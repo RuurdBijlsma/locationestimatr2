@@ -1,4 +1,4 @@
-# vuetifytes
+# locationestimatr2
 
 ## Project setup
 ```
