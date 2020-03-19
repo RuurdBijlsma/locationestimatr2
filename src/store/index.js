@@ -6,7 +6,7 @@ import "firebase/storage";
 
 Vue.use(Vuex);
 const db = firebase.firestore();
-const storage = firebase.storage().ref()
+const storage = firebase.storage().ref();
 
 export default new Vuex.Store({
     state: {
@@ -18,26 +18,30 @@ export default new Vuex.Store({
         'setUser': (state, user) => {
             state.user = user;
         },
-        'setMaps': (state, maps) => {
-            state.maps = maps;
+        'setHomeMaps': (state, maps) => {
+            state.homeMaps = maps;
         }
     },
     getters: {},
     actions: {
-        async getMaps({commit}) {
+        async getUrl({commit}, imageUrl) {
+            return storage.child(imageUrl).getDownloadURL()
+        },
+        async getHomeMaps({commit}) {
             if (this.state.homeMaps.length === 0) {
-                const mapsCollection = await db.collection('home-maps').get();
-                const maps = [];
+                const mapsCollection = await db.collection('home-maps').orderBy('order').get();
+                const homeMaps = [];
                 mapsCollection.forEach(map => {
-                    maps.push(map.data());
+                    homeMaps.push(map.data());
                 });
-                commit('setMaps', maps);
+                await Promise.all(homeMaps.map(async m => {
+                    m.maps = await Promise.all(m.maps.map(async h => {
+                        return (await h.get()).data();
+                    }))
+                }));
+                commit('setHomeMaps', homeMaps);
             }
 
-            return await Promise.all(this.state.maps.map(async map => {
-                map.url = await storage.child(map.image).getDownloadURL();
-                return map;
-            }));
         }
     },
     modules: {}

@@ -1,16 +1,16 @@
 <template>
     <div class="play">
-        <div class="map-collection">
-            <v-icon :color="$store.state.color">brightness_high</v-icon>
-            <span class="title">Official Maps</span>
+        <div class="map-collection" v-for="collection in $store.state.homeMaps" :key="collection.name">
+            <v-icon :color="$store.state.color">{{collection.icon}}</v-icon>
+            <span class="title">{{collection.name}}</span>
             <div class="maps">
-                <v-card dark class="card" max-width="250" v-for="map in officialMaps" :key="map.name">
+                <div class="card" v-for="map in collection.maps" :key="map.name">
                     <v-img class="white--text align-end"
                            height="150px"
-                           :src="map.url">
+                           :src="'./' + map.image">
                         <v-card-title class="card-title">{{map.name}}</v-card-title>
                     </v-img>
-                    <v-card-actions>
+                    <div>
                         <div v-if="map.area" class="area-actions">
                             <span>Radius</span>
                             <v-text-field dense outlined type="number" value="10"
@@ -19,25 +19,25 @@
                         </div>
                         <v-btn :color="$store.state.color" text>Play</v-btn>
                         <v-btn :color="$store.state.color" text v-if="!map.area">Scores</v-btn>
-                    </v-card-actions>
-                </v-card>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="map-collection">
-            <v-icon :color="$store.state.color">collections_bookmark</v-icon>
-            <span class="title">Country Collection Maps</span>
-            <div class="maps"></div>
-        </div>
-        <div class="map-collection">
-            <v-icon :color="$store.state.color">supervised_user_circle</v-icon>
-            <span class="title">Featured User Maps</span>
-            <div class="maps"></div>
-        </div>
-        <div class="map-collection">
-            <v-icon :color="$store.state.color">flag</v-icon>
-            <span class="title">Country Maps</span>
-            <div class="maps"></div>
-        </div>
+        <!--        <div class="map-collection">-->
+        <!--            <v-icon :color="$store.state.color">collections_bookmark</v-icon>-->
+        <!--            <span class="title">Country Collection Maps</span>-->
+        <!--            <div class="maps"></div>-->
+        <!--        </div>-->
+        <!--        <div class="map-collection">-->
+        <!--            <v-icon :color="$store.state.color">supervised_user_circle</v-icon>-->
+        <!--            <span class="title">Featured User Maps</span>-->
+        <!--            <div class="maps"></div>-->
+        <!--        </div>-->
+        <!--        <div class="map-collection">-->
+        <!--            <v-icon :color="$store.state.color">flag</v-icon>-->
+        <!--            <span class="title">Country Maps</span>-->
+        <!--            <div class="maps"></div>-->
+        <!--        </div>-->
     </div>
 </template>
 
@@ -46,12 +46,7 @@
         name: 'Play',
         components: {},
         data() {
-            return {
-                officialMaps: [],
-                collectionMaps: [],
-                featuredMaps: [],
-                countryMaps: [],
-            }
+            return {}
         },
         async mounted() {
             if (this.$store.state.user) {
@@ -60,30 +55,8 @@
         },
         methods: {
             async loadMaps() {
-                // await this.$store.dispatch('loadMaps');
-                console.log("DONE");
-                let maps = await this.$store.dispatch('getMaps');
-                this.officialMaps = [];
-                this.collectionMaps = [];
-                this.featuredMaps = [];
-                this.countryMaps = [];
-                for (let map of maps) {
-                    switch (map.type) {
-                        case 'official':
-                            this.officialMaps.push(map);
-                            break;
-                        case 'collection':
-                            this.collectionMaps.push(map);
-                            break;
-                        case 'featured':
-                            this.featuredMaps.push(map);
-                            break;
-                        case 'country':
-                            this.countryMaps.push(map);
-                            break;
-                    }
-                }
-                console.log(this.officialMaps)
+                await this.$store.dispatch('getHomeMaps');
+                console.log("LOADED", this.$store.state.homeMaps)
             }
         },
         watch: {
