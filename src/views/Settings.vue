@@ -1,6 +1,7 @@
 <template>
     <div class="settings">
-        <h1>Settings</h1>
+        <h1 class="title lighten-4">Settings</h1>
+        <v-btn @click="clearCache()">Clear Cache</v-btn>
     </div>
 </template>
 
@@ -9,8 +10,15 @@
         name: 'Settings',
         components: {},
         data() {
-            return {
+            return {}
+        },
+        mounted() {
 
+        },
+        methods: {
+            clearCache() {
+                localStorage.clear();
+                location.reload();
             }
         }
     }

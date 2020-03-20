@@ -31,6 +31,11 @@ const routes = [
             },
         ]
     },
+    {
+        path: '/play',
+        name: 'PlayMap',
+        component: () => import('../views/PlayMap')
+    },
 
 ];
 

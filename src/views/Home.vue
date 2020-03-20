@@ -78,12 +78,12 @@
     }
 
     .left-content {
-        height: 100%;
         padding-top: 60px;
+        position: fixed;
     }
 
     .drawer {
-        padding-top:10px;
+        padding-top: 10px;
         border-bottom-right-radius: 10px;
         border-top-right-radius: 10px;
         min-height: 500px;
@@ -121,7 +121,7 @@
 
     .middle-content {
         flex-grow: 1;
-        margin: 120px 30px 30px;
-        padding: 10px 50px;
+        margin: 120px 0px 15px 256px;
+        padding: 10px 30px;
     }
 </style>

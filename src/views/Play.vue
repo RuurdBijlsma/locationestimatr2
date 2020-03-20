@@ -1,43 +1,42 @@
 <template>
     <div class="play">
+        <div v-if="$store.state.homeMaps.length === 0">
+            <h1>Loading maps... :)</h1>
+            <br>
+            <v-progress-circular
+                    :size="70"
+                    :width="7"
+                    color="purple"
+                    indeterminate
+            ></v-progress-circular>
+        </div>
         <div class="map-collection" v-for="collection in $store.state.homeMaps" :key="collection.name">
-            <v-icon :color="$store.state.color">{{collection.icon}}</v-icon>
-            <span class="title">{{collection.name}}</span>
+            <div class="map-collection-title">
+                <v-icon :color="$store.state.color">{{collection.icon}}</v-icon>
+                <span class="title">{{collection.name}}</span>
+            </div>
             <div class="maps">
                 <div class="card" v-for="map in collection.maps" :key="map.name">
-                    <v-img class="white--text align-end"
-                           height="150px"
+                    <v-img class="white--text align-end map-background"
+                           aspect-ratio="3/5"
                            :src="'./' + map.image">
-                        <v-card-title class="card-title">{{map.name}}</v-card-title>
+                        <v-card-title class="card-title text-truncate d-inline-block">{{map.name}}</v-card-title>
                     </v-img>
-                    <div>
-                        <div v-if="map.area" class="area-actions">
+                    <div class="card-bottom">
+                        <div v-if="map.type === 'area'" class="area-actions">
                             <span>Radius</span>
-                            <v-text-field dense outlined type="number" value="10"
+                            <v-text-field dense outlined dark type="number" value="10"
                                           class="radius-field"></v-text-field>
                             <span>KM</span>
                         </div>
-                        <v-btn :color="$store.state.color" text>Play</v-btn>
-                        <v-btn :color="$store.state.color" text v-if="!map.area">Scores</v-btn>
+                        <v-btn :color="$store.state.color" small text :to="`/play?map=${map.id}`">Play</v-btn>
+                        <v-btn :color="$store.state.color" small text :to="`/scores?map=${map.id}`"
+                               v-if="map.type !== 'area'">Scores
+                        </v-btn>
                     </div>
                 </div>
             </div>
         </div>
-        <!--        <div class="map-collection">-->
-        <!--            <v-icon :color="$store.state.color">collections_bookmark</v-icon>-->
-        <!--            <span class="title">Country Collection Maps</span>-->
-        <!--            <div class="maps"></div>-->
-        <!--        </div>-->
-        <!--        <div class="map-collection">-->
-        <!--            <v-icon :color="$store.state.color">supervised_user_circle</v-icon>-->
-        <!--            <span class="title">Featured User Maps</span>-->
-        <!--            <div class="maps"></div>-->
-        <!--        </div>-->
-        <!--        <div class="map-collection">-->
-        <!--            <v-icon :color="$store.state.color">flag</v-icon>-->
-        <!--            <span class="title">Country Maps</span>-->
-        <!--            <div class="maps"></div>-->
-        <!--        </div>-->
     </div>
 </template>
 
@@ -55,7 +54,8 @@
         },
         methods: {
             async loadMaps() {
-                await this.$store.dispatch('getHomeMaps');
+                // console.log("Loading called")
+                await this.$store.dispatch('loadHomeMaps')
                 console.log("LOADED", this.$store.state.homeMaps)
             }
         },
@@ -68,27 +68,78 @@
 </script>
 
 <style scoped>
+    .play {
+        text-align: center;
+    }
 
     .map-collection {
         margin-bottom: 40px;
     }
 
+    .map-collection-title {
+        margin-bottom: 15px;
+    }
+
     .maps {
-        min-height: 100px;
-        /*width: 100%;*/
-        background-color: rgba(0, 0, 0, 0.17);
-        border-radius: 10px;
-        margin: 5px 0;
+        display: inline-grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 2em;
+        grid-auto-rows: minmax(13em, auto);
+        max-width: 1200px;
+        width: 90%;
+    }
+
+    @media screen and (max-width: calc(1100px + 487px)) {
+        .maps {
+            grid-template-columns: repeat(3, 1fr) !important;
+        }
+    }
+
+    @media screen and (max-width: calc(700px + 487px)) {
+        .maps {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+
+    @media screen and (max-width: calc(350px + 487px)) {
+        .maps {
+            grid-template-columns: repeat(1, 1fr) !important;
+        }
     }
 
     .maps .card {
-        margin: 10px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 0.7em;
+        box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.2);
+        transition: 0.15s;
+        text-align: left;
+        min-width: 220px;
+    }
+
+    .maps .card > div {
+        position: relative;
+        top: -17px;
+    }
+
+    .map-background {
+        pointer-events: none;
+        height: calc(100% - 52px);
+        width: 100%;
         display: inline-block;
+        border-top-right-radius: 0.7em;
+        border-top-left-radius: 0.7em;
+    }
+
+    .card-bottom {
+        padding: 12px;
     }
 
     .card-title {
         text-shadow: 0 0 10px black;
         background-image: linear-gradient(to top, rgba(30, 30, 30, 0.6), transparent);
+        position: absolute;
+        bottom: 0px;
+        width: 100%
     }
 
     .map-collection i {
@@ -97,17 +148,16 @@
     }
 
     .map-collection .title {
-        color: #ffffffd6;
         padding: 5px;
     }
 
     .area-actions {
         font-size: 12px;
-        display: flex;
+        display: inline-flex;
     }
 
     .radius-field {
-        width: 40px;
+        width: 50px;
         font-size: 12px;
         height: 10px;
         margin: -10px 10px 0px;
