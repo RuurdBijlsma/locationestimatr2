@@ -54,7 +54,17 @@ export default new Vuex.Store({
     getters: {},
     actions: {
         async getMap({commit}, mapKey) {
-            let getMapFromDb = async () => (await db.collection('maps').doc(mapKey).get()).data();
+            let getMapFromDb = async () => {
+                let map = (await db.collection('maps').doc(mapKey).get()).data();
+                if (map.type === 'collection') {
+                    map.maps = await Promise.all(map.maps.map(async map => {
+                        let mapData = (await map.get()).data();
+                        delete mapData.maps;
+                        return mapData;
+                    }))
+                }
+                return map;
+            };
             return await getCached('map:' + mapKey, getMapFromDb);
         },
         async getUrl({commit}, imageUrl) {

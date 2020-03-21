@@ -16,7 +16,7 @@ class Game {
 
         this.distribution = distribution.weighted;
         this.element = element;
-        this.svElement = new StreetviewElement(element.querySelector(".streetview"), element.querySelector(".return-home"));
+        this.svElement = new StreetViewElement(element.querySelector(".streetview"), element.querySelector(".return-home"));
 
         this.scoreElement = element.querySelector(".total-score");
         this.timeElement = element.querySelector(".time-left");

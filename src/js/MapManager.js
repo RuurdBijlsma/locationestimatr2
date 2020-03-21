@@ -1,25 +1,29 @@
+import Google from './Google'
+import GeoMap from './GeoMap'
+
 class MapManager {
-    async initialize() {
-        let response = await fetch("../data/countries.json");
-        this.countries = await response.json();
-        response = await fetch("../data/maps.json");
-        this.maps = await response.json();
-    }
-
-    getAreaMap(lat, lon, radius, numSides = 20) {
-        radius *= 1000;
-        let center = new google.maps.LatLng(lat, lon);
-        const paths = [], degreeStep = 360 / numSides;
-
-        for (let i = 0; i < numSides; i++) {
-            const gpos = google.maps.geometry.spherical.computeOffset(center, radius, degreeStep * i);
-            paths.push({lat: gpos.lat(), lng: gpos.lng()});
+    async mapToGeoMap(map) {
+        let paths;
+        switch (map.type) {
+            case 'collection':
+                paths = await this.kmlsToPaths(...map.maps.map(map => map.kml));
+                break;
+            case 'area':
+                paths = await this.getAreaPaths(map.lat, map.lon, map.radius);
+                break;
+            case 'kml':
+            default:
+                paths = await this.kmlsToPaths(map.kml);
+                break;
         }
 
-        paths.push(paths[0]);
-        console.log(paths);
+        return await this.getMapByPaths(paths, map.name);
+    }
 
-        let poly = new google.maps.Polygon({
+    async getMapByPaths(paths, mapName) {
+        await Google.wait();
+
+        let poly = new Google.maps.Polygon({
             paths: paths,
             strokeColor: "#FFC107",
             strokeOpacity: 0.8,
@@ -28,32 +32,9 @@ class MapManager {
             fillOpacity: 0.35
         });
 
-        return this.getMapByPoly(poly, "my_area");
-    }
-
-    async getMapByName(key) {
-        let poly;
-        if (this.maps[key] === undefined) {
-            poly = this.kmlsToPolygon(this.countries[key]);
-        } else {
-            let map = this.maps[key];
-            if (map.type === "collection") {
-                console.log("Map collection:", map.countries);
-                poly = this.kmlsToPolygon(...map.countries.map(country => this.countries[country]));
-            } else if (map.type === "kml") {
-                let response = await fetch("../data/kml/" + map.file);
-                let kml = await response.text();
-                poly = this.kmlsToPolygon(kml);
-            }
-        }
-
-        return this.getMapByPoly(poly, key);
-    }
-
-    getMapByPoly(poly, mapName) {
         let area = 0;
         poly.getPaths().forEach(path => {
-            area += google.maps.geometry.spherical.computeArea(path);
+            area += Google.maps.geometry.spherical.computeArea(path);
         });
 
         let minimumDistanceForPoints = Math.sqrt(area) * 2;
@@ -61,20 +42,27 @@ class MapManager {
         return new GeoMap(poly, minimumDistanceForPoints, mapName);
     }
 
-    kmlsToPolygon(...kmls) {
-        let paths = [];
-        for (let kml of kmls) {
-            paths = paths.concat(this.kmlToPaths(kml));
+    async getAreaPaths(lat, lon, radius, numSides = 20) {
+        await Google.wait();
+        let center = new Google.maps.LatLng(lat, lon);
+        const paths = [], degreeStep = 360 / numSides;
+
+        for (let i = 0; i < numSides; i++) {
+            const gpos = Google.maps.geometry.spherical.computeOffset(center, radius, degreeStep * i);
+            paths.push({lat: gpos.lat(), lng: gpos.lng()});
         }
 
-        return new google.maps.Polygon({
-            paths: paths,
-            strokeColor: "#FFC107",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FFC107",
-            fillOpacity: 0.35
-        });
+        paths.push(paths[0]);
+        return paths;
+    }
+
+    kmlsToPaths(...kmls) {
+        let paths = [];
+
+        for (let kml of kmls)
+            paths = paths.concat(this.kmlToPaths(kml));
+
+        return paths;
     }
 
     kmlToPaths(kml) {
@@ -90,7 +78,7 @@ class MapManager {
                 });
             }
             paths.push(poly);
-        }
+        };
 
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(kml, "text/xml").firstChild;
@@ -104,3 +92,5 @@ class MapManager {
         return paths;
     }
 }
+
+export default new MapManager()

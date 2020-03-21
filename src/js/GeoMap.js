@@ -1,4 +1,4 @@
-class GeoMap {
+export default class GeoMap {
     constructor(polygon, minimumDistanceForPoints, name) {
         console.log(minimumDistanceForPoints);
         this.minimumDistanceForPoints = minimumDistanceForPoints;
@@ -27,7 +27,7 @@ class GeoMap {
             return 5000;
 
         let score = (this.minimumDistanceForPoints - distance) / (this.minimumDistanceForPoints / this.maxScore);
-        let scoreDifficulty = 2;
+        let scoreDifficulty = 3;
 
         console.log("1", score);
 

@@ -1,4 +1,4 @@
-class StreetviewElement {
+export default class StreetViewElement {
     constructor(element, flagElement) {
         this.flagElement = flagElement;
         this.element = element;
