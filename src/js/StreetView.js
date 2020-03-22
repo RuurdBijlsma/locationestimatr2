@@ -1,4 +1,4 @@
-class Streetview {
+export default class StreetView {
     constructor(map, distribution) {
         this.map = map;
         this.distribution = distribution;
@@ -36,7 +36,7 @@ class Streetview {
     }
 
     async randomValidTile(endZoom) {
-        let chosenTile = { x: 0, y: 0, zoom: 0 };
+        let chosenTile = {x: 0, y: 0, zoom: 0};
         let previousTiles = [chosenTile];
         let failedTiles = [];
         while (chosenTile.zoom < endZoom) {
@@ -57,7 +57,7 @@ class Streetview {
                 if (previousTiles.length > 0)
                     chosenTile = previousTiles.splice(-2)[0];
                 else
-                    chosenTile = { x: 0, y: 0, zoom: 0 };
+                    chosenTile = {x: 0, y: 0, zoom: 0};
                 console.log("Took a wrong turn when getting a random position, going back to zoom " + chosenTile.zoom, chosenTile);
             } else {
                 chosenTile = this.pickRandomSubTile(validTiles);
@@ -69,7 +69,7 @@ class Streetview {
     }
 
     pickRandomSubTile(tiles) {
-        if (this.distribution === distribution.uniform) {
+        if (this.distribution === "uniform") {
             return tiles[Math.floor(tiles.length * Math.random())];
         }
 
@@ -91,32 +91,34 @@ class Streetview {
         bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 256, 256));
         bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 0, 256));
         bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 256, 0));
+        //Check if tile corners are in map bounds
         for (let bound of bounds)
             if (this.map.isInMap(...bound))
                 return true;
 
-        let mapsBounds = new google.maps.LatLngBounds({ lat: bounds[2][0], lng: bounds[2][1] }, { lat: bounds[3][0], lng: bounds[3][1] });
-
-        let intersect = false;
-        this.map.polygon.getPaths().forEach(path => {
-            path.forEach(point => {
-                if (mapsBounds.contains(point))
-                    intersect = true;
-            });
+        //Maybe one of the 4 tile corners don't intersect, doesn't mean the two polygons don't intersect
+        let mapsBounds = new google.maps.LatLngBounds({lat: bounds[2][0], lng: bounds[2][1]}, {
+            lat: bounds[3][0],
+            lng: bounds[3][1]
         });
 
         // Check if map coordinates are in within tile bounds
-        return intersect;
+        for (let path of this.map.polygon.getPaths())
+            for (let point of path)
+                if (mapsBounds.contains(point))
+                    return true;
+
+        return false;
     }
 
     async getSubTiles(x, y, zoom) {
+        //Zooming multiplies coordinates by 2 (4 sub tiles in a tile)
         let startX = x * 2;
         let startY = y * 2;
         let endX = startX + 2;
         let endY = startY + 2;
-        zoom++;
 
-        return this.getTilesAtCoordinate(startX, endX, startY, endY, zoom);
+        return this.getTilesAtCoordinate(startX, endX, startY, endY, zoom + 1);
     }
 
     async getTilesAtCoordinate(startX, endX, startY, endY, zoom) {
@@ -172,14 +174,14 @@ class Streetview {
         return new Promise(async resolve => {
             let response = await fetch(`https://mts1.googleapis.com/vt?hl=en-US&lyrs=svv|cb_client:apiv3&style=40,18&x=${x}&y=${y}&z=${zoom}`);
             let blob = await response.blob();
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.readAsDataURL(blob);
             reader.onload = e => {
-                var img = new Image();
+                const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
                     let hasSv = img.width !== 1;
-                    let coverage = this.distribution === distribution.weighted ? this.getTileCoverage(img) : 0;
+                    let coverage = this.distribution === "weighted" ? this.getTileCoverage(img) : 1;
 
                     resolve({
                         coverage, hasSv, img, x, y, zoom
@@ -204,12 +206,12 @@ class Streetview {
 }
 
 Array.prototype.shuffle = function () {
-    var input = this;
+    const input = this;
 
-    for (var i = input.length - 1; i >= 0; i--) {
+    for (let i = input.length - 1; i >= 0; i--) {
 
-        var randomIndex = Math.floor(Math.random() * (i + 1));
-        var itemAtIndex = input[randomIndex];
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        const itemAtIndex = input[randomIndex];
 
         input[randomIndex] = input[i];
         input[i] = itemAtIndex;

@@ -43,8 +43,9 @@
 <style>
     @import url('https://fonts.googleapis.com/css?family=Material+Icons|Montserrat:200,500,700|Roboto:400,400i,500,600,700,800,900&display=swap');
 
-    html {
+    html, body {
         background-color: #222031;
+        overflow-y: hidden !important;
     }
 
     * {
@@ -53,6 +54,7 @@
 
     #app {
         background-color: #222031;
+        overflow-y: hidden;
     }
 
     input[type='number'] {

@@ -67,22 +67,26 @@ export default class StreetViewElement {
         return [lat, lon];
     }
 
-    setLocation(lat, lon) {
-        if (this.panorama !== undefined) {
-            this.panorama.setPosition({lat: lat, lng: lon});
-        } else {
-            this.panorama = new google.maps.StreetViewPanorama(
-                this.element, {
-                    position: {lat: lat, lng: lon},
-                    addressControl: false,
-                    linksControl: true,
-                    panControl: true,
-                    enableCloseButton: false,
-                    showRoadLabels: false,
-                    motionTracking: false,
-                    fullscreenControl: false,
-                    motionTrackingControl: false
-                });
-        }
+    async setLocation(lat, lon) {
+        //TODO ADD TIMEOUT?
+        return new Promise(resolve=>{
+            if (this.panorama !== undefined) {
+                this.panorama.setPosition({lat: lat, lng: lon});
+            } else {
+                this.panorama = new google.maps.StreetViewPanorama(
+                    this.element, {
+                        position: {lat: lat, lng: lon},
+                        addressControl: false,
+                        linksControl: true,
+                        panControl: true,
+                        enableCloseButton: false,
+                        showRoadLabels: false,
+                        motionTracking: false,
+                        fullscreenControl: false,
+                        motionTrackingControl: false
+                    });
+            }
+            resolve();
+        });
     }
 }

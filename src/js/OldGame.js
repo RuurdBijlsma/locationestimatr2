@@ -1,4 +1,7 @@
-class Game {
+import StreetView from './StreetView'
+import StreetViewElement from "./StreetViewElement";
+
+export default class Game {
     constructor(map, element, rules = {
         roundCount: 5,
         moveLimit: -1,
@@ -205,7 +208,7 @@ class Game {
 
         if (map !== false) {
             this.map = map;
-            this.streetview = new Streetview(map, this.distribution);
+            this.streetview = new StreetView(map, this.distribution);
         }
 
         this.zoom = map.minimumDistanceForPoints < 3000 ? 18 : 14;
