@@ -45,7 +45,7 @@
 
     html, body {
         background-color: #222031;
-        overflow-y: hidden !important;
+        overflow-y: auto !important;
     }
 
     * {
@@ -64,5 +64,14 @@
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
+    }
+
+    .map-element {
+        width: 100%;
+        height: 100%;
+    }
+
+    .map-element  * {
+        cursor: default;
     }
 </style>

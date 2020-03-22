@@ -16,25 +16,27 @@
                 <span class="title">{{collection.name}}</span>
             </div>
             <div class="maps">
-                <div class="card" v-for="map in collection.maps" :key="map.name">
-                    <v-img class="white--text align-end map-background"
-                           aspect-ratio="3/5"
-                           :src="'./' + map.image">
-                        <v-card-title class="card-title text-truncate d-inline-block">{{map.name}}</v-card-title>
-                    </v-img>
-                    <div class="card-bottom">
-                        <div v-if="map.type === 'area'" class="area-actions">
-                            <span>Radius</span>
-                            <v-text-field dense outlined dark type="number" value="10"
-                                          class="radius-field"></v-text-field>
-                            <span>KM</span>
+                <v-lazy v-for="map in collection.maps" :key="map.name" min-height="207" transition="fade-transition">
+                    <div class="card">
+                        <v-img class="white--text align-end map-background"
+                               aspect-ratio="3/5"
+                               :src="'./' + map.image">
+                            <v-card-title class="card-title text-truncate d-inline-block">{{map.name}}</v-card-title>
+                        </v-img>
+                        <div class="card-bottom">
+                            <div v-if="map.type === 'area'" class="area-actions">
+                                <span>Radius</span>
+                                <v-text-field dense outlined dark type="number" value="10"
+                                              class="radius-field"></v-text-field>
+                                <span>KM</span>
+                            </div>
+                            <v-btn :color="$store.state.color" small text :to="`/play?map=${map.id}`">Play</v-btn>
+                            <v-btn :color="$store.state.color" small text :to="`/scores?map=${map.id}`"
+                                   v-if="map.type !== 'area'">Scores
+                            </v-btn>
                         </div>
-                        <v-btn :color="$store.state.color" small text :to="`/play?map=${map.id}`">Play</v-btn>
-                        <v-btn :color="$store.state.color" small text :to="`/scores?map=${map.id}`"
-                               v-if="map.type !== 'area'">Scores
-                        </v-btn>
                     </div>
-                </div>
+                </v-lazy>
             </div>
         </div>
     </div>
@@ -114,6 +116,7 @@
         transition: 0.15s;
         text-align: left;
         min-width: 220px;
+        height: 100%;
     }
 
     .maps .card > div {
