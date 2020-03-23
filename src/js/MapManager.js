@@ -2,7 +2,7 @@ import Google from './Google'
 import GeoMap from './GeoMap'
 
 class MapManager {
-    async mapToGeoMap(map) {
+    async mapToGeoMap(map, id) {
         let paths;
         switch (map.type) {
             case 'collection':
@@ -17,10 +17,11 @@ class MapManager {
                 break;
         }
 
-        return await this.getMapByPaths(paths, map.name);
+        console.log("?MAP ID", map);
+        return await this.getMapByPaths(paths, map.name, id);
     }
 
-    async getMapByPaths(paths, mapName) {
+    async getMapByPaths(paths, mapName, id) {
         await Google.wait();
 
         let poly = new Google.maps.Polygon({
@@ -39,7 +40,7 @@ class MapManager {
 
         let minimumDistanceForPoints = Math.sqrt(area) * 2;
 
-        return new GeoMap(poly, minimumDistanceForPoints, mapName);
+        return new GeoMap(poly, minimumDistanceForPoints, mapName, id);
     }
 
     async getAreaPaths(lat, lon, radius, numSides = 20) {

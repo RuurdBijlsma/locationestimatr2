@@ -15,8 +15,12 @@
                 </v-btn>
             </div>
         </div>
-        <round-score @nextRound="nextRoundEvent" class="roundScore" v-show="showRoundOverview" :google-map="googleMap"
-                     ref="roundScore">
+        <round-score @submitHighScore="submitHighScore" @nextRound="nextRoundEvent"
+                     :guesses="previousGuesses"
+                     class="roundScore"
+                     :submitting="submitting"
+                     v-show="showRoundOverview" :google-map="googleMap"
+                     ref="roundScore" :is-custom="rules && rules.presetName === 'Custom'">
             <div class="big-map" ref="bigMap"></div>
         </round-score>
     </div>
@@ -57,6 +61,8 @@
             prepared: false,
             showRoundOverview: false,
             nextLocation: null,
+            startTime: 0,
+            submitting: false,
         }),
         async mounted() {
             console.log("MOUNTED");
@@ -79,6 +85,23 @@
             });
         },
         methods: {
+            async submitHighScore(user, totalScore, scores) {
+                this.submitting = true;
+                let timeTaken = Math.round(performance.now() - this.startTime);
+                let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.presetName;
+                await this.$store.dispatch('submitHighScore', {
+                    totalScore,
+                    totalDistance: scores.map(s => s.distance).reduce((a, b) => a + b),
+                    scores,
+                    rules,
+                    map: this.map.id,
+                    user,
+                    timeTaken,
+                    date: new Date(),
+                });
+                await this.$router.push('/scores?map=' + this.map.id);
+                this.submitting = false;
+            },
             start() {
                 if (this.map === null) {
                     console.log("Map is not set, we wait before starting game");
@@ -97,6 +120,7 @@
                 }
 
                 console.log("Start game");
+                this.startTime = performance.now();
                 this.startRound();
             },
             async startRound() {
@@ -175,24 +199,29 @@
             },
             makeGuess() {
                 this.guessedLocation = [this.mapMarker.position.lat(), this.mapMarker.position.lng()];
-                let distance = this.measureDistance(this.guessedLocation, this.currentDestination);
+                let targetDestination = this.rules.objectives === 1 ? this.svElement.getLocation() : this.currentDestination;
+                let distance = this.measureDistance(this.guessedLocation, targetDestination);
                 let points = this.map.scoreCalculation(distance);
                 this.previousGuesses.push({
+                    round: this.currentRound,
                     guess: this.guessedLocation,
-                    target: this.currentDestination,
+                    target: targetDestination,
+                    distance,
                     score: points
                 });
-                this.showOverview(this.guessedLocation, this.currentDestination, distance, points);
-                this.nextRound(this.nextLocation);
+                let isLastRound = this.currentRound === this.rules.roundCount;
+                this.showOverview(this.guessedLocation, targetDestination, distance, points, isLastRound);
+                if (!isLastRound)
+                    this.nextRound(this.nextLocation);
             },
-            showOverview(guess, target, distance, points) {
+            showOverview(guess, target, distance, points, isLastRound) {
                 console.log("SHOW OVERVIEW");
                 this.showRoundOverview = true;
                 if (this.mapMarker !== null)
                     this.mapMarker.setMap(null);
                 this.mapMarker = null;
                 this.attachMap(this.$refs.bigMap);
-                this.$refs.roundScore.show(this.guessedLocation, this.currentDestination, distance, points);
+                this.$refs.roundScore.show(guess, target, distance, points, isLastRound);
             },
             measureDistance(from, to) {
                 return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(...from), new google.maps.LatLng(...to));

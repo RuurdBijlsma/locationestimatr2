@@ -145,6 +145,7 @@
                     moveLimit: this.rules.moveLimit,
                     roundCount: this.rounds[this.rules.roundIndex],
                     objective: this.rules.objective,
+                    preset: this.difficulties.indexOf(this.selectedDifficulty),
                 });
             }
         },

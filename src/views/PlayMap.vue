@@ -23,7 +23,7 @@
         async mounted() {
             let mapInfo = await this.$store.dispatch('getMap', this.$route.query.map);
             console.log(mapInfo);
-            this.map = await MapManager.mapToGeoMap(mapInfo);
+            this.map = await MapManager.mapToGeoMap(mapInfo, this.$route.query.map);
             this.startGame(this.$refs.rules.exportRules())
         },
         methods: {

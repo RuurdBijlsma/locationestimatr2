@@ -7,7 +7,8 @@ export default class Rules {
                     moveLimit = -1,
                     timeLimit = -1,
                     roundCount = 5,
-                    objective = 1
+                    objective = 1,
+                    preset = 0,
                 }) {
         this.zoomAllowed = zoomAllowed;
         this.panAllowed = panAllowed;
@@ -17,5 +18,10 @@ export default class Rules {
         this.timeLimit = timeLimit;
         this.roundCount = roundCount;
         this.objective = objective;
+        this.preset = preset;
+    }
+
+    get presetName() {
+        return ['Easy', 'Normal', 'Hard', 'Extreme', 'Custom'][this.preset];
     }
 }

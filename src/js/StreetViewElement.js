@@ -11,14 +11,15 @@ export default class StreetViewElement {
         this.removeMoveLimit();
     }
 
-    setMoveLimit(moves, remainingElement) {
+    setMoveLimit(moves) {
         console.log({moves});
         if (moves === 0)
             this.restrictMove();
-        remainingElement.style.display = "inline-block";
-        remainingElement.innerHTML = `Moves: <b>${moves}</b>`;
+        //TODO: don't have this work like this
+        // remainingElement.style.display = "inline-block";
+        // remainingElement.innerHTML = `Moves: <b>${moves}</b>`;
         this.panorama.addListener("position_changed", () => {
-            remainingElement.innerHTML = `Moves: <b>${--moves}</b>`;
+            // remainingElement.innerHTML = `Moves: <b>${--moves}</b>`;
             if (moves === 0)
                 this.restrictMove();
         });
@@ -68,7 +69,6 @@ export default class StreetViewElement {
     }
 
     async setLocation(lat, lon) {
-        //TODO ADD TIMEOUT?
         return new Promise(resolve=>{
             if (this.panorama !== undefined) {
                 this.panorama.setPosition({lat: lat, lng: lon});
@@ -86,6 +86,7 @@ export default class StreetViewElement {
                         motionTrackingControl: false
                     });
             }
+            //TODO ADD TIMEOUT?
             resolve();
         });
     }

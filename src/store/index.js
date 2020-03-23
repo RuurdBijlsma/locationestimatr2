@@ -10,6 +10,9 @@ const storage = firebase.storage().ref();
 if (localStorage.getItem("cache") === null)
     localStorage.cache = JSON.stringify({});
 const cache = JSON.parse(localStorage.cache);
+if (localStorage.getItem("scores") === null)
+    localStorage.scores = JSON.stringify({});
+const localScores = JSON.parse(localStorage.scores);
 
 async function getCached(key, action) {
     //Refresh cache if it doesn't exist
@@ -53,6 +56,13 @@ export default new Vuex.Store({
     },
     getters: {},
     actions: {
+        async submitHighScore({commit}, score) {
+            if (!localScores[score.map])
+                localScores[score.map] = [];
+            localScores[score.map].push(score);
+            localStorage.scores = JSON.stringify(localScores);
+            await db.collection('scores').add(score);
+        },
         async getMap({commit}, mapKey) {
             let getMapFromDb = async () => {
                 let map = (await db.collection('maps').doc(mapKey).get()).data();

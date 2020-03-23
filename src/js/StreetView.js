@@ -103,12 +103,15 @@ export default class StreetView {
         });
 
         // Check if map coordinates are in within tile bounds
-        for (let path of this.map.polygon.getPaths())
-            for (let point of path)
+        let mapContains = false;
+        this.map.polygon.getPaths().forEach(path => {
+            path.forEach(point => {
                 if (mapsBounds.contains(point))
-                    return true;
+                    mapContains = true;
+            });
+        });
 
-        return false;
+        return mapContains;
     }
 
     async getSubTiles(x, y, zoom) {
