@@ -24,8 +24,10 @@ async function getCached(key, action) {
         let now = +new Date();
         let refreshCacheTime = 1000 /*ms*/ * 60 /*s*/ * 60 /*min*/ * 24; /*hours*/ //Refresh cache every 24 hours
         //Refresh cache if it's 24+ hours old
-        if (now - date >= refreshCacheTime)
+        if (navigator.onLine && now - date >= refreshCacheTime)
             data = await action();
+        if (!navigator.onLine)
+            console.warn("Using old cache because browser is offline");
     }
     if (data) {
         console.log(`Not using cached ${key}`);
@@ -57,9 +59,17 @@ export default new Vuex.Store({
     getters: {},
     actions: {
         async getChallengeUrl({commit}, data) {
-            console.log("Challenge data", data);
+            console.log("Challenge data", data.radius);
+            let appendString = '';
+            if (data.radius && data.coordinates) {
+                let radius = data.radius;
+                let coordinates = data.coordinates;
+                appendString = `&area_coordinates=${coordinates}&area_radius=${radius}`;
+            }
+            delete data.radius;
+            delete data.coordinates;
             let dbData = await db.collection('challenges').add(data);
-            return location.origin + location.pathname + '#play?challenge=' + dbData.id;
+            return location.origin + location.pathname + '#play?challenge=' + dbData.id + appendString;
         },
         async submitHighScore({commit}, score) {
             if (!localScores[score.map])
@@ -71,7 +81,10 @@ export default new Vuex.Store({
         async getChallenge({commit, dispatch}, challengeId) {
             let getChallengeFromDb = async () => (await db.collection('challenges').doc(challengeId).get()).data();
             let challenge = await getCached('challenge:' + challengeId, getChallengeFromDb);
-            let map = await dispatch('getMap', challenge.map);
+            let map = 'my_area';
+            if (challenge.map !== 'my_area') {
+                map = await dispatch('getMap', challenge.map);
+            }
             return {challenge, map};
         },
         async getMap({commit}, mapKey) {

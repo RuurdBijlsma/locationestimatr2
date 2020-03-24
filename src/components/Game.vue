@@ -1,5 +1,5 @@
 <template>
-    <div class="game">
+    <div class="game" ref="game">
         <div class="game-info" v-if="rules !== null">
             <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
             <span v-if="!rules.unlimitedTime" class="time">Time: <span
@@ -12,7 +12,12 @@
             </v-btn>
         </div>
         <div class="map-element" ref="map"></div>
-        <div class="guess-map">
+        <div class="guess-map" ref="guessMap">
+            <div class="resize-map" ref="resizeTrigger" @mousedown="resizeDownEvent"
+                 @touchstart="resizeDownEvent($event.touches[0])">
+                <v-icon color="#FFFFFF" class="resize-icon" v-if="mobile">menu</v-icon>
+                <v-icon small color="#FFFFFF" class="resize-icon" v-else>call_made</v-icon>
+            </div>
             <div class="small-map" ref="smallMap"></div>
             <div class="guess-bottom">
                 <v-btn @click="makeGuess()" :color="$store.state.color" text large class="guess-button"
@@ -27,7 +32,8 @@
                      class="roundScore"
                      :submitting="submitting"
                      v-show="showRoundOverview" :google-map="googleMap"
-                     ref="roundScore" :is-custom="rules && rules.presetName === 'Custom'">
+                     ref="roundScore"
+                     :hs-enabled="(rules && rules.presetName === 'Custom') || (map && map.id === 'my_area')">
             <div class="big-map" ref="bigMap"></div>
         </round-score>
 
@@ -36,11 +42,15 @@
                 <v-card-title class="headline">Challenge a Friend</v-card-title>
                 <v-card-subtitle>
                     <p>Share this link with someone so they can play on the locations you played and compare scores!</p>
-                    <a target="_blank" :href="challengeUrl">{{challengeUrl}}</a>
+                    <v-text-field ref="challengeUrlField" :value="challengeUrl"></v-text-field>
+                    <p class="caption" v-if="isCopied">
+                        <v-icon :color="$store.state.color">done</v-icon>
+                        Copied link to clipboard
+                    </p>
                 </v-card-subtitle>
 
                 <v-card-actions>
-                    <v-btn text @click="dialog=false">Cancel</v-btn>
+                    <v-btn text @click="dialog=false">Dismiss</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -95,8 +105,16 @@
             timer: -1,
             roundTime: '',
             svElement: null,
+            isCopied: false,
+            resizeDown: false,
+            resizeOffset: {x: 0, y: 0},
+            windowWidth: window.innerWidth,
+            mobile: window.innerWidth < 500,
         }),
         async mounted() {
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth
+            }
             console.log("MOUNTED");
             this.svElement = new StreetViewElement(this.$refs.streetView, this.$refs.returnHome);
             console.log("SV ELEMENT", this.svElement);
@@ -115,9 +133,49 @@
                 });
                 this.attachMap(this.$refs.smallMap);
                 // this.showOverview()
+
+                document.onmouseup = e => {
+                    this.resizeDown = false;
+                    this.resizeEvent(e);
+                };
+                document.onmousemove = e => {
+                    if (this.resizeDown) {
+                        this.resizeEvent(e);
+                    }
+                };
+                document.ontouchend = e => {
+                    this.resizeDown = false;
+                    this.resizeEvent(e.touches[0]);
+                };
+                document.ontouchmove = e => {
+                    if (this.resizeDown) {
+                        this.resizeEvent(e.touches[0]);
+                    }
+                };
             });
         },
         methods: {
+            resizeDownEvent(e) {
+                this.resizeDown = true;
+                let trigger = this.$refs.resizeTrigger;
+                let triggerWidth = this.$refs.guessMap.offsetWidth - trigger.offsetLeft;
+                this.resizeOffset.x = triggerWidth - (e.pageX - trigger.offsetLeft);
+                this.resizeOffset.y = e.pageY - this.$refs.guessMap.offsetTop;
+                this.resizeEvent(e);
+            },
+            resizeEvent(e) {
+                if (!this.resizeDown) return;
+                let x = e.pageX - this.$refs.game.offsetLeft + this.resizeOffset.x;
+                let y = e.pageY - this.$refs.game.offsetTop - this.resizeOffset.y;
+                console.log("RESIZE EVENT", x, y)
+                this.setMapSize(x, window.innerHeight - y - 50);
+            },
+            setMapSize(width, height) {
+                if (!this.mobile) {
+                    this.$refs.guessMap.style.width = width + 'px';
+                }
+                this.$refs.guessMap.style.height = (height + 50) + 'px';
+            },
             async getChallengeUrl() {
                 this.dialog = true;
                 this.challengeLoading = true;
@@ -131,9 +189,21 @@
                         guesses,
                         rules,
                         map: this.map.id,
+                        radius: this.$route.query['area_radius'],
+                        coordinates: this.$route.query['area_coordinates'],
                         timeTaken: this.timeTaken,
                         date: new Date(),
                     });
+                    setTimeout(() => {
+                        const copyText = this.$refs.challengeUrlField.$el.querySelector('input');
+                        console.log(copyText);
+                        copyText.select();
+                        copyText.setSelectionRange(0, 99999);
+                        document.execCommand("copy");
+                        console.log("Copied the text: " + copyText.value);
+                        this.isCopied = true;
+                        copyText.blur();
+                    }, 300);
                 }
                 this.challengeLoading = false;
             },
@@ -373,7 +443,11 @@
             rules() {
                 this.$emit('rules');
                 console.log("Rules set", this.rules);
-            }
+            },
+            windowWidth() {
+                this.mobile = this.windowWidth < 500;
+                console.log(this.mobile);
+            },
         }
     }
 </script>
@@ -405,16 +479,68 @@
         z-index: 4;
     }
 
+    @media screen and (max-width: 500px) {
+        .street-view {
+            height: calc(100% - 94px) !important;
+        }
+
+        .return-home {
+            bottom: calc(200px + 94px) !important;
+        }
+
+        .guess-map {
+            width: 100% !important;
+            border-radius: 0 !important;
+        }
+
+        .resize-map {
+            width: 100% !important;
+            border-radius: 0 !important;
+            left: 0 !important;
+            top: 0 !important;
+            height: auto !important;
+            position: absolute;
+            text-align: center !important;
+            padding: 10px !important;
+        }
+    }
+
     .street-view, .game {
         width: 100%;
         height: 100%;
     }
 
+    .guess-map {
+        z-index: 2;
+        position: absolute !important;
+        bottom: 0;
+        left: 0;
+        width: 350px;
+        height: 350px;
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+        border-top-right-radius: 10px;
+        overflow: hidden;
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        min-width: 50px;
+        min-height: 94px;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
     .small-map {
         width: 100%;
-        height: 100%;
+        height: calc(100% - 50px);
         z-index: 3;
-        flex-grow: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     .small-map > div {
@@ -423,21 +549,27 @@
         cursor: default;
     }
 
-    .guess-map {
-        z-index: 2;
-        position: absolute !important;
-        bottom: 0;
-        left: 0;
-        width: 300px;
-        height: 250px;
-        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
-        border-top-right-radius: 10px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+    .resize-map {
+        background-color: #222222;
+        width: 50px;
+        height: 50px;
+        border-radius: 25%;
+        cursor: sw-resize;
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        z-index: 5;
+        -webkit-user-drag: none;
+        text-align: left;
+        padding-top: 22px;
+        padding-left: 7px;
     }
 
     .guess-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
         height: 50px;
         text-align: center;
         z-index: 5;
@@ -446,6 +578,7 @@
 
     .guess-bottom > * {
         width: 100%;
+        height: 100% !important;
     }
 
     .return-home {

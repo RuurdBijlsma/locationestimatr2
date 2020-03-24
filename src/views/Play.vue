@@ -26,11 +26,17 @@
                         <div class="card-bottom">
                             <div v-if="map.type === 'area'" class="area-actions">
                                 <span>Radius</span>
-                                <v-text-field dense outlined dark type="number" value="10"
+                                <v-text-field v-model="areaRadius" dense outlined dark type="number"
                                               class="radius-field"></v-text-field>
                                 <span>KM</span>
                             </div>
-                            <v-btn :color="$store.state.color" small text :to="`/play?map=${map.id}`">Play</v-btn>
+                            <v-btn v-if="map.type === 'area'" class="area-play" :color="$store.state.color" small text
+                                   @mouseup.middle="openMyArea(true)" @mouseup.left="openMyArea(false)">
+                                Play
+                            </v-btn>
+                            <v-btn v-else :color="$store.state.color" small text :to="`/play?map=${map.id}`">
+                                Play
+                            </v-btn>
                             <v-btn :color="$store.state.color" small text :to="`/scores?map=${map.id}`"
                                    v-if="map.type !== 'area'">Scores
                             </v-btn>
@@ -47,7 +53,9 @@
         name: 'Play',
         components: {},
         data() {
-            return {}
+            return {
+                areaRadius: 5,
+            }
         },
         async mounted() {
             if (this.$store.state.user) {
@@ -55,6 +63,20 @@
             }
         },
         methods: {
+            openMyArea(newTab = false) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    let {latitude, longitude} = position.coords;
+                    let url = `/play?area_coordinates=${[latitude, longitude]}&area_radius=${this.areaRadius}`;
+                    if (newTab) {
+                        let absUrl = location.origin + location.pathname + this.$router.resolve(url).href;
+                        console.log(absUrl);
+                        window.open(absUrl, '_blank');
+                        window.focus();
+                    } else {
+                        this.$router.push(url);
+                    }
+                });
+            },
             async loadMaps() {
                 // console.log("Loading called")
                 await this.$store.dispatch('loadHomeMaps')
@@ -103,7 +125,7 @@
         }
     }
 
-    @media screen and (max-width: calc(350px + 487px)) {
+    @media screen and (max-width: calc(621px)) {
         .maps {
             grid-template-columns: repeat(1, 1fr) !important;
         }
@@ -115,7 +137,7 @@
         box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.2);
         transition: 0.15s;
         text-align: left;
-        min-width: 220px;
+        min-width: 230px;
         height: 100%;
     }
 
@@ -168,5 +190,9 @@
 
     .radius-field >>> input {
         text-align: center;
+    }
+
+    .area-play {
+        margin-left: 10px;
     }
 </style>

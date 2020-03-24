@@ -37,10 +37,7 @@
                     </p>
                 </template>
             </v-data-table>
-            <div v-if="isCustom">
-                <p class="caption">Sorry, you can't submit your highscore when playing on custom difficulty.</p>
-            </div>
-            <div v-else>
+            <div v-if="!hsEnabled">
                 <p class="caption">Submit to scoreboard to see other high scores</p>
                 <v-form class="highscore-submit" @submit="submitHighScore">
                     <v-text-field v-model="user" label="Username" dense class="hs-input" outlined required
@@ -73,7 +70,7 @@
                 type: Object,
                 default: null,
             },
-            isCustom: {
+            hsEnabled: {
                 type: Boolean,
                 default: true,
             },
@@ -480,13 +477,12 @@
 
     .play-again {
         width: 340px;
-        margin: 0 auto;
         display: flex;
         justify-content: space-around;
+        margin: 0 auto 20px;
     }
 
     .challenge {
         margin-bottom: 20px;
-        margin-top: -10px;
     }
 </style>

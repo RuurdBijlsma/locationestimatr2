@@ -2,6 +2,12 @@ import Google from './Google'
 import GeoMap from './GeoMap'
 
 class MapManager {
+    async areaToGeoMap(coordinates, radius, name = 'My Area', id = 'my_area') {
+        let paths = await this.getAreaPaths(...coordinates, radius);
+        console.log("AREA PATHS", paths);
+        return await this.getMapByPaths(paths, name, id)
+    }
+
     async mapToGeoMap(map, id) {
         let paths;
         switch (map.type) {

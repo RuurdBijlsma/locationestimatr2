@@ -91,7 +91,7 @@
         data: () => ({
             customRoundIndex: 4,
             valid: true,
-            selectedDifficulty: 'Extreme',
+            selectedDifficulty: 'Normal',
             difficulties: [
                 'Easy', 'Normal', 'Hard', 'Extreme', 'Custom'
             ],
@@ -130,7 +130,8 @@
 <style scoped>
     .rules-card {
         display: inline-block;
-        width: 500px;
+        max-width: 500px;
+        width: 100%;
     }
 
     .chips > * {

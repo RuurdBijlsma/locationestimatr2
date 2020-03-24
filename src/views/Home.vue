@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <aside class="left-content">
+        <aside class="left-content" v-if="!mobile">
             <div class="logo">
                 <div class="logo-image"></div>
                 <div class="logo-text">
@@ -56,6 +56,30 @@
         <main class="middle-content">
             <router-view></router-view>
         </main>
+        <div class="bottom-content">
+            <v-bottom-navigation
+                    :color="$store.state.color"
+
+                    :input-value="mobile"
+                    grow>
+                <v-btn to="/"  class="bottom-button">
+                    <span>Play</span>
+                    <v-icon>home</v-icon>
+                </v-btn>
+                <v-btn to="/explore"  class="bottom-button">
+                    <span>Explore Maps</span>
+                    <v-icon>explore</v-icon>
+                </v-btn>
+                <v-btn to="/create" class="bottom-button">
+                    <span>Map Maker</span>
+                    <v-icon>map</v-icon>
+                </v-btn>
+                <v-btn to="/settings"  class="bottom-button">
+                    <span>Settings</span>
+                    <v-icon>settings</v-icon>
+                </v-btn>
+            </v-bottom-navigation>
+        </div>
     </div>
 </template>
 
@@ -67,6 +91,18 @@
             return {
                 drawer: true,
                 loggedIn: false,
+                windowWidth: window.innerWidth,
+                mobile: window.innerWidth < 840,
+            }
+        },
+        mounted() {
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth
+            }
+        },
+        watch: {
+            windowWidth() {
+                this.mobile = this.windowWidth < 840;
             }
         }
     }
@@ -104,6 +140,7 @@
         background-size: 60%;
         background-repeat: no-repeat;
         background-position: 50% 20%;
+        transition: margin-left 0.3s;
     }
 
     .logo-text {
@@ -113,6 +150,23 @@
         -webkit-text-fill-color: transparent;
         font-weight: 800;
         line-height: 110%;
+        transition: opacity 0.3s;
+        opacity: 1;
+    }
+
+    @media screen and (max-width: 840px) {
+        .logo-image {
+            margin-left: -25px;
+        }
+
+        .logo-text {
+            opacity: 0;
+        }
+
+        .middle-content {
+            margin-left: 0px !important;
+            padding: 10px !important;
+        }
     }
 
     .logo-text p {
@@ -123,5 +177,17 @@
         flex-grow: 1;
         margin: 120px 0px 15px 256px;
         padding: 10px 30px;
+    }
+
+    .bottom-content {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .bottom-button {
+        padding: 9px !important;
+        display: inline-block;
+        height: 100% !important;
     }
 </style>
