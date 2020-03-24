@@ -10,6 +10,10 @@
             <div class="score-text">
                 <p class="score-distance">Your guess is {{distance}} removed from the target location</p>
                 <p class="score-total">You scored {{points}} points</p>
+                <p v-if="challengeGuess !== null" class="score-distance">Your challenger guessed
+                    {{formatDistance(challengeGuess.distance)}} away from the target, scoring {{challengeGuess.score}}
+                    points
+                </p>
             </div>
             <v-btn v-if="isLastRound" :disabled="!nextButtonEnabled" large dark rounded :color="$store.state.color"
                    @click="showGameOverview">
@@ -29,7 +33,8 @@
                     :items="tableGuesses"
                     class="elevation-1 data-table">
                 <template v-slot:footer>
-                    <p class="table-footer">Your total score is {{points}}</p>
+                    <p class="table-footer">Your total score: {{points}}<span v-if="challenge!==null">, challenger total score: {{challengeTotalScore}}</span>
+                    </p>
                 </template>
             </v-data-table>
             <div v-if="isCustom">
@@ -43,9 +48,12 @@
                     <v-btn text type="submit" :loading="submitting" class="hs-button">Submit</v-btn>
                 </v-form>
             </div>
+            <div class="challenge">
+                <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
+            </div>
             <div class="play-again">
                 <v-btn text to="/">Play Other Map</v-btn>
-                <v-btn :color="$store.state.color">Play Again</v-btn>
+                <v-btn @click="playAgain" :color="$store.state.color">Play Again</v-btn>
             </div>
         </div>
     </div>
@@ -73,6 +81,10 @@
                 type: Boolean,
                 default: false,
             },
+            challenge: {
+                type: Object,
+                default: null,
+            }
         },
         data: () => ({
             userRules: [
@@ -106,11 +118,18 @@
             roundOverview: true,
             nextButtonEnabled: false,
             user: lastUser,
+            challengeGuess: null,
         }),
         async mounted() {
 
         },
         methods: {
+            getChallengeUrl() {
+                this.$emit('challengeUrl');
+            },
+            playAgain() {
+                location.reload();
+            },
             submitHighScore(e) {
                 e.preventDefault();
                 localStorage.lastUser = this.user;
@@ -121,12 +140,37 @@
                 for (let i = 0; i < this.guesses.length; i++) {
                     let {guess, target} = this.guesses[i];
                     setTimeout(() => {
-                        this.addOverviewLine(this.toLatLng(guess), this.toLatLng(target));
-                    }, i * 350);
+                        this.addOverviewLine({
+                            location: this.toLatLng(guess),
+                            name: `Your Guess (round ${i + 1})`,
+                            color: '#FE6256',
+                            number: i + 1,
+                        }, {
+                            location: this.toLatLng(target),
+                            name: `Target Location (round ${i + 1})`,
+                            color: '#02c780',
+                            number: i + 1,
+                        }, '#FE6256', 800).then(() => {
+                            if (this.challenge !== null) {
+                                this.addOverviewLine({
+                                    location: this.toLatLng(this.challenge.guesses[i].target),
+                                    name: `Target Location (round ${i + 1})`,
+                                    color: '#02c780',
+                                    number: i + 1,
+                                }, {
+                                    location: this.toLatLng(this.challenge.guesses[i].guess),
+                                    name: `Challenger Guess (round ${i + 1})`,
+                                    color: '#daa604',
+                                    number: i + 1,
+                                }, '#daa604', 800)
+                            }
+                        })
+                    }, i * 500);
                 }
                 let locations = this.guesses.flatMap(g => [g.guess, g.target]).map(l => this.toLatLng(l));
+                locations = locations.concat(this.challenge.guesses.map(c => this.toLatLng(c.guess)));
                 console.log("LOCATIONS", locations, 'guesses', this.guesses);
-                this.updateFit(...locations)
+                this.updateFit(...locations);
                 this.points = this.guesses.map(g => g.score).reduce((a, b) => a + b);
                 this.roundOverview = false;
                 console.log("TOTAL SCORE", this.points);
@@ -136,86 +180,126 @@
                 this.points = 0;
                 this.$emit('nextRound');
             },
-            show(guess, target, meters, points, isLastRound = false) {
+            show(guess, target, meters, points, isLastRound, challengeGuess) {
                 console.log(guess, target, "is last round", isLastRound);
                 this.nextButtonEnabled = false;
+                let challengeGuessLocation = null;
+                if (challengeGuess !== null) {
+                    challengeGuessLocation = this.toLatLng(challengeGuess.guess);
+                    this.challengeGuess = challengeGuess;
+                }
                 this.isLastRound = isLastRound;
                 this.guess = this.toLatLng(guess);
                 this.target = this.toLatLng(target);
                 this.meters = meters;
                 this.points = points;
                 setTimeout(() => {
-                    this.updateMap(this.guess, this.target);
+                    this.updateMap(this.guess, this.target, challengeGuessLocation);
                 }, 250);
             },
-            updateMap(guess, target) {
+            updateMap(guess, target, challengeGuess) {
                 if (guess === null || target === null)
                     return;
-                this.updateFit(guess, target);
+                this.updateFit(guess, target, challengeGuess);
                 this.removeOverviewLines();
-                this.addOverviewLine(guess, target, 700)
-                    .then(() => this.nextButtonEnabled = true);
+                this.addOverviewLine({
+                    location: guess,
+                    name: "Your Guess",
+                    color: '#FE6256',
+                }, {
+                    location: target,
+                    name: "Target Location",
+                    color: '#02c780'
+                }, '#FE6256', 600)
+                    .then(() => {
+                        if (challengeGuess !== null) {
+                            this.addOverviewLine({
+                                location: target,
+                                name: "Target Location",
+                                color: '#02c780',
+                            }, {
+                                location: challengeGuess,
+                                name: "Challenger Guess",
+                                color: '#daa604',
+                            }, '#daa604', 600).then(() => {
+                                this.nextButtonEnabled = true;
+                            });
+                        } else {
+                            this.nextButtonEnabled = true;
+                        }
+                    });
             },
             updateFit(...locations) {
                 console.log("UPDATE FIT");
                 const bounds = new google.maps.LatLngBounds();
-                locations.forEach(l => bounds.extend(l));
+                locations.forEach(l => {
+                    if (l !== null)
+                        bounds.extend(l)
+                });
                 this.googleMap.fitBounds(bounds);
             },
-            addOverviewLine(guess, actual, animationTime = 1500) {
+            addOverviewLine(start, end, lineColor = 'red', animationTime = 1500) {
                 return new Promise(resolve => {
                     let lineData = {};
                     this.overviewLines.push(lineData);
 
                     lineData.line = new google.maps.Polyline({
-                        path: [guess, guess],
+                        path: [start.location, end.location],
                         geodesic: true,
-                        strokeColor: "red",
+                        strokeColor: lineColor,
                         strokeOpacity: 0.8,
                         strokeWeight: 3,
-                        map: this.googleMap
                     });
 
                     let dropTime = 250;
                     let fps = 30;
                     let steps = fps * (animationTime / 1000);
                     let step = 0;
-                    let deltaLat = guess.lat - actual.lat;
-                    let deltaLng = guess.lng - actual.lng;
+                    let deltaLat = start.location.lat - end.location.lat;
+                    let deltaLng = start.location.lng - end.location.lng;
 
-                    lineData.guess = new google.maps.Marker({
-                        position: guess,
+                    let color = start.color || '#FE6256';
+                    let number = start.number || 0;
+                    lineData.start = new google.maps.Marker({
+                        position: start.location,
                         map: this.googleMap,
                         animation: google.maps.Animation.DROP,
-                        title: "Your Guess",
+                        icon: `https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${number}|${color.substr(1)}|000000`,
+                        title: start.name,
                     });
 
                     setTimeout(() => {
+                        let i = 0;
                         let interval = self.setInterval(() => {
                             if (step++ >= steps) {
                                 clearInterval(interval);
-                                lineData.line.setPath([guess, actual]);
+                                lineData.line.setPath([start.location, end.location]);
                                 return;
                             }
 
                             lineData.line.setPath([
-                                guess,
+                                start.location,
                                 {
-                                    lat: guess.lat - deltaLat * (step / steps),
-                                    lng: guess.lng - deltaLng * (step / steps),
+                                    lat: start.location.lat - deltaLat * (step / steps),
+                                    lng: start.location.lng - deltaLng * (step / steps),
                                 }
                             ]);
+                            if (i++ === 0)
+                                lineData.line.setMap(this.googleMap)
                         }, 1000 / fps);
                     }, dropTime);
 
                     setTimeout(() => {
-                        lineData.actual = new google.maps.Marker({
-                            position: actual,
+                        color = end.color || '#14f75f';
+                        number = end.number || 0;
+                        lineData.end = new google.maps.Marker({
+                            position: end.location,
+                            map: this.googleMap,
                             animation: google.maps.Animation.DROP,
-                            icon: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                            title: "Target Location",
+                            icon: `https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${number}|${color.substr(1)}|000000`,
+                            title: end.name,
                         });
-                        lineData.actual.setMap(this.googleMap);
+                        // lineData.end.setMap(this.googleMap);
                         resolve();
                     }, animationTime);
                 });
@@ -224,10 +308,10 @@
                 for (let lineData of this.overviewLines) {
                     if (lineData.line)
                         lineData.line.setMap(null);
-                    if (lineData.guess)
-                        lineData.guess.setMap(null);
-                    if (lineData.actual)
-                        lineData.actual.setMap(null);
+                    if (lineData.start)
+                        lineData.start.setMap(null);
+                    if (lineData.end)
+                        lineData.end.setMap(null);
                 }
                 this.overviewLines = [];
             },
@@ -245,10 +329,24 @@
             }
         },
         computed: {
+            challengeTotalScore() {
+                return this.challenge.guesses.map(c => c.score).reduce((a, b) => a + b);
+            },
             distance() {
                 return this.formatDistance(this.meters);
             },
             tableGuesses() {
+                if (this.challenge !== null) {
+                    return this.guesses.map((guess, i) => {
+                        return {
+                            score: guess.score,
+                            challengerScore: this.challenge.guesses[i].score,
+                            distance: this.formatDistance(guess.distance),
+                            challengerDistance: this.formatDistance(this.challenge.guesses[i].distance),
+                            round: guess.round,
+                        }
+                    })
+                }
                 return this.guesses.map(guess => {
                     return {
                         score: guess.score,
@@ -266,7 +364,34 @@
                 })
             },
         },
-        watch: {}
+        watch: {
+            challenge() {
+                this.tableHeaders = [
+                    {
+                        text: "Round",
+                        value: "round",
+                    },
+                    {
+                        text: "Distance (you)",
+                        value: "distance",
+                        sortable: false,
+                    },
+                    {
+                        text: "Distance (challenger)",
+                        value: "challengerDistance",
+                        sortable: false,
+                    },
+                    {
+                        text: "Score (you)",
+                        value: "score",
+                    },
+                    {
+                        text: "Score (challenger)",
+                        value: "challengerScore",
+                    },
+                ];
+            }
+        }
     }
 </script>
 
@@ -357,5 +482,10 @@
         margin: 0 auto;
         display: flex;
         justify-content: space-around;
+    }
+
+    .challenge {
+        margin-bottom: 20px;
+        margin-top: -10px;
     }
 </style>

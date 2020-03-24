@@ -8,24 +8,10 @@ export default class StreetViewElement {
         this.allowMove();
         this.allowPan();
         this.allowZoom();
-        this.removeMoveLimit();
+        this.removeMoveListener();
     }
 
-    setMoveLimit(moves) {
-        console.log({moves});
-        if (moves === 0)
-            this.restrictMove();
-        //TODO: don't have this work like this
-        // remainingElement.style.display = "inline-block";
-        // remainingElement.innerHTML = `Moves: <b>${moves}</b>`;
-        this.panorama.addListener("position_changed", () => {
-            // remainingElement.innerHTML = `Moves: <b>${--moves}</b>`;
-            if (moves === 0)
-                this.restrictMove();
-        });
-    }
-
-    removeMoveLimit() {
+    removeMoveListener() {
         google.maps.event.clearListeners(this.panorama, "position_changed");
     }
 
@@ -69,7 +55,7 @@ export default class StreetViewElement {
     }
 
     async setLocation(lat, lon) {
-        return new Promise(resolve=>{
+        return new Promise(resolve => {
             if (this.panorama !== undefined) {
                 this.panorama.setPosition({lat: lat, lng: lon});
             } else {
@@ -86,8 +72,8 @@ export default class StreetViewElement {
                         motionTrackingControl: false
                     });
             }
-            //TODO ADD TIMEOUT?
-            resolve();
+            //TODO IS THIS NECESSARY??
+            setTimeout(() => resolve(), 500);
         });
     }
 }

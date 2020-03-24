@@ -56,12 +56,23 @@ export default new Vuex.Store({
     },
     getters: {},
     actions: {
+        async getChallengeUrl({commit}, data) {
+            console.log("Challenge data", data);
+            let dbData = await db.collection('challenges').add(data);
+            return location.origin + location.pathname + '#play?challenge=' + dbData.id;
+        },
         async submitHighScore({commit}, score) {
             if (!localScores[score.map])
                 localScores[score.map] = [];
             localScores[score.map].push(score);
             localStorage.scores = JSON.stringify(localScores);
             await db.collection('scores').add(score);
+        },
+        async getChallenge({commit, dispatch}, challengeId) {
+            let getChallengeFromDb = async () => (await db.collection('challenges').doc(challengeId).get()).data();
+            let challenge = await getCached('challenge:' + challengeId, getChallengeFromDb);
+            let map = await dispatch('getMap', challenge.map);
+            return {challenge, map};
         },
         async getMap({commit}, mapKey) {
             let getMapFromDb = async () => {

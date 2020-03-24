@@ -2,9 +2,15 @@
     <div class="game">
         <div class="game-info" v-if="rules !== null">
             <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
+            <span v-if="!rules.unlimitedTime" class="time">Time: <span
+                    class="font-weight-bold">{{roundTime}}</span></span>
         </div>
         <div class="street-view" ref="streetView"></div>
-        <div class="return-home" ref="returnHome"></div>
+        <div class="return-home" ref="returnHome">
+            <v-btn @click="homeFlag()" class="return-home-button" color="#222222" fab dark>
+                <v-icon>flag</v-icon>
+            </v-btn>
+        </div>
         <div class="map-element" ref="map"></div>
         <div class="guess-map">
             <div class="small-map" ref="smallMap"></div>
@@ -15,7 +21,8 @@
                 </v-btn>
             </div>
         </div>
-        <round-score @submitHighScore="submitHighScore" @nextRound="nextRoundEvent"
+        <round-score :challenge="challenge" @challengeUrl="getChallengeUrl" @submitHighScore="submitHighScore"
+                     @nextRound="nextRoundEvent"
                      :guesses="previousGuesses"
                      class="roundScore"
                      :submitting="submitting"
@@ -23,6 +30,20 @@
                      ref="roundScore" :is-custom="rules && rules.presetName === 'Custom'">
             <div class="big-map" ref="bigMap"></div>
         </round-score>
+
+        <v-dialog v-model="dialog">
+            <v-card :loading="challengeLoading">
+                <v-card-title class="headline">Challenge a Friend</v-card-title>
+                <v-card-subtitle>
+                    <p>Share this link with someone so they can play on the locations you played and compare scores!</p>
+                    <a target="_blank" :href="challengeUrl">{{challengeUrl}}</a>
+                </v-card-subtitle>
+
+                <v-card-actions>
+                    <v-btn text @click="dialog=false">Cancel</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -45,9 +66,16 @@
             map: {
                 type: GeoMap,
                 default: null,
+            },
+            challenge: {
+                type: Object,
+                default: null,
             }
         },
         data: () => ({
+            dialog: false,
+            challengeLoading: false,
+            challengeUrl: '',
             googleMap: null,
             mapMarker: null,
             guessButtonEnabled: false,
@@ -62,11 +90,16 @@
             showRoundOverview: false,
             nextLocation: null,
             startTime: 0,
+            timeTaken: -1,
             submitting: false,
+            timer: -1,
+            roundTime: '',
+            svElement: null,
         }),
         async mounted() {
             console.log("MOUNTED");
             this.svElement = new StreetViewElement(this.$refs.streetView, this.$refs.returnHome);
+            console.log("SV ELEMENT", this.svElement);
             Google.wait().then(() => {
                 this.googleMap = new Google.maps.Map(this.$refs.map, {
                     zoom: 0,
@@ -85,10 +118,31 @@
             });
         },
         methods: {
+            async getChallengeUrl() {
+                this.dialog = true;
+                this.challengeLoading = true;
+                if (this.challengeUrl === '') {
+                    let guesses = this.previousGuesses.map(g => {
+                        return {guess: g.guess, target: g.target}
+                    });
+                    let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.preset;
+                    rules = JSON.parse(JSON.stringify(rules));
+                    this.challengeUrl = await this.$store.dispatch('getChallengeUrl', {
+                        guesses,
+                        rules,
+                        map: this.map.id,
+                        timeTaken: this.timeTaken,
+                        date: new Date(),
+                    });
+                }
+                this.challengeLoading = false;
+            },
+            async homeFlag() {
+                await this.svElement.setLocation(...this.currentDestination);
+            },
             async submitHighScore(user, totalScore, scores) {
                 this.submitting = true;
-                let timeTaken = Math.round(performance.now() - this.startTime);
-                let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.presetName;
+                let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.preset;
                 await this.$store.dispatch('submitHighScore', {
                     totalScore,
                     totalDistance: scores.map(s => s.distance).reduce((a, b) => a + b),
@@ -96,56 +150,87 @@
                     rules,
                     map: this.map.id,
                     user,
-                    timeTaken,
+                    timeTaken: this.timeTaken,
                     date: new Date(),
                 });
                 await this.$router.push('/scores?map=' + this.map.id);
                 this.submitting = false;
             },
-            start() {
-                if (this.map === null) {
-                    console.log("Map is not set, we wait before starting game");
-                    this.$once('map', () => this.start());
-                    return;
-                }
-                if (this.rules === null) {
-                    console.log("Rules is not set, we wait before starting game");
-                    this.$once('rules', () => this.start());
-                    return;
-                }
-                if (!this.prepared) {
-                    console.log("Not prepared yet, we wait before starting game");
-                    this.$once('prepared', () => this.start());
-                    return;
-                }
+            async start() {
+                if (this.map === null)
+                    await this.waitFor('map');
+                if (this.rules === null)
+                    await this.waitFor('rules');
+                if (!this.prepared)
+                    await this.waitFor('prepared');
+
+                await this.nextRound(this.nextLocation);
 
                 console.log("Start game");
                 this.startTime = performance.now();
                 this.startRound();
             },
+            msToTime(ms) {
+                let s = ms / 1000;
+                let minutes = Math.floor(s / 60);
+                let seconds = s % 60;
+                if (minutes !== 0)
+                    return `${minutes}:${Math.floor(seconds).toString().padStart(2, '0')}`;
+                if (seconds > 20)
+                    return Math.round(seconds);
+                return (Math.round(seconds * 10) / 10).toFixed(1);
+            },
             async startRound() {
                 this.attachMap(this.$refs.smallMap);
                 this.fitMapToGeoMap();
                 console.log("Round start. Start timer here, reset allowed moves");
-                //  Start Timer
+                if (!this.rules.unlimitedTime) {
+                    //  Start Timer grace period of 500 ms
+                    let timeLimitMs = this.rules.timeLimit * 1000;
+                    this.roundTime = this.msToTime(timeLimitMs);
+                    setTimeout(() => {
+                        let roundStartTime = performance.now();
+                        this.timer = setInterval(() => {
+                            let elapsed = performance.now() - roundStartTime;
+                            let remainingMs = Math.max(timeLimitMs - elapsed, 0);
+
+                            this.roundTime = this.msToTime(remainingMs);
+                            if (remainingMs <= 0) {
+                                if (this.mapMarker === null)
+                                    this.placeGuessMarker({lat: 0, lng: 0});
+                                this.makeGuess();
+                            }
+                        }, 1000 / 60);
+                    }, 500);
+                }
             },
             async prepareGame() {
-                this.prepared = false;
-                console.log("prepareGame");
-                this.streetView = new StreetView(this.map, 'weighted');
-                this.zoom = this.map.minimumDistanceForPoints < 3000 ? 18 : 14;
-                this.currentRound = 0;
-                this.previousGuesses = [];
+                return new Promise(async resolve => {
+                    this.prepared = false;
+                    console.log("prepareGame");
+                    this.streetView = new StreetView(this.map, 'weighted');
+                    this.zoom = this.map.minimumDistanceForPoints < 3000 ? 18 : 14;
+                    this.currentRound = 0;
+                    this.previousGuesses = [];
 
-                let nextLocation = await this.loadNextLocation();
-                await this.nextRound(nextLocation);
-                this.prepared = true;
-                this.$emit('prepared');
+                    let nextLocation = await this.loadNextLocation();
+                    if (this.rules === null)
+                        await this.waitFor('rules');
+
+                    this.prepared = true;
+                    this.$emit('prepared');
+                })
             },
             async loadNextLocation() {
                 console.log("loadNextLocation");
                 this.findingRandomLocation = true;
-                this.nextLocation = await this.streetView.randomValidLocation(this.zoom);
+                if (this.challenge !== null) {
+                    this.nextLocation = this.challenge.guesses[this.currentRound].target;
+                    console.log("Using challenge location, round: ", this.currentRound, 'location:', this.nextLocation);
+                } else {
+                    console.log("Using random location");
+                    this.nextLocation = await this.streetView.randomValidLocation(this.zoom);
+                }
                 this.findingRandomLocation = false;
                 this.$emit('preload');
                 return this.nextLocation;
@@ -164,11 +249,14 @@
                 if (++this.currentRound < this.rules.roundCount)
                     this.loadNextLocation();
 
+                console.log("Setting location to ", this.currentDestination);
                 await this.svElement.setLocation(...this.currentDestination);
+                this.applyRules();
                 //TODO: CHECK TIMEOUT HERE
                 // setTimeout(() => {
                 //Ensure location in this.currentDestination is as accurate as possible
                 this.currentDestination = this.svElement.getLocation();
+                console.log("SV Getlocation returned", this.currentDestination)
                 this.$emit("nextRound");
                 console.log("Next round load complete");
                 // }, 500);
@@ -195,9 +283,32 @@
                 this.guessButtonEnabled = true;
             },
             applyRules() {
-                //TODO THIS
+                if (this.rules.zoomAllowed)
+                    this.svElement.allowZoom();
+                else
+                    this.svElement.restrictZoom();
+                if (this.rules.panAllowed)
+                    this.svElement.allowPan();
+                else
+                    this.svElement.restrictPan();
+
+                if (this.rules.moveLimit !== 0 && !this.rules.unlimitedMoves)
+                    this.svElement.allowMove();
+                if (!this.rules.unlimitedMoves) {
+                    let moveLimit = this.rules.moveLimit;
+                    if (moveLimit === 0) {
+                        this.svElement.restrictMove();
+                    } else {
+                        this.svElement.removeMoveListener();
+                        this.svElement.panorama.addListener("position_changed", () => {
+                            if (--moveLimit === 0)
+                                this.svElement.restrictMove();
+                        });
+                    }
+                }
             },
             makeGuess() {
+                clearInterval(this.timer);
                 this.guessedLocation = [this.mapMarker.position.lat(), this.mapMarker.position.lng()];
                 let targetDestination = this.rules.objectives === 1 ? this.svElement.getLocation() : this.currentDestination;
                 let distance = this.measureDistance(this.guessedLocation, targetDestination);
@@ -211,8 +322,11 @@
                 });
                 let isLastRound = this.currentRound === this.rules.roundCount;
                 this.showOverview(this.guessedLocation, targetDestination, distance, points, isLastRound);
-                if (!isLastRound)
+                if (!isLastRound) {
                     this.nextRound(this.nextLocation);
+                } else {
+                    this.timeTaken = performance.now() - this.startTime;
+                }
             },
             showOverview(guess, target, distance, points, isLastRound) {
                 console.log("SHOW OVERVIEW");
@@ -221,7 +335,10 @@
                     this.mapMarker.setMap(null);
                 this.mapMarker = null;
                 this.attachMap(this.$refs.bigMap);
-                this.$refs.roundScore.show(guess, target, distance, points, isLastRound);
+                let challengeGuess = null;
+                if (this.challenge !== null)
+                    challengeGuess = this.challenge.guesses[this.currentRound - 1];
+                this.$refs.roundScore.show(guess, target, distance, points, isLastRound, challengeGuess);
             },
             measureDistance(from, to) {
                 return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(...from), new google.maps.LatLng(...to));
@@ -231,8 +348,23 @@
                 this.showRoundOverview = false;
                 this.startRound();
             },
+            waitFor(event) {
+                return new Promise(resolve => {
+                    this.$once(event, () => resolve());
+                });
+            }
         },
         watch: {
+            async challenge() {
+                await Google.wait();
+                await this.waitFor('map');
+                this.challenge.guesses.forEach(challenge => {
+                    let guess = challenge.guess;
+                    let target = challenge.target;
+                    challenge.distance = this.measureDistance(guess, target);
+                    challenge.score = this.map.scoreCalculation(challenge.distance);
+                });
+            },
             map() {
                 this.$emit('map');
                 console.log("Map set", this.map);
@@ -260,6 +392,11 @@
         justify-content: space-around;
         background-color: rgb(34, 34, 34);
         font-size: 13px;
+    }
+
+    .time {
+        width: 100px;
+        text-align: left;
     }
 
     .round-score {
@@ -304,10 +441,24 @@
         height: 50px;
         text-align: center;
         z-index: 5;
-        background-color: rgb(34, 34, 34)
+        background-color: rgb(34, 34, 34);
     }
 
     .guess-bottom > * {
         width: 100%;
+    }
+
+    .return-home {
+        position: absolute;
+        bottom: 200px;
+        right: 10px;
+        width: 48px;
+        height: 48px;
+        z-index: 1;
+    }
+
+    .return-home-button {
+        width: 100%;
+        height: 100%;
     }
 </style>
