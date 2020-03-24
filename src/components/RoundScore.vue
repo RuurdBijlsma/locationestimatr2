@@ -168,7 +168,8 @@
                     }, i * 500);
                 }
                 let locations = this.guesses.flatMap(g => [g.guess, g.target]).map(l => this.toLatLng(l));
-                locations = locations.concat(this.challenge.guesses.map(c => this.toLatLng(c.guess)));
+                if (this.challenge !== null)
+                    locations = locations.concat(this.challenge.guesses.map(c => this.toLatLng(c.guess)));
                 console.log("LOCATIONS", locations, 'guesses', this.guesses);
                 this.updateFit(...locations);
                 this.points = this.guesses.map(g => g.score).reduce((a, b) => a + b);
