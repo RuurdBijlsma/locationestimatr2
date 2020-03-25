@@ -2,9 +2,27 @@ export default class StreetView {
     constructor(map, distribution) {
         this.map = map;
         this.distribution = distribution;
+        this.debug = false;
+        this.typeColors = [
+            {color: [84, 160, 185, 131], id: 'sv'},
+            {color: [84, 160, 185, 255], id: 'sv'},
+            {color: [165, 224, 250, 108], id: 'photo'},
+        ];
+
+        if (this.debug) {
+            let div = document.createElement('div');
+            document.body.appendChild(div);
+            this.debugImg = [1, 2, 3, 4].map(() => document.createElement('img'));
+            this.debugImg.forEach(i => div.appendChild(i));
+            div.style.position = 'fixed';
+            div.style.top = '0';
+            div.style.left = '0';
+        }
     }
 
     async randomValidLocation(endZoom = 14) {
+        //We can get initialTile by using the geomap polygon without having to access the google sv coverage
+        //{x: 4833, y: 3249, zoom: 13} //cyprus city streets
         let tile = await this.randomValidTile(endZoom);
         let canvas = document.createElement("canvas");
         let context = canvas.getContext("2d");
@@ -14,36 +32,44 @@ export default class StreetView {
         context.drawImage(img, 0, 0);
 
         let data = context.getImageData(0, 0, img.width, img.height).data;
-        let bluePixelCount = 0;
 
-        for (let i = 0; i < data.length; i += 4)
-            if (data[i + 2] > 0)
-                bluePixelCount++;
-
-        let randomPixel = Math.floor(Math.random() * bluePixelCount);
+        let types = {
+            sv: {count: 0, indices: []},
+            photo: {count: 0, indices: []},
+        };
         for (let i = 0; i < data.length; i += 4) {
-
-            if (data[i + 2] > 0 && --randomPixel === 0) {
-                let x = (i / 4) % img.width;
-                let y = Math.floor((i / 4) / img.width);
-
-                return this.tilePixelToLatLon(tile.x, tile.y, tile.zoom, x, y);
+            let color = data.slice(i, i + 4);
+            let colorType = this.getColorType(color);
+            if (colorType !== 'empty') {
+                types[colorType].count++;
+                types[colorType].indices.push(i);
             }
         }
+        if (this.debug)
+            console.log(types);
 
-        console.error("No blue pixel found");
-        return this.randomValidLocation(endZoom);
+        if (types.sv.count === 0) {
+            console.error("No blue pixel found");
+            return this.randomValidLocation(endZoom);
+        }
+        let randomSvPixel = Math.floor(Math.random() * types.sv.count);
+        let randomSvIndex = types.sv.indices[randomSvPixel];
+        let x = (randomSvIndex / 4) % img.width;
+        let y = Math.floor((randomSvIndex / 4) / img.width);
+        return this.tilePixelToLatLon(tile.x, tile.y, tile.zoom, x, y);
     }
 
-    async randomValidTile(endZoom) {
-        let chosenTile = {x: 0, y: 0, zoom: 0};
+    async randomValidTile(endZoom, initialTile = {x: 0, y: 0, zoom: 0}) {
+        let chosenTile = initialTile;
+        // let chosenTile = {x: 76, y: 50, zoom: 7};
         let previousTiles = [chosenTile];
         let failedTiles = [];
         while (chosenTile.zoom < endZoom) {
             let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
 
             let validTiles = subTiles
-                .filter(tile => tile.hasSv)
+                //Change type to photo to have only photo spheres
+                .filter(tile => tile.types.sv)
                 .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom))
                 .filter(tile => {
                     for (let fail of failedTiles)
@@ -51,6 +77,18 @@ export default class StreetView {
                             return false;
                     return true;
                 });
+            if (this.debug) {
+                console.log(validTiles);
+                this.debugImg.forEach(img => {
+                    img.src = '';
+                });
+                validTiles.forEach((tile, i) => {
+                    if (this.debugImg[i] && tile.img) {
+                        this.debugImg[i].src = tile.img.src
+                    }
+                });
+            }
+            // return;
 
             if (validTiles.length === 0) {
                 failedTiles.push(chosenTile);
@@ -58,7 +96,7 @@ export default class StreetView {
                     chosenTile = previousTiles.splice(-2)[0];
                 else
                     chosenTile = {x: 0, y: 0, zoom: 0};
-                console.log("Took a wrong turn when getting a random position, going back to zoom " + chosenTile.zoom, chosenTile);
+                console.log("Took a wrong turn when getting a random tile, going back to zoom " + chosenTile.zoom, chosenTile);
             } else {
                 chosenTile = this.pickRandomSubTile(validTiles);
                 previousTiles.push(chosenTile);
@@ -127,17 +165,17 @@ export default class StreetView {
     async getTilesAtCoordinate(startX, endX, startY, endY, zoom) {
         return new Promise(resolve => {
 
-            let maxIterations = (endX - startX) * (endY - startY);
+            let tileCount = (endX - startX) * (endY - startY);
             let iteration = 0;
-            let results = [];
+            let tiles = [];
 
             for (let y = startY; y < endY; y++) {
                 for (let x = startX; x < endX; x++) {
                     this.getTile(x, y, zoom).then(result => {
 
-                        results.push(result);
-                        if (++iteration >= maxIterations) {
-                            resolve(results);
+                        tiles.push(result);
+                        if (++iteration >= tileCount) {
+                            resolve(tiles);
                         }
 
                     });
@@ -173,9 +211,14 @@ export default class StreetView {
         return [xTile, yTile];
     }
 
+    getUrl(x, y, zoom) {
+        return `https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i${zoom}!2i${x}!3i${y}!4i256!2m8!1e2!2ssvv!4m2!1scb_client!2sapiv3!4m2!1scc!2s*211m3*211e3*212b1*213e2*211m3*211e2*212b1*213e2!3m3!3sUS!12m1!1e68!4e0`;
+        // return `https://mts1.googleapis.com/vt?hl=en-US&lyrs=svv|cb_client:apiv3&style=40,18&x=${x}&y=${y}&z=${zoom}`;
+    }
+
     async getTile(x, y, zoom) {
         return new Promise(async resolve => {
-            let response = await fetch(`https://mts1.googleapis.com/vt?hl=en-US&lyrs=svv|cb_client:apiv3&style=40,18&x=${x}&y=${y}&z=${zoom}`);
+            let response = await fetch(this.getUrl(x, y, zoom));
             let blob = await response.blob();
             const reader = new FileReader();
             reader.readAsDataURL(blob);
@@ -183,15 +226,31 @@ export default class StreetView {
                 const img = new Image();
                 img.src = e.target.result;
                 img.onload = () => {
-                    let hasSv = img.width !== 1;
-                    let coverage = this.distribution === "weighted" ? this.getTileCoverage(img) : 1;
+                    let {coverage, types} = this.getTileCoverage(img);
 
                     resolve({
-                        coverage, hasSv, img, x, y, zoom
+                        coverage, types, img, x, y, zoom
                     });
                 }
             }
         });
+    }
+
+    getColorType(rgba) {
+        if (rgba[2] === 0)
+            return 'empty';
+
+        const allowedColorDiff = 3;
+        typeLoop:
+            for (let {id, color} of this.typeColors) {
+                for (let i = 0; i < rgba.length; i++) {
+                    const componentDifference = Math.abs(color[i] - rgba[i]);
+                    if (componentDifference > allowedColorDiff)
+                        continue typeLoop;
+                }
+                return id;
+            }
+        return 'empty';
     }
 
     getTileCoverage(img) {
@@ -202,9 +261,25 @@ export default class StreetView {
         context.drawImage(img, 0, 0);
         let data = context.getImageData(0, 0, img.width, img.height).data;
         let coverage = 0;
-        for (let i = 0; i < data.length; i += 4)
-            coverage += data[i + 2];
-        return coverage;
+        let types = {
+            empty: false,
+            sv: false,
+            photo: false,
+        };
+        for (let i = 0; i < data.length; i += 4) {
+            //If tile is known to have both sv and photo, don't keep checking for there is no more information to get
+            if (!(types.sv && types.photo)) {
+                let color = data.slice(i, i + 4);
+                let colorType = this.getColorType(color);
+                if (this.debug) {
+                    // console.log(JSON.stringify([...color]), colorType);
+                }
+                types[colorType] = true;
+            }
+
+            coverage += data[i + 2]; // Blue pixel data
+        }
+        return {coverage, types};
     }
 }
 

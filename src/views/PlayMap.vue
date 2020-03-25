@@ -1,7 +1,7 @@
 <template>
     <div class="play-map" :style="`background-image: ${bgImage}`">
         <div class="background-image" :style="`background-image: ${bgImage}`"></div>
-        <rules class="rules" v-if="!gameStarted" @startGame="startGame" ref="rules" :challenge-rules="challengeRules"
+        <rules v-show="true" class="rules" v-if="!gameStarted" @startGame="startGame" ref="rules" :challenge-rules="challengeRules"
                :challenge-map="challengeMap"></rules>
         <game v-show="gameStarted" :rules="rules" :map="map" :challenge="challenge" ref="game"></game>
     </div>

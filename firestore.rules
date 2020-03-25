@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /home-maps/{map}{
+        allow read: if request.auth != null
+        allow write: if false
+    }
+    match /maps/{map}{
+        allow read, create: if request.auth != null
+        allow update: if false
+    }
+    match /map-collections/{collection}{
+        allow read: if request.auth != null
+        allow write: if false
+    }
+    match /scores/{score}{
+        allow read, create: if request.auth != null
+        allow update: if false
+    }
+    match /challenges/{challenge}{
+    	allow get, create: if request.auth != null
+    	allow list, write: if false
+    }
+  }
+}

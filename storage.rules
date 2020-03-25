@@ -1,0 +1,19 @@
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /images/{imageId} {
+      allow read: if request.auth != null
+      allow write: if false
+    }
+    match /images/flags/{imageId} {
+      allow read: if request.auth != null
+      allow write: if false
+    }
+    match /images/user/{imageId} {
+      allow read: if request.auth != null
+      allow create: if request.auth != null &&
+                        request.resource.size < 5 * 1024 * 1024 &&
+                        request.resource.contentType.matches('image/.*');
+      allow update: if false
+    }
+  }
+}

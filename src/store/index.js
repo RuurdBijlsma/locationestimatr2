@@ -90,7 +90,7 @@ export default new Vuex.Store({
             delete data.radius;
             delete data.coordinates;
             let dbData = await db.collection('challenges').add(data);
-            return location.origin + location.pathname + '#play?challenge=' + dbData.id + appendString;
+            return location.origin + location.pathname + '?challenge=' + dbData.id + appendString;
         },
         async submitHighScore({commit}, score) {
             if (!localScores[score.map])
