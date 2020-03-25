@@ -17,20 +17,22 @@
                    title="Export your map as a kml file, which can be imported later.">
                 Export KML
             </v-btn>
-<!--            <v-btn @click="getImage()" outlined-->
-<!--                   title="Export your map as a kml file, which can be imported later.">-->
-<!--                Get Image-->
-<!--            </v-btn>-->
+            <!--            <v-btn @click="getImage()" outlined-->
+            <!--                   title="Export your map as a kml file, which can be imported later.">-->
+            <!--                Get Image-->
+            <!--            </v-btn>-->
         </div>
-        <div class="map-element" ref="map"></div>
-<!--        <v-file-input v-model="mapImage" class="image-input" prepend-icon="insert_photo" outlined dense small-chips-->
-<!--                      accept="image/*" label="Map Image (optional)"></v-file-input>-->
+        <div class="map-element" ref="map" @keyup="mapUp" @keydown="mapDown"
+             :style="`pointer-events: ${uploading?'none':'all'}`"></div>
+        <!--        <v-file-input v-model="mapImage" class="image-input" prepend-icon="insert_photo" outlined dense small-chips-->
+        <!--                      accept="image/*" label="Map Image (optional)"></v-file-input>-->
         <v-form class="name-field" @submit="createMap">
             <v-text-field required :rules="nameRules" v-model="mapName" class="name-input" outlined label="Map Name"
                           dense></v-text-field>
-            <v-dialog v-model="dialog">
+            <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on }">
-                    <v-btn text :color="$store.state.color" type="submit" :loading="uploading">Upload Map
+                    <v-btn text :color="$store.state.color" type="submit" :loading="uploading">
+                        Upload Map
                     </v-btn>
                 </template>
                 <v-card>
@@ -124,31 +126,31 @@
                     this.placePolygonPiece(e.latLng);
                 });
 
-                document.onkeydown = e => {
-                    switch (e.key) {
-                        case "Delete":
-                            this.removeActiveMarker();
-                            break;
-                        case "f":
-                            this.fitToMarkers();
-                            break;
-                        case "Control":
-                            this.ctrlDown = true;
-                            this.googleMap.setOptions({draggable: false});
-                            break;
-                    }
-                };
-                document.onkeyup = e => {
-                    switch (e.key) {
-                        case "Control":
-                            this.ctrlDown = false;
-                            this.googleMap.setOptions({draggable: true});
-                            break;
-                    }
-                }
             })
         },
         methods: {
+            mapDown(e) {
+                switch (e.key) {
+                    case "Delete":
+                        this.removeActiveMarker();
+                        break;
+                    case "f":
+                        this.fitToMarkers();
+                        break;
+                    case "Control":
+                        this.ctrlDown = true;
+                        this.googleMap.setOptions({draggable: false});
+                        break;
+                }
+            },
+            mapUp(e) {
+                switch (e.key) {
+                    case "Control":
+                        this.ctrlDown = false;
+                        this.googleMap.setOptions({draggable: true});
+                        break;
+                }
+            },
             importKml(file) {
                 if (!file) return;
                 const reader = new FileReader();
@@ -420,7 +422,7 @@
     }
 
     .name-field {
-        max-width:1000px;
+        max-width: 1000px;
         display: flex;
         justify-content: space-around;
         margin: 20px 0;

@@ -59,8 +59,7 @@
         <div class="bottom-content">
             <v-bottom-navigation
                     :color="$store.state.color"
-
-                    :input-value="mobile"
+                    v-if="mobile"
                     grow>
                 <v-btn to="/"  class="bottom-button">
                     <span>Play</span>

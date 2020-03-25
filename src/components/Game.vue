@@ -167,7 +167,6 @@
                 if (!this.resizeDown) return;
                 let x = e.pageX - this.$refs.game.offsetLeft + this.resizeOffset.x;
                 let y = e.pageY - this.$refs.game.offsetTop - this.resizeOffset.y;
-                console.log("RESIZE EVENT", x, y)
                 this.setMapSize(x, window.innerHeight - y - 50);
             },
             setMapSize(width, height) {

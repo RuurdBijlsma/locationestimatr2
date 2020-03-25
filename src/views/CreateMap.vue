@@ -3,8 +3,8 @@
         <div v-if="$route.path==='/create'">
             <h1>Create Map</h1>
             <p>What type of map do you want to make</p>
-            <v-btn to="/create/polygon">Polygon area map</v-btn>
-            <v-btn to="/create/point">Point map</v-btn>
+            <v-btn to="/create/polygon" outlined class="polygon-map-button">Polygon area map</v-btn>
+            <v-btn to="/create/point" outlined>Point map</v-btn>
         </div>
         <router-view v-else @uploaded="uploadedMap" class="map-editor"></router-view>
     </div>
@@ -45,5 +45,8 @@
 
     .playable {
         padding: 10px;
+    }
+    .polygon-map-button{
+        margin-right:20px;
     }
 </style>
