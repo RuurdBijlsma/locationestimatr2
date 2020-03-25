@@ -96,6 +96,7 @@ class MapManager {
         else if (xmlDoc.nodeName === "Polygon")
             addPolygonToPaths(xmlDoc, paths);
 
+        console.log(paths);
         return paths;
     }
 }

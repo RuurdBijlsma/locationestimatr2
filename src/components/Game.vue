@@ -120,7 +120,7 @@
             console.log("SV ELEMENT", this.svElement);
             Google.wait().then(() => {
                 this.googleMap = new Google.maps.Map(this.$refs.map, {
-                    zoom: 0,
+                    zoom: 1,
                     center: {lat: 0, lng: 0},
                     disableDefaultUI: true,
                     clickableIcons: false,
@@ -279,7 +279,10 @@
                     this.prepared = false;
                     console.log("prepareGame");
                     this.streetView = new StreetView(this.map, 'weighted');
-                    this.zoom = this.map.minimumDistanceForPoints < 3000 ? 18 : 14;
+                    if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
+                    else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
+                    else this.zoom = 14;
+                    console.log("End Zoom Level: ", this.zoom, this.map.minimumDistanceForPoints);
                     this.currentRound = 0;
                     this.previousGuesses = [];
 
@@ -302,7 +305,8 @@
                     this.nextLocation = await this.streetView.randomValidLocation(this.zoom);
                 }
                 this.findingRandomLocation = false;
-                this.$emit('preload');
+                //TODO locationload
+                this.$emit('locationLoad');
                 return this.nextLocation;
             },
             async nextRound(nextLocation) {
@@ -404,6 +408,7 @@
                 if (this.mapMarker !== null)
                     this.mapMarker.setMap(null);
                 this.mapMarker = null;
+                //TODO IMPORTANT SHOW LOADING NEXT ROUDN BUTTON WHEN NEXT LOCATION ISN'T  FOUND YET
                 this.attachMap(this.$refs.bigMap);
                 let challengeGuess = null;
                 if (this.challenge !== null)

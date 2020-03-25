@@ -71,7 +71,12 @@
         height: 100%;
     }
 
-    .map-element  * {
+    .map-element * {
         cursor: default;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
     }
 </style>

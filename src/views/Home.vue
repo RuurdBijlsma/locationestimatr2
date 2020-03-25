@@ -164,7 +164,7 @@
         }
 
         .middle-content {
-            margin-left: 0px !important;
+            margin-left: 0 !important;
             padding: 10px !important;
         }
     }
@@ -175,7 +175,7 @@
 
     .middle-content {
         flex-grow: 1;
-        margin: 120px 0px 15px 256px;
+        margin: 100px 0 15px 256px;
         padding: 10px 30px;
     }
 

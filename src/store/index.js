@@ -58,6 +58,27 @@ export default new Vuex.Store({
     },
     getters: {},
     actions: {
+        async uploadUserMap({commit}, data) {
+            return new Promise(async (resolve, error) => {
+                let image = data.image;
+                if (data.image)
+                    data.image = 'id';
+                let doc = await db.collection('maps').add(data);
+                if (image) {
+                    const metadata = {contentType: image.type};
+                    const uploadTask = storage.child('images/user/' + doc.id).put(image, metadata);
+                    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, snapshot => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done', snapshot);
+                    }, (err) => {
+                        console.warn("ERROR", err);
+                        error(err);
+                    }, () => {
+                        resolve(doc.id);
+                    });
+                }
+            });
+        },
         async getChallengeUrl({commit}, data) {
             console.log("Challenge data", data.radius);
             let appendString = '';

@@ -22,7 +22,16 @@ const routes = [
             {
                 path: '/create',
                 name: 'CreateMap',
-                component: () => import('../views/CreateMap')
+                component: () => import('../views/CreateMap'),
+                children: [{
+                    path: '/create/polygon',
+                    name: 'CreatePolygonMap',
+                    component: () => import('../views/PolyMapEditor')
+                }, {
+                    path: '/create/point',
+                    name: 'CreatePointMap',
+                    component: () => import('../views/PointMapEditor')
+                },]
             },
             {
                 path: '/settings',
@@ -35,6 +44,11 @@ const routes = [
         path: '/play',
         name: 'PlayMap',
         component: () => import('../views/PlayMap')
+    },
+    {
+        path: '/scores',
+        name: 'Scores',
+        component: () => import('../views/Scores')
     },
 
 ];

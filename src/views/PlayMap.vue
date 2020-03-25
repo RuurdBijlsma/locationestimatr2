@@ -1,5 +1,6 @@
 <template>
-    <div class="play-map">
+    <div class="play-map" :style="`background-image: ${bgImage}`">
+        <div class="background-image" :style="`background-image: ${bgImage}`"></div>
         <rules class="rules" v-if="!gameStarted" @startGame="startGame" ref="rules" :challenge-rules="challengeRules"
                :challenge-map="challengeMap"></rules>
         <game v-show="gameStarted" :rules="rules" :map="map" :challenge="challenge" ref="game"></game>
@@ -23,6 +24,7 @@
                 challengeRules: null,
                 challengeMap: null,
                 challenge: null,
+                image: '',
             }
         },
         async mounted() {
@@ -56,6 +58,13 @@
                 this.map = await MapManager.areaToGeoMap(coordinates, radius);
             } else if (this.$route.query.hasOwnProperty('map')) {
                 let mapInfo = await this.$store.dispatch('getMap', this.$route.query.map);
+                if (mapInfo.image === 'id') {
+                    mapInfo.image = '/images/user/' + this.$route.query.map;
+                }
+                this.$store.dispatch('getUrl', mapInfo.image).then(imageUrl => {
+                    console.log("IMAGE URL", imageUrl);
+                    this.image = `url(${imageUrl})`;
+                });
                 console.log(mapInfo);
                 this.map = await MapManager.mapToGeoMap(mapInfo, this.$route.query.map);
                 // this.startGame(this.$refs.rules.exportRules())
@@ -70,6 +79,14 @@
                 this.gameStarted = true;
                 this.$refs.game.start();
             }
+        },
+        computed: {
+            bgImage() {
+                if (this.image === '' || !this.image) {
+                    return 'linear-gradient(180deg, rgba(9, 6, 50, 1) 0%, rgba(24, 150, 202, 1) 77%, rgba(26, 231, 219, 1) 100%)';
+                }
+                return this.image;
+            }
         }
     }
 </script>
@@ -81,8 +98,22 @@
         display: flex;
         overflow-y: hidden;
         justify-content: center;
-        background-color: rgb(9, 6, 50);
-        background-image: linear-gradient(180deg, rgba(9, 6, 50, 1) 0%, rgba(24, 150, 202, 1) 77%, rgba(26, 231, 219, 1) 100%);
+        background-color: #99c4e6;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .background-image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        position: fixed;
+        width: calc(100%);
+        height: calc(100%);
+        top: 0;
+        left: 0;
+        filter: blur(4px) brightness(0.9);
     }
 
     .rules {
