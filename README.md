@@ -15,10 +15,12 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
+### Deploy to firebase hosting
+*Requires `firebase-tools` to be installed (`npm i -g firebase-tools`)*
 ```
-npm run lint
+npm run deploy
 ```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
