@@ -32,11 +32,13 @@ class MapManager {
 
         let poly = new Google.maps.Polygon({
             paths: paths,
-            strokeColor: "#FFC107",
+            strokeColor: "#00ff7a",
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: "#FFC107",
-            fillOpacity: 0.35
+            fillColor: "#00ff7a",
+            fillOpacity: 0.35,
+            draggable: false,
+            clickable: false,
         });
 
         let area = 0;

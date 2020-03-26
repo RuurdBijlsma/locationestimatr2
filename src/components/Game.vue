@@ -1,30 +1,40 @@
 <template>
     <div class="game" ref="game">
-        <div class="game-info" v-if="rules !== null">
-            <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
-            <span v-if="!rules.unlimitedTime" class="time">Time: <span
-                    class="font-weight-bold">{{roundTime}}</span></span>
-        </div>
-        <div class="street-view" ref="streetView"></div>
-        <div class="return-home" ref="returnHome">
-            <v-btn @click="homeFlag()" class="return-home-button" color="#222222" fab dark>
-                <v-icon>flag</v-icon>
-            </v-btn>
-        </div>
-        <div class="map-element" ref="map"></div>
-        <div class="guess-map" ref="guessMap">
-            <div class="resize-map" ref="resizeTrigger" @mousedown="resizeDownEvent"
-                 @touchstart="resizeDownEvent($event.touches[0])">
-                <v-icon color="#FFFFFF" class="resize-icon" v-if="mobile">menu</v-icon>
-                <v-icon small color="#FFFFFF" class="resize-icon" v-else>call_made</v-icon>
+        <div class="game-part" v-show="!dontAllowPlay">
+            <div class="game-info" v-if="rules !== null">
+                <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
+                <span v-if="!rules.unlimitedTime" class="time">Time: <span
+                        class="font-weight-bold">{{roundTime}}</span></span>
             </div>
-            <div class="small-map" ref="smallMap"></div>
-            <div class="guess-bottom">
-                <v-btn @click="makeGuess()" :color="$store.state.color" text large class="guess-button"
-                       :disabled="!guessButtonEnabled">
-                    Make Guess
+            <div class="street-view" ref="streetView"></div>
+            <div class="return-home" ref="returnHome">
+                <v-btn @click="homeFlag()" class="return-home-button" color="#222222" fab dark>
+                    <v-icon>flag</v-icon>
                 </v-btn>
             </div>
+            <div class="map-element" ref="map"></div>
+            <div class="guess-map" ref="guessMap">
+                <v-btn @click="showCoverage" title="Show current map area and StreetView coverage." fab small
+                       class="show-coverage">
+                    <v-icon :color="showingCoverage ? $store.state.color : undefined">layers</v-icon>
+                </v-btn>
+                <div class="resize-map" ref="resizeTrigger" @mousedown="resizeDownEvent"
+                     @touchstart="resizeDownEvent($event.touches[0])">
+                    <v-icon color="#FFFFFF" class="resize-icon" v-if="mobile">menu</v-icon>
+                    <v-icon small color="#FFFFFF" class="resize-icon" v-else>call_made</v-icon>
+                </div>
+                <div class="small-map" ref="smallMap"></div>
+                <div class="guess-bottom">
+                    <v-btn @click="makeGuess()" :color="$store.state.color" text large class="guess-button"
+                           :disabled="!guessButtonEnabled">
+                        Make Guess
+                    </v-btn>
+                </div>
+            </div>
+        </div>
+        <div class="loading-text" v-if="dontAllowPlay">
+            <p>Loading random location...</p>
+            <v-progress-circular indeterminate></v-progress-circular>
         </div>
         <round-score :challenge="challenge" @challengeUrl="getChallengeUrl" @submitHighScore="submitHighScore"
                      @nextRound="nextRoundEvent"
@@ -41,7 +51,8 @@
             <v-card :loading="challengeLoading">
                 <v-card-title class="headline">Challenge a Friend</v-card-title>
                 <v-card-subtitle>
-                    <p>Share this link with someone so they can play on the locations you played and compare scores!</p>
+                    <p>Share this link with someone so they can play on the locations you played and compare
+                        scores!</p>
                     <v-text-field ref="challengeUrlField" :value="challengeUrl"></v-text-field>
                     <p class="caption" v-if="isCopied">
                         <v-icon :color="$store.state.color">done</v-icon>
@@ -83,6 +94,7 @@
             }
         },
         data: () => ({
+            dontAllowPlay: false,
             dialog: false,
             challengeLoading: false,
             challengeUrl: '',
@@ -110,6 +122,8 @@
             resizeOffset: {x: 0, y: 0},
             windowWidth: window.innerWidth,
             mobile: window.innerWidth < 500,
+            svCoverage: null,
+            showingCoverage: false,
         }),
         async mounted() {
             window.onresize = () => {
@@ -127,6 +141,7 @@
                     backgroundColor: "#aadaff",
                     fullscreenControl: false,
                 });
+                this.svCoverage = new Google.maps.StreetViewCoverageLayer();
                 Google.maps.event.addListener(this.googleMap, "click", e => {
                     if (this.googleMap.getDiv().parentElement.attributes.class.value === "small-map")
                         this.placeGuessMarker(e.latLng);
@@ -155,6 +170,17 @@
             });
         },
         methods: {
+            showCoverage() {
+                if (this.showingCoverage) {
+                    this.svCoverage.setMap(null);
+                    this.map.polygon.setMap(null);
+                    this.showingCoverage = false;
+                } else {
+                    this.svCoverage.setMap(this.googleMap);
+                    this.map.polygon.setMap(this.googleMap);
+                    this.showingCoverage = true;
+                }
+            },
             resizeDownEvent(e) {
                 this.resizeDown = true;
                 let trigger = this.$refs.resizeTrigger;
@@ -222,7 +248,7 @@
                     timeTaken: this.timeTaken,
                     date: new Date(),
                 });
-                await this.$router.push('/scores?map=' + this.map.id);
+                await this.$router.push(`/scores?refresh=true&difficulty=${this.rules.preset}&map=${this.map.id}`);
                 this.submitting = false;
             },
             async start() {
@@ -233,6 +259,8 @@
                 if (!this.prepared)
                     await this.waitFor('prepared');
 
+                if (this.findingRandomLocation)
+                    await this.waitFor('locationLoad');
                 await this.nextRound(this.nextLocation);
 
                 console.log("Start game");
@@ -252,6 +280,7 @@
             async startRound() {
                 this.attachMap(this.$refs.smallMap);
                 this.fitMapToGeoMap();
+                this.dontAllowPlay = false;
                 console.log("Round start. Start timer here, reset allowed moves");
                 if (!this.rules.unlimitedTime) {
                     //  Start Timer grace period of 500 ms
@@ -259,39 +288,42 @@
                     this.roundTime = this.msToTime(timeLimitMs);
                     setTimeout(() => {
                         let roundStartTime = performance.now();
-                        this.timer = setInterval(() => {
+                        clearInterval(this.timer);
+                        let thisTimer;
+                        thisTimer = setInterval(() => {
                             let elapsed = performance.now() - roundStartTime;
                             let remainingMs = Math.max(timeLimitMs - elapsed, 0);
 
                             this.roundTime = this.msToTime(remainingMs);
                             if (remainingMs <= 0) {
+                                clearInterval(thisTimer);
                                 if (this.mapMarker === null)
                                     this.placeGuessMarker({lat: 0, lng: 0});
                                 this.makeGuess();
                             }
                         }, 1000 / 60);
+                        this.timer = thisTimer;
                     }, 500);
                 }
             },
             async prepareGame() {
-                return new Promise(async resolve => {
-                    this.prepared = false;
-                    console.log("prepareGame");
-                    this.streetView = new StreetView(this.map, 'weighted');
-                    if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
-                    else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
-                    else this.zoom = 14;
-                    console.log("End Zoom Level: ", this.zoom, this.map.minimumDistanceForPoints);
-                    this.currentRound = 0;
-                    this.previousGuesses = [];
+                if (this.rules === null)
+                    await this.waitFor('rules');
+                this.prepared = false;
+                let svType = this.rules.svType === 2 ? 'both' : (this.rules.svType === 1 ? 'photo' : 'sv');
+                console.log("prepareGame, svType: ", this.rules.svType, svType);
+                this.streetView = new StreetView(this.map, 'weighted', svType);
+                if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
+                else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
+                else this.zoom = 14;
+                console.log("End Zoom Level: ", this.zoom, this.map.minimumDistanceForPoints);
+                this.currentRound = 0;
+                this.previousGuesses = [];
 
-                    let nextLocation = await this.loadNextLocation();
-                    if (this.rules === null)
-                        await this.waitFor('rules');
+                await this.loadNextLocation();
 
-                    this.prepared = true;
-                    this.$emit('prepared');
-                })
+                this.prepared = true;
+                this.$emit('prepared');
             },
             async loadNextLocation() {
                 console.log("loadNextLocation");
@@ -417,9 +449,14 @@
             measureDistance(from, to) {
                 return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(...from), new google.maps.LatLng(...to));
             },
-            nextRoundEvent() {
+            async nextRoundEvent() {
+                this.dontAllowPlay = true;
+                this.attachMap(this.$refs.smallMap);
                 console.log("NExt round event, nextlocation: ", this.nextLocation);
                 this.showRoundOverview = false;
+                if (this.findingRandomLocation)
+                    await this.waitFor('locationLoad');
+                this.dontAllowPlay = false;
                 this.startRound();
             },
             waitFor(event) {
@@ -457,6 +494,10 @@
 </script>
 
 <style scoped>
+    .game-part {
+        height: 100%;
+    }
+
     .game-info {
         position: absolute;
         top: 0;
@@ -506,6 +547,10 @@
             position: absolute;
             text-align: center !important;
             padding: 10px !important;
+        }
+
+        .show-coverage {
+            margin-top: 50px !important;
         }
     }
 
@@ -597,5 +642,15 @@
     .return-home-button {
         width: 100%;
         height: 100%;
+    }
+
+    .show-coverage {
+        z-index: 4;
+        margin: 5px;
+    }
+
+    .loading-text {
+        padding: 20px;
+        text-align: center;
     }
 </style>

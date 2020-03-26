@@ -8,6 +8,7 @@ export default class Rules {
                     timeLimit = -1,
                     roundCount = 5,
                     objective = 1,
+                    svType = 0,
                     preset = 0,
                 }) {
         this.zoomAllowed = zoomAllowed;
@@ -18,6 +19,7 @@ export default class Rules {
         this.timeLimit = timeLimit;
         this.roundCount = roundCount;
         this.objective = objective;
+        this.svType = svType;
         this.preset = preset;
     }
 
@@ -25,7 +27,11 @@ export default class Rules {
         return Rules.presetNames[this.preset];
     }
 
-    static get presetNames(){
+    static get svTypes() {
+        return ['Roads', 'PhotoSpheres', 'Roads and PhotoSpheres'];
+    }
+
+    static get presetNames() {
         return ['Easy', 'Normal', 'Hard', 'Extreme', 'Custom'];
     }
 
@@ -40,6 +46,7 @@ export default class Rules {
                 timeLimit: -1,
                 roundCount: 5,
                 objective: 1,
+                svType: 0,
                 preset: 0,
             }),
             Normal: new Rules({
@@ -51,17 +58,19 @@ export default class Rules {
                 timeLimit: -1,
                 roundCount: 5,
                 objective: 0,
+                svType: 0,
                 preset: 1,
             }),
             Hard: new Rules({
                 zoomAllowed: true,
                 panAllowed: true,
-                unlimitedTime: true,
+                unlimitedTime: false,
                 unlimitedMoves: false,
                 moveLimit: 0,
-                timeLimit: -1,
+                timeLimit: 30,
                 roundCount: 5,
                 objective: 0,
+                svType: 1,
                 preset: 2,
             }),
             Extreme: new Rules({
@@ -73,6 +82,7 @@ export default class Rules {
                 timeLimit: 10,
                 roundCount: 5,
                 objective: 0,
+                svType: 2,
                 preset: 3,
             }),
             Custom: new Rules({

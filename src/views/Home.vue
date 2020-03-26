@@ -165,6 +165,7 @@
         .middle-content {
             margin-left: 0 !important;
             padding: 10px !important;
+            margin-top:10px !important;
         }
     }
 

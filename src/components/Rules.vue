@@ -1,11 +1,15 @@
 <template>
     <div class="rules">
         <v-card class="rules-card">
+            <v-img v-if="image !== '' && map !== null" :src="image" class="banner-image"
+                   gradient="to top, rgba(25,32,72,.7), rgba(100,115,201,.13)">
+                <h1 class="game-title">{{map.name}}</h1>
+            </v-img>
             <v-card-title v-if="challengeRules === null">Game Rules</v-card-title>
             <v-card-title v-else>You've been challenged!</v-card-title>
-            <v-card-subtitle v-if="challengeMap !== null && challengeRules !== null">
+            <v-card-text v-if="challengeMap !== null && challengeRules !== null">
                 Play Location Estimatr in "{{challengeMap.name}}" using the following difficulty rules:
-            </v-card-subtitle>
+            </v-card-text>
             <v-card-text>
                 <v-form ref="form"
                         v-model="valid"
@@ -37,6 +41,16 @@
                                 {{objective}}
                             </v-chip>
                         </v-chip-group>
+                        <h3>StreetView type</h3>
+                        <v-chip-group class="chips" active-class="primary--text" mandatory v-model="rules.svType">
+                            <v-chip v-for="svType in svTypes">
+                                {{svType}}
+                            </v-chip>
+                        </v-chip-group>
+                        <p v-if="rules.svType===2">
+                            <v-icon color="warning">warning</v-icon>
+                            In regions with low StreetView coverage PhotoSpheres will occur disproportionally often.
+                        </p>
                     </div>
                     <div v-else>
                         <div class="chips">
@@ -52,12 +66,15 @@
                             <v-chip v-else>{{rules.timeLimit}} second{{rules.timeLimit === 1 ? '' : 's'}} per round
                             </v-chip>
                             <v-chip v-if="rules.objective === 0">
-                                Objective: {{objectives[rules.objective]}}
+                                {{objectives[rules.objective]}}
                             </v-chip>
                             <v-chip title="With this objective you try to guess where the StreetView camera is at the time of guessing, instead of where you started."
                                     v-if="rules.objective === 1" light :color="$store.state.color">
-                                Objective: {{objectives[rules.objective]}}
+                                {{objectives[rules.objective]}}
                                 <v-icon right>priority_high</v-icon>
+                            </v-chip>
+                            <v-chip>
+                                StreetView: {{svTypes[rules.svType]}}
                             </v-chip>
                         </div>
                     </div>
@@ -86,6 +103,14 @@
             challengeMap: {
                 type: GeoMap,
                 default: null,
+            },
+            map: {
+                type: GeoMap,
+                default: null,
+            },
+            image: {
+                type: String,
+                default: '',
             }
         },
         data: () => ({
@@ -98,6 +123,7 @@
             difficultyRules: Rules.presets,
             rounds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             objectives: ["Guess starting location", "Guess camera location"],
+            svTypes: Rules.svTypes,
         }),
         async mounted() {
 
@@ -130,8 +156,19 @@
 <style scoped>
     .rules-card {
         display: inline-block;
-        max-width: 500px;
+        max-width: 550px;
         width: 100%;
+    }
+
+    @media screen and (max-width: 550px) {
+        .rules {
+            margin-top: 0px !important;
+        }
+
+        .rules-card {
+            height: 100%;
+            margin-top: 0 !important;
+        }
     }
 
     .chips > * {
@@ -140,5 +177,15 @@
 
     .number-input {
         /*margin-top: 20px;*/
+    }
+
+    .banner-image {
+        height: 300px;
+    }
+
+    .game-title {
+        position: absolute;
+        padding: 20px;
+        bottom: 0;
     }
 </style>

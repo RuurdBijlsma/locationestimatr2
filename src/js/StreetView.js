@@ -1,8 +1,9 @@
 export default class StreetView {
-    constructor(map, distribution) {
+    constructor(map, distribution, type = 'sv') {
         this.map = map;
         this.distribution = distribution;
         this.debug = false;
+        this.type = type;
         this.typeColors = [
             {color: [84, 160, 185, 131], id: 'sv'},
             {color: [84, 160, 185, 255], id: 'sv'},
@@ -33,27 +34,22 @@ export default class StreetView {
 
         let data = context.getImageData(0, 0, img.width, img.height).data;
 
-        let types = {
-            sv: {count: 0, indices: []},
-            photo: {count: 0, indices: []},
-        };
+        let pixelCounts = {count: 0, indices: []};
         for (let i = 0; i < data.length; i += 4) {
             let color = data.slice(i, i + 4);
             let colorType = this.getColorType(color);
-            if (colorType !== 'empty') {
-                types[colorType].count++;
-                types[colorType].indices.push(i);
+            if (colorType === this.type || (colorType !== 'empty' && this.type === 'both')) {
+                pixelCounts.count++;
+                pixelCounts.indices.push(i);
             }
         }
-        if (this.debug)
-            console.log(types);
 
-        if (types.sv.count === 0) {
+        if (pixelCounts.count === 0) {
             console.error("No blue pixel found");
             return this.randomValidLocation(endZoom);
         }
-        let randomSvPixel = Math.floor(Math.random() * types.sv.count);
-        let randomSvIndex = types.sv.indices[randomSvPixel];
+        let randomSvPixel = Math.floor(Math.random() * pixelCounts.count);
+        let randomSvIndex = pixelCounts.indices[randomSvPixel];
         let x = (randomSvIndex / 4) % img.width;
         let y = Math.floor((randomSvIndex / 4) / img.width);
         return this.tilePixelToLatLon(tile.x, tile.y, tile.zoom, x, y);
@@ -69,7 +65,10 @@ export default class StreetView {
 
             let validTiles = subTiles
                 //Change type to photo to have only photo spheres
-                .filter(tile => tile.types.sv)
+                .filter(tile =>
+                    (this.type === 'sv' || this.type === 'both') && tile.types.sv ||
+                    (this.type === 'photo' || this.type === 'both') && tile.types.photo ||
+                    tile.zoom < 7 && tile.types.sv)
                 .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom))
                 .filter(tile => {
                     for (let fail of failedTiles)

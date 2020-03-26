@@ -7,16 +7,19 @@
         <p class="caption">Click on a polygon point to select it, then click somewhere in the map to place a polygon
             point after the selected point. Press delete to remove a selected point.</p>
         <div class="controls">
-            <v-btn @click="makeNewGroup()" outlined
-                   title="Add new polygon, detached from current polygon, click map to create the new polygon">
-                Add area
-            </v-btn>
             <v-file-input small-chips v-model="kmlFile" label="Import KML" outlined dense accept=".kml"
                           title="Import .kml file into editor" class="kml-input"></v-file-input>
             <v-btn @click="exportKml()" outlined
                    title="Export your map as a kml file, which can be imported later.">
                 Export KML
             </v-btn>
+        </div>
+        <div class="controls">
+            <v-btn @click="makeNewGroup()" outlined
+                   title="Add new polygon, detached from current polygon, click map to create the new polygon">
+                Add area
+            </v-btn>
+            <v-switch class="coverage-switch" v-model="showCoverage" label="Show StreetView Coverage"></v-switch>
             <!--            <v-btn @click="getImage()" outlined-->
             <!--                   title="Export your map as a kml file, which can be imported later.">-->
             <!--                Get Image-->
@@ -84,11 +87,14 @@
                 mapName: '',
                 uploading: false,
                 dialog: false,
+                svCoverage: null,
                 invalid: false,
+                showCoverage: false,
             }
         },
         async mounted() {
             Google.wait().then(() => {
+                this.svCoverage = new Google.maps.StreetViewCoverageLayer();
                 this.googleMap = new Google.maps.Map(this.$refs.map, {
                     zoom: 1,
                     center: {lat: 0, lng: 0},
@@ -386,7 +392,14 @@
             activeMarker(activeMarker) {
                 this.normalizeMarkerIcons();
                 this.highlightMarkerConnection(activeMarker);
-            }
+            },
+            showCoverage() {
+                if (this.showCoverage) {
+                    this.svCoverage.setMap(this.googleMap);
+                } else {
+                    this.svCoverage.setMap(null);
+                }
+            },
         },
     }
 </script>
@@ -412,9 +425,7 @@
 
     .kml-input {
         max-width: 200px;
-        margin-top: -2px;
-        margin-left: -36px;
-        margin-bottom: -7px;
+        margin: -1px 20px -7px -5px;
     }
 
     .kml-input >>> * {
@@ -435,5 +446,9 @@
     .image-input {
         margin-top: 20px;
         margin-bottom: -30px;
+    }
+
+    .coverage-switch {
+        margin-top: 0px;
     }
 </style>

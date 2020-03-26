@@ -41,6 +41,7 @@
 </script>
 
 <style>
+    @import url('https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css');
     @import url('https://fonts.googleapis.com/css?family=Material+Icons|Montserrat:200,500,700|Roboto:400,400i,500,600,700,800,900&display=swap');
 
     html, body {

@@ -14,7 +14,7 @@ if (localStorage.getItem("scores") === null)
     localStorage.scores = JSON.stringify({});
 const localScores = JSON.parse(localStorage.scores);
 
-async function getCached(key, action) {
+async function getCached(key, action, cacheLifetime = 1000 * 60 * 60 * 24) {
     //Refresh cache if it doesn't exist
     let data;
     if (!cache.hasOwnProperty(key)) {
@@ -22,9 +22,8 @@ async function getCached(key, action) {
     } else {
         let date = cache[key].date;
         let now = +new Date();
-        let refreshCacheTime = 1000 /*ms*/ * 60 /*s*/ * 60 /*min*/ * 24; /*hours*/ //Refresh cache every 24 hours
         //Refresh cache if it's 24+ hours old
-        if (navigator.onLine && now - date >= refreshCacheTime)
+        if (navigator.onLine && now - date >= cacheLifetime)
             data = await action();
         if (!navigator.onLine)
             console.warn("Using old cache because browser is offline");
@@ -58,6 +57,32 @@ export default new Vuex.Store({
     },
     getters: {},
     actions: {
+        async getScoresByDifficultyAndMap({commit}, {difficulty, map, refresh, limit = 50}) {
+            console.log({difficulty, map});
+            let getScores = async () => {
+                let result = await db.collection('scores')
+                    .where('map', '==', map)
+                    .where('rules', '==', difficulty)
+                    .orderBy('totalScore', 'desc')
+                    .orderBy('totalDistance', 'desc')
+                    .limit(limit)
+                    .get();
+                let list = [];
+                result.forEach(score => {
+                    score = score.data();
+                    score.date = +score.date.toDate();
+                    list.push(score)
+                });
+                return list;
+            };
+            //5 Minutes cache lifetime
+            let cacheLifetime = 1000 * 60 * 5;
+            if (refresh)
+                cacheLifetime = 0;
+
+            // console.log(scores);
+            return await getCached(`scores:${difficulty}:${map}:${limit}`, getScores, cacheLifetime);
+        },
         async uploadUserMap({commit}, data) {
             return new Promise(async (resolve, error) => {
                 let image = data.image;
