@@ -56,6 +56,16 @@
         <main class="middle-content">
             <router-view></router-view>
         </main>
+        <v-footer absolute padless class="footer">
+            <v-card flat tile width="100%">
+                <v-card-text class="white--text bottom-row">
+                    <span class="made-by">Made by <a href="https://ruurd.dev" target="_blank">Ruurd Bijlsma</a></span>
+                    <div class="buttons">
+                        <v-btn outlined class="gh-button" href="https://github.com/ruurdbijlsma/locationestimatr2" target="_blank">View on Github</v-btn>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-footer>
         <div class="bottom-content">
             <v-bottom-navigation
                     :color="$store.state.color"
@@ -109,7 +119,7 @@
 
 <style scoped>
     .home {
-        display: flex;
+        /*display: flex;*/
     }
 
     .left-content {
@@ -165,7 +175,12 @@
         .middle-content {
             margin-left: 0 !important;
             padding: 10px !important;
+            padding-bottom: 150px !important;
             margin-top: 10px !important;
+        }
+
+        .footer {
+            padding-bottom: 58px !important;
         }
     }
 
@@ -176,7 +191,7 @@
     .middle-content {
         flex-grow: 1;
         margin: 100px 0 15px 256px;
-        padding: 10px 30px;
+        padding: 10px 30px 100px;
     }
 
     .bottom-content {
@@ -189,5 +204,24 @@
         padding: 9px !important;
         display: inline-block;
         height: 100% !important;
+    }
+
+    .footer {
+        z-index: 0;
+        padding-bottom: 0;
+    }
+
+    .bottom-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .buttons {
+
+    }
+
+    .made-by {
+        padding: 7px 0;
+        display: inline-block;
     }
 </style>
