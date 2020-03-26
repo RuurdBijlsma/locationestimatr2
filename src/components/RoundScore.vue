@@ -28,6 +28,7 @@
             <v-data-table
                     dense
                     dark
+                    disable-sort
                     :headers="tableHeaders"
                     hide-default-footer
                     :items="tableGuesses"

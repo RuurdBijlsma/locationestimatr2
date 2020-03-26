@@ -5,7 +5,7 @@
                :image="image"
                :map="map"
                :challenge-map="challengeMap"></rules>
-        <game v-show="gameStarted" :rules="rules" :map="map" :challenge="challenge" ref="game"></game>
+        <game v-show="gameStarted" ref="game"></game>
     </div>
 </template>
 
@@ -86,7 +86,7 @@
                 console.log({rules});
                 this.rules = rules;
                 this.gameStarted = true;
-                this.$refs.game.start();
+                this.$refs.game.start(this.map, this.rules, this.challenge);
             }
         },
         computed: {

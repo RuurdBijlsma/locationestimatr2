@@ -1,9 +1,11 @@
-export default class StreetView {
-    constructor(map, distribution, type = 'sv') {
+import EventEmitter from 'events';
+
+export default class StreetView extends EventEmitter {
+    constructor(map, distribution) {
+        super();
         this.map = map;
         this.distribution = distribution;
         this.debug = false;
-        this.type = type;
         this.typeColors = [
             {color: [84, 160, 185, 131], id: 'sv'},
             {color: [84, 160, 185, 255], id: 'sv'},
@@ -18,13 +20,14 @@ export default class StreetView {
             div.style.position = 'fixed';
             div.style.top = '0';
             div.style.left = '0';
+            div.style.zIndex = '14';
         }
     }
 
-    async randomValidLocation(endZoom = 14) {
-        //We can get initialTile by using the geomap polygon without having to access the google sv coverage
+    async randomValidLocation(endZoom = 14, type = 'sv') {
+        //We can get initialTile by using the geo map polygon without having to access the google sv coverage
         //{x: 4833, y: 3249, zoom: 13} //cyprus city streets
-        let tile = await this.randomValidTile(endZoom);
+        let tile = await this.randomValidTile(endZoom, type);
         let canvas = document.createElement("canvas");
         let context = canvas.getContext("2d");
         let img = tile.img;
@@ -38,7 +41,7 @@ export default class StreetView {
         for (let i = 0; i < data.length; i += 4) {
             let color = data.slice(i, i + 4);
             let colorType = this.getColorType(color);
-            if (colorType === this.type || (colorType !== 'empty' && this.type === 'both')) {
+            if (colorType === type || (colorType !== 'empty' && type === 'both')) {
                 pixelCounts.count++;
                 pixelCounts.indices.push(i);
             }
@@ -46,7 +49,7 @@ export default class StreetView {
 
         if (pixelCounts.count === 0) {
             console.error("No blue pixel found");
-            return this.randomValidLocation(endZoom);
+            return this.randomValidLocation(endZoom, type);
         }
         let randomSvPixel = Math.floor(Math.random() * pixelCounts.count);
         let randomSvIndex = pixelCounts.indices[randomSvPixel];
@@ -55,27 +58,24 @@ export default class StreetView {
         return this.tilePixelToLatLon(tile.x, tile.y, tile.zoom, x, y);
     }
 
-    async randomValidTile(endZoom, initialTile = {x: 0, y: 0, zoom: 0}) {
+    async randomValidTile(endZoom, type, initialTile = {x: 0, y: 0, zoom: 0}) {
         let chosenTile = initialTile;
         // let chosenTile = {x: 76, y: 50, zoom: 7};
         let previousTiles = [chosenTile];
         let failedTiles = [];
         while (chosenTile.zoom < endZoom) {
             let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
+            this.emit('subTiles', subTiles);
 
+            console.log("TYPE", type);
             let validTiles = subTiles
                 //Change type to photo to have only photo spheres
                 .filter(tile =>
-                    (this.type === 'sv' || this.type === 'both') && tile.types.sv ||
-                    (this.type === 'photo' || this.type === 'both') && tile.types.photo ||
+                    (type === 'sv' || type === 'both') && tile.types.sv ||
+                    (type === 'photo' || type === 'both') && tile.types.photo ||
                     tile.zoom < 7 && tile.types.sv)
                 .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom))
-                .filter(tile => {
-                    for (let fail of failedTiles)
-                        if (fail.x === tile.x && fail.y === tile.y && fail.zoom === tile.zoom)
-                            return false;
-                    return true;
-                });
+                .filter(tile => !this.isFailedTile(tile, failedTiles));
             if (this.debug) {
                 console.log(validTiles);
                 this.debugImg.forEach(img => {
@@ -86,16 +86,20 @@ export default class StreetView {
                         this.debugImg[i].src = tile.img.src
                     }
                 });
+                if (chosenTile.zoom === 5) {
+                    console.log(validTiles);
+                    return;
+                }
             }
-            // return;
 
             if (validTiles.length === 0) {
                 failedTiles.push(chosenTile);
+                let fromTile = chosenTile;
                 if (previousTiles.length > 0)
                     chosenTile = previousTiles.splice(-2)[0];
                 else
-                    chosenTile = {x: 0, y: 0, zoom: 0};
-                console.log("Took a wrong turn when getting a random tile, going back to zoom " + chosenTile.zoom, chosenTile);
+                    chosenTile = initialTile;
+                console.log("Took a wrong turn when getting a random tile, going back to zoom " + chosenTile.zoom, chosenTile, 'from', fromTile);
             } else {
                 chosenTile = this.pickRandomSubTile(validTiles);
                 previousTiles.push(chosenTile);
@@ -103,6 +107,17 @@ export default class StreetView {
         }
 
         return chosenTile;
+    }
+
+    isFailedTile(tile, failedTiles) {
+        for (let fail of failedTiles)
+            if (this.tileEquals(tile, fail))
+                return true;
+        return false;
+    }
+
+    tileEquals(tileA, tileB) {
+        return (tileA.x === tileB.x && tileA.y === tileB.y && tileA.zoom === tileB.zoom);
     }
 
     pickRandomSubTile(tiles) {

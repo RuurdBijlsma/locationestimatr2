@@ -1,10 +1,11 @@
 <template>
-    <div class="game" ref="game">
+    <div class="game" ref="game" v-show="rules !== null && map !== null">
         <div class="game-part" v-show="!dontAllowPlay">
             <div class="game-info" v-if="rules !== null">
                 <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
-                <span v-if="!rules.unlimitedTime" class="time">Time: <span
-                        class="font-weight-bold">{{roundTime}}</span></span>
+                <span v-if="!rules.unlimitedTime" class="time">Time: <span class="font-weight-bold">{{roundTime}}</span></span>
+                <span v-if="!rules.unlimitedMoves" class="time">Moves Left:
+                    <span class="font-weight-bold">{{movesLeft}}</span></span>
             </div>
             <div class="street-view" ref="streetView"></div>
             <div class="return-home" ref="returnHome">
@@ -32,9 +33,11 @@
                 </div>
             </div>
         </div>
-        <div class="loading-text" v-if="dontAllowPlay || this.currentRound === 0">
+        <!--        <div class="loading-text">-->
+        <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">
             <p>Loading random location...</p>
             <v-progress-circular indeterminate></v-progress-circular>
+            <canvas class="tile-canvas" ref="tileCanvas"></canvas>
         </div>
         <round-score :challenge="challenge" @challengeUrl="getChallengeUrl" @submitHighScore="submitHighScore"
                      @nextRound="nextRoundEvent"
@@ -69,8 +72,6 @@
 </template>
 
 <script>
-    import Rules from "../js/Rules";
-    import GeoMap from "../js/GeoMap";
     import Google from "../js/Google";
     import StreetView from "../js/StreetView";
     import StreetViewElement from "../js/StreetViewElement";
@@ -79,20 +80,6 @@
     export default {
         name: 'Game',
         components: {RoundScore},
-        props: {
-            rules: {
-                type: Rules,
-                default: null,
-            },
-            map: {
-                type: GeoMap,
-                default: null,
-            },
-            challenge: {
-                type: Object,
-                default: null,
-            }
-        },
         data: () => ({
             dontAllowPlay: false,
             dialog: false,
@@ -124,15 +111,74 @@
             mobile: window.innerWidth < 500,
             svCoverage: null,
             showingCoverage: false,
+            rules: null,
+            map: null,
+            challenge: null,
+            movesLeft: 5,
+            canvas: null,
+            context: null,
         }),
         async mounted() {
-            window.onresize = () => {
-                this.windowWidth = window.innerWidth
-            }
-            console.log("MOUNTED");
-            this.svElement = new StreetViewElement(this.$refs.streetView, this.$refs.returnHome);
-            console.log("SV ELEMENT", this.svElement);
-            Google.wait().then(() => {
+            window.onresize = () => this.windowWidth = window.innerWidth;
+            document.onmouseup = e => {
+                this.resizeDown = false;
+                this.resizeEvent(e);
+            };
+            document.onmousemove = e => {
+                if (this.resizeDown) {
+                    this.resizeEvent(e);
+                }
+            };
+            document.ontouchend = e => {
+                this.resizeDown = false;
+                this.resizeEvent(e.touches[0]);
+            };
+            document.ontouchmove = e => {
+                if (this.resizeDown) {
+                    this.resizeEvent(e.touches[0]);
+                }
+            };
+        },
+        methods: {
+            async start(map, rules, challenge) {
+                this.map = map;
+                this.rules = rules;
+                this.challenge = challenge;
+                if (this.challenge !== null)
+                    this.challenge.guesses.forEach(challenge => {
+                        let guess = challenge.guess;
+                        let target = challenge.target;
+                        challenge.distance = this.measureDistance(guess, target);
+                        challenge.score = this.map.scoreCalculation(challenge.distance);
+                    });
+
+                this.svType = this.rules.svType === 2 ? 'both' : (this.rules.svType === 1 ? 'photo' : 'sv');
+                this.streetView = new StreetView(this.map, 'uniform');
+                this.initializeTilesVisualizer().then(() => {
+                    this.streetView.on('subTiles', tiles => {
+                        if (this.dontAllowPlay || this.currentRound === 0)
+                            this.visualizeTiles(tiles);
+                    });
+                });
+                if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
+                else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
+                else this.zoom = 14;
+                this.currentRound = 0;
+                this.previousGuesses = [];
+
+                let [_, nextLocation] = await Promise.all([
+                    this.initGoogle(),
+                    this.loadNextLocation()
+                ]);
+                await this.nextRound(nextLocation);
+
+                console.log("Start game");
+                this.startTime = performance.now();
+                this.startRound();
+            },
+            async initGoogle() {
+                this.svElement = new StreetViewElement(this.$refs.streetView, this.$refs.returnHome);
+                await Google.wait();
                 this.googleMap = new Google.maps.Map(this.$refs.map, {
                     zoom: 1,
                     center: {lat: 0, lng: 0},
@@ -147,29 +193,34 @@
                         this.placeGuessMarker(e.latLng);
                 });
                 this.attachMap(this.$refs.smallMap);
-                // this.showOverview()
-
-                document.onmouseup = e => {
-                    this.resizeDown = false;
-                    this.resizeEvent(e);
-                };
-                document.onmousemove = e => {
-                    if (this.resizeDown) {
-                        this.resizeEvent(e);
-                    }
-                };
-                document.ontouchend = e => {
-                    this.resizeDown = false;
-                    this.resizeEvent(e.touches[0]);
-                };
-                document.ontouchmove = e => {
-                    if (this.resizeDown) {
-                        this.resizeEvent(e.touches[0]);
-                    }
-                };
-            });
-        },
-        methods: {
+            },
+            async initializeTilesVisualizer() {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        this.canvas = this.$refs.tileCanvas;
+                        this.context = this.canvas.getContext('2d');
+                        let canvasBounds = this.canvas.getBoundingClientRect();
+                        this.canvas.width = canvasBounds.width;
+                        this.canvas.height = canvasBounds.height;
+                        resolve();
+                    }, 100);
+                })
+            },
+            visualizeTiles(tiles) {
+                tiles.sort((a, b) => {
+                    if (a.y === b.y)
+                        return a.x - b.x;
+                    return a.y - b.y;
+                })
+                let gridWidth = 2;
+                let imgSize = this.canvas.width / gridWidth;
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                tiles.map(tile => tile.img).forEach((img, i) => {
+                    let x = i % gridWidth;
+                    let y = Math.floor(i / gridWidth);
+                    this.context.drawImage(img, x * imgSize, y * imgSize, imgSize, imgSize);
+                });
+            },
             showCoverage() {
                 if (this.showingCoverage) {
                     this.svCoverage.setMap(null);
@@ -251,22 +302,6 @@
                 await this.$router.push(`/scores?refresh=true&difficulty=${this.rules.preset}&map=${this.map.id}`);
                 this.submitting = false;
             },
-            async start() {
-                if (this.map === null)
-                    await this.waitFor('map');
-                if (this.rules === null)
-                    await this.waitFor('rules');
-                if (!this.prepared)
-                    await this.waitFor('prepared');
-
-                if (this.findingRandomLocation)
-                    await this.waitFor('locationLoad');
-                await this.nextRound(this.nextLocation);
-
-                console.log("Start game");
-                this.startTime = performance.now();
-                this.startRound();
-            },
             msToTime(ms) {
                 let s = ms / 1000;
                 let minutes = Math.floor(s / 60);
@@ -279,7 +314,7 @@
             },
             async startRound() {
                 this.attachMap(this.$refs.smallMap);
-                this.fitMapToGeoMap();
+                setTimeout(() => this.fitMapToGeoMap(), 30);
                 this.dontAllowPlay = false;
                 console.log("Round start. Start timer here, reset allowed moves");
                 if (!this.rules.unlimitedTime) {
@@ -306,25 +341,6 @@
                     }, 500);
                 }
             },
-            async prepareGame() {
-                if (this.rules === null)
-                    await this.waitFor('rules');
-                this.prepared = false;
-                let svType = this.rules.svType === 2 ? 'both' : (this.rules.svType === 1 ? 'photo' : 'sv');
-                console.log("prepareGame, svType: ", this.rules.svType, svType);
-                this.streetView = new StreetView(this.map, 'weighted', svType);
-                if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
-                else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
-                else this.zoom = 14;
-                console.log("End Zoom Level: ", this.zoom, this.map.minimumDistanceForPoints);
-                this.currentRound = 0;
-                this.previousGuesses = [];
-
-                await this.loadNextLocation();
-
-                this.prepared = true;
-                this.$emit('prepared');
-            },
             async loadNextLocation() {
                 console.log("loadNextLocation");
                 this.findingRandomLocation = true;
@@ -333,7 +349,7 @@
                     console.log("Using challenge location, round: ", this.currentRound, 'location:', this.nextLocation);
                 } else {
                     console.log("Using random location");
-                    this.nextLocation = await this.streetView.randomValidLocation(this.zoom);
+                    this.nextLocation = await this.streetView.randomValidLocation(this.zoom, this.svType);
                 }
                 this.findingRandomLocation = false;
                 //TODO locationload
@@ -400,13 +416,13 @@
                 if (this.rules.moveLimit !== 0 && !this.rules.unlimitedMoves)
                     this.svElement.allowMove();
                 if (!this.rules.unlimitedMoves) {
-                    let moveLimit = this.rules.moveLimit;
-                    if (moveLimit === 0) {
+                    this.movesLeft = this.rules.moveLimit;
+                    if (this.movesLeft === 0) {
                         this.svElement.restrictMove();
                     } else {
                         this.svElement.removeMoveListener();
                         this.svElement.panorama.addListener("position_changed", () => {
-                            if (--moveLimit === 0)
+                            if (--this.movesLeft === 0)
                                 this.svElement.restrictMove();
                         });
                     }
@@ -466,25 +482,6 @@
             }
         },
         watch: {
-            async challenge() {
-                await Google.wait();
-                await this.waitFor('map');
-                this.challenge.guesses.forEach(challenge => {
-                    let guess = challenge.guess;
-                    let target = challenge.target;
-                    challenge.distance = this.measureDistance(guess, target);
-                    challenge.score = this.map.scoreCalculation(challenge.distance);
-                });
-            },
-            map() {
-                this.$emit('map');
-                console.log("Map set", this.map);
-                this.prepareGame();
-            },
-            rules() {
-                this.$emit('rules');
-                console.log("Rules set", this.rules);
-            },
             windowWidth() {
                 this.mobile = this.windowWidth < 500;
                 console.log(this.mobile);
@@ -514,6 +511,7 @@
     }
 
     .time {
+        text-transform: uppercase;
         width: 100px;
         text-align: left;
     }
@@ -658,5 +656,25 @@
         height: 100%;
         z-index: 6;
         background-color: #222031;
+    }
+
+    .tile-canvas {
+        position: relative;
+        width: 512px;
+        height: 512px;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        display: block;
+        margin-left: calc(50% - 256px);
+        margin-top: 40px;
+        background-color: #afdca9;
+        border-radius: 50%;
+    }
+
+    @media screen and (max-width: 500px) {
+        .tile-canvas {
+            width: 256px;
+            height: 256px;
+            margin-left: calc(50% - 128px);
+        }
     }
 </style>

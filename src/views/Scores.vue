@@ -14,7 +14,7 @@
                     :disabled="loading"
                     outlined
             ></v-select>
-            <div v-for="{id, scores} in compoundScores"
+            <div v-for="{id, scores, expanded} in compoundScores"
                  :key="id">
                 <h2>{{id}} Scores</h2>
                 <v-data-table
@@ -48,7 +48,7 @@
                 </v-data-table>
             </div>
             <div class="bottom-buttons">
-                <v-btn :to="`/play?map=${map.id}`" filled color="primary">Play this map</v-btn>
+                <v-btn :to="`/play?map=${map.id}&difficulty=${difficultyId}`" filled color="primary">Play this map</v-btn>
                 <v-btn to="/" outlined>Homepage</v-btn>
             </div>
         </div>
@@ -64,11 +64,10 @@
         components: {},
         data() {
             return {
-                expanded: [],
                 singleExpand: false,
                 selectedDifficulty: 'Normal',
                 scoreTypes: Rules.presetNames.filter(p => p !== 'Custom'),
-                compoundScores: [{id: "Global", scores: [], loading: false,}],
+                compoundScores: [{id: "Global", scores: [], expanded: [],}],
                 map: null,
                 image: '',
                 loading: false,
@@ -121,11 +120,13 @@
                         this.compoundScores[1] = {
                             scores: this.parseScores(localScores),
                             id: 'Local',
+                            expanded: [],
                         };
                     } catch (e) {
                         this.compoundScores[1] = {
                             scores: [],
                             id: 'Local',
+                            expanded: [],
                         };
                     }
                     this.loading = true;
@@ -151,6 +152,7 @@
                     this.compoundScores[0] = {
                         scores: this.parseScores(scores),
                         id: 'Global',
+                        expanded: [],
                     };
 
 

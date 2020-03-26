@@ -61,11 +61,11 @@
                     :color="$store.state.color"
                     v-if="mobile"
                     grow>
-                <v-btn to="/"  class="bottom-button">
+                <v-btn to="/" class="bottom-button">
                     <span>Play</span>
                     <v-icon>home</v-icon>
                 </v-btn>
-                <v-btn to="/explore"  class="bottom-button">
+                <v-btn to="/explore" class="bottom-button">
                     <span>Explore Maps</span>
                     <v-icon>explore</v-icon>
                 </v-btn>
@@ -73,7 +73,7 @@
                     <span>Map Maker</span>
                     <v-icon>map</v-icon>
                 </v-btn>
-                <v-btn to="/settings"  class="bottom-button">
+                <v-btn to="/settings" class="bottom-button">
                     <span>Settings</span>
                     <v-icon>settings</v-icon>
                 </v-btn>
@@ -91,7 +91,6 @@
                 drawer: true,
                 loggedIn: false,
                 windowWidth: window.innerWidth,
-                mobile: window.innerWidth < 840,
             }
         },
         mounted() {
@@ -99,9 +98,10 @@
                 this.windowWidth = window.innerWidth
             }
         },
-        watch: {
-            windowWidth() {
-                this.mobile = this.windowWidth < 840;
+        watch: {},
+        computed: {
+            mobile() {
+                return this.windowWidth <= 840;
             }
         }
     }
@@ -165,7 +165,7 @@
         .middle-content {
             margin-left: 0 !important;
             padding: 10px !important;
-            margin-top:10px !important;
+            margin-top: 10px !important;
         }
     }
 

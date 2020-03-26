@@ -32,12 +32,12 @@ export default class Rules {
     }
 
     static get presetNames() {
-        return ['Easy', 'Normal', 'Hard', 'Extreme', 'Custom'];
+        return ['Relaxed (roads)', 'Relaxed (PhotoSpheres)', 'Normal', 'Hard', 'Custom'];
     }
 
     static get presets() {
         return {
-            Easy: new Rules({
+            'Relaxed (roads)': new Rules({
                 zoomAllowed: true,
                 panAllowed: true,
                 unlimitedTime: true,
@@ -49,7 +49,7 @@ export default class Rules {
                 svType: 0,
                 preset: 0,
             }),
-            Normal: new Rules({
+            'Relaxed (PhotoSpheres)': new Rules({
                 zoomAllowed: true,
                 panAllowed: true,
                 unlimitedTime: true,
@@ -58,22 +58,22 @@ export default class Rules {
                 timeLimit: -1,
                 roundCount: 5,
                 objective: 0,
-                svType: 0,
+                svType: 1,
                 preset: 1,
             }),
-            Hard: new Rules({
+            'Normal': new Rules({
                 zoomAllowed: true,
                 panAllowed: true,
-                unlimitedTime: false,
-                unlimitedMoves: false,
-                moveLimit: 0,
-                timeLimit: 30,
+                unlimitedTime: true,
+                unlimitedMoves: true,
+                moveLimit: -1,
+                timeLimit: -1,
                 roundCount: 5,
                 objective: 0,
                 svType: 1,
                 preset: 2,
             }),
-            Extreme: new Rules({
+            'Hard': new Rules({
                 zoomAllowed: false,
                 panAllowed: false,
                 unlimitedTime: false,
@@ -85,7 +85,7 @@ export default class Rules {
                 svType: 2,
                 preset: 3,
             }),
-            Custom: new Rules({
+            'Custom': new Rules({
                 zoomAllowed: true,
                 panAllowed: true,
                 unlimitedTime: true,

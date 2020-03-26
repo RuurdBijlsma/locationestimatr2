@@ -1,10 +1,10 @@
 <template>
     <div class="rules">
         <v-card class="rules-card">
-            <v-img v-if="image !== '' && map !== null" :src="image" class="banner-image"
+            <v-img :src="image" class="banner-image"
                    aspect-ratio="3/5"
                    gradient="to top, rgba(25,32,72,.7), rgba(100,115,201,.13)">
-                <h1 class="game-title">{{map.name}}</h1>
+                <h1 class="game-title" v-if="map !== null">{{map.name}}</h1>
             </v-img>
             <v-card-title v-if="challengeRules === null">Game Rules</v-card-title>
             <v-card-title v-else>You've been challenged!</v-card-title>
@@ -118,16 +118,16 @@
             customRoundIndex: 4,
             valid: true,
             selectedDifficulty: 'Normal',
-            difficulties: [
-                'Easy', 'Normal', 'Hard', 'Extreme', 'Custom'
-            ],
+            difficulties: Rules.presetNames,
             difficultyRules: Rules.presets,
             rounds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             objectives: ["Guess starting location", "Guess camera location"],
             svTypes: Rules.svTypes,
         }),
         async mounted() {
-
+            if (this.$route.query.hasOwnProperty('difficulty')) {
+                this.selectedDifficulty = Rules.presetNames[this.$route.query['difficulty']];
+            }
         },
         methods: {
             exportRules() {
@@ -135,6 +135,19 @@
             }
         },
         watch: {
+            selectedDifficulty() {
+                if (this.challengeMap || this.challengeRules)
+                    return;
+                try {
+                    this.$router.replace({
+                        query: {
+                            map: this.map.id,
+                            difficulty: this.difficultyId
+                        }
+                    })
+                } catch (e) {
+                }
+            },
             customRoundIndex() {
                 this.rules.roundCount = this.customRoundIndex + 1;
             },
@@ -147,6 +160,9 @@
             },
         },
         computed: {
+            difficultyId() {
+                return Rules.presetNames.indexOf(this.selectedDifficulty);
+            },
             rules() {
                 return this.difficultyRules[this.selectedDifficulty];
             }
@@ -181,8 +197,8 @@
     }
 
     .banner-image {
-        min-height:300px;
-        width:100%;
+        min-height: 300px;
+        width: 100%;
     }
 
     .game-title {
