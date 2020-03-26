@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="loading-text" v-if="dontAllowPlay">
+        <div class="loading-text" v-if="dontAllowPlay || this.currentRound === 0">
             <p>Loading random location...</p>
             <v-progress-circular indeterminate></v-progress-circular>
         </div>
@@ -652,5 +652,11 @@
     .loading-text {
         padding: 20px;
         text-align: center;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 6;
+        background-color: #222031;
     }
 </style>
