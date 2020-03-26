@@ -37,7 +37,7 @@
         <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">
             <p>Loading random location...</p>
             <v-progress-circular indeterminate></v-progress-circular>
-            <canvas class="tile-canvas" ref="tileCanvas"></canvas>
+            <canvas v-if="visualize" class="tile-canvas" ref="tileCanvas"></canvas>
         </div>
         <round-score :challenge="challenge" @challengeUrl="getChallengeUrl" @submitHighScore="submitHighScore"
                      @nextRound="nextRoundEvent"
@@ -46,7 +46,7 @@
                      :submitting="submitting"
                      v-show="showRoundOverview" :google-map="googleMap"
                      ref="roundScore"
-                     :hs-enabled="(rules && rules.presetName === 'Custom') || (map && map.id === 'my_area')">
+                     :hs-disabled="(rules && rules.presetName === 'Custom') || (map && map.id === 'my_area') || (challenge !== null)">
             <div class="big-map" ref="bigMap"></div>
         </round-score>
 
@@ -117,6 +117,9 @@
             movesLeft: 5,
             canvas: null,
             context: null,
+            visualize: localStorage.getItem('visualize') && localStorage.visualize === 'true',
+            svType: 0,
+            distribution: 0,
         }),
         async mounted() {
             window.onresize = () => this.windowWidth = window.innerWidth;
@@ -153,13 +156,15 @@
                     });
 
                 this.svType = this.rules.svType === 2 ? 'both' : (this.rules.svType === 1 ? 'photo' : 'sv');
-                this.streetView = new StreetView(this.map, 'uniform');
-                this.initializeTilesVisualizer().then(() => {
-                    this.streetView.on('subTiles', tiles => {
-                        if (this.dontAllowPlay || this.currentRound === 0)
-                            this.visualizeTiles(tiles);
+                this.distribution = this.rules.distribution === 1 ? 'uniform' : 'weighted';
+                this.streetView = new StreetView(this.map);
+                if (this.visualize)
+                    this.initializeTilesVisualizer().then(() => {
+                        this.streetView.on('subTiles', tiles => {
+                            if (this.dontAllowPlay || this.currentRound === 0)
+                                this.visualizeTiles(tiles);
+                        });
                     });
-                });
                 if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
                 else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
                 else this.zoom = 14;
@@ -348,8 +353,8 @@
                     this.nextLocation = this.challenge.guesses[this.currentRound].target;
                     console.log("Using challenge location, round: ", this.currentRound, 'location:', this.nextLocation);
                 } else {
-                    console.log("Using random location");
-                    this.nextLocation = await this.streetView.randomValidLocation(this.zoom, this.svType);
+                    console.log("Using random location", this.svType, this.distribution);
+                    this.nextLocation = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
                 }
                 this.findingRandomLocation = false;
                 //TODO locationload

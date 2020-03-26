@@ -1,10 +1,9 @@
 import EventEmitter from 'events';
 
 export default class StreetView extends EventEmitter {
-    constructor(map, distribution) {
+    constructor(map) {
         super();
         this.map = map;
-        this.distribution = distribution;
         this.debug = false;
         this.typeColors = [
             {color: [84, 160, 185, 131], id: 'sv'},
@@ -24,7 +23,8 @@ export default class StreetView extends EventEmitter {
         }
     }
 
-    async randomValidLocation(endZoom = 14, type = 'sv') {
+    async randomValidLocation(endZoom = 14, type = 'sv', distribution = 'weighted') {
+        this.distribution = distribution;
         //We can get initialTile by using the geo map polygon without having to access the google sv coverage
         //{x: 4833, y: 3249, zoom: 13} //cyprus city streets
         let tile = await this.randomValidTile(endZoom, type);
@@ -67,7 +67,7 @@ export default class StreetView extends EventEmitter {
             let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
             this.emit('subTiles', subTiles);
 
-            console.log("TYPE", type);
+            console.log("TYPE", type, "DISTRIBUTION", this.distribution);
             let validTiles = subTiles
                 //Change type to photo to have only photo spheres
                 .filter(tile =>

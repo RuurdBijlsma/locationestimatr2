@@ -9,7 +9,7 @@
             </div>
             <div class="score-text">
                 <p class="score-distance">Your guess is {{distance}} removed from the target location</p>
-                <p class="score-total">You scored {{points}} points</p>
+                <p class="score-total">You scored {{points}} point{{points !== 1 ? 's' : ''}}</p>
                 <p v-if="challengeGuess !== null" class="score-distance">Your challenger guessed
                     {{formatDistance(challengeGuess.distance)}} away from the target, scoring {{challengeGuess.score}}
                     points
@@ -38,7 +38,7 @@
                     </p>
                 </template>
             </v-data-table>
-            <div v-if="!hsEnabled">
+            <div v-if="!hsDisabled">
                 <p class="caption">Submit to scoreboard to see other high scores</p>
                 <v-form class="highscore-submit" @submit="submitHighScore">
                     <v-text-field v-model="user" label="Username" dense class="hs-input" outlined required
@@ -71,7 +71,7 @@
                 type: Object,
                 default: null,
             },
-            hsEnabled: {
+            hsDisabled: {
                 type: Boolean,
                 default: true,
             },

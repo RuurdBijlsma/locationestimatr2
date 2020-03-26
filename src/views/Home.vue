@@ -56,12 +56,14 @@
         <main class="middle-content">
             <router-view></router-view>
         </main>
-        <v-footer absolute padless class="footer">
+        <v-footer absolute padless class="footer" v-if="$route.path==='/'">
             <v-card flat tile width="100%">
                 <v-card-text class="white--text bottom-row">
                     <span class="made-by">Made by <a href="https://ruurd.dev" target="_blank">Ruurd Bijlsma</a></span>
                     <div class="buttons">
-                        <v-btn outlined class="gh-button" href="https://github.com/ruurdbijlsma/locationestimatr2" target="_blank">View on Github</v-btn>
+                        <v-btn outlined class="gh-button" href="https://github.com/ruurdbijlsma/locationestimatr2"
+                               target="_blank">View on Github
+                        </v-btn>
                     </div>
                 </v-card-text>
             </v-card>

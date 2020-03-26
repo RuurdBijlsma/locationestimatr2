@@ -48,6 +48,21 @@
                                 {{svType}}
                             </v-chip>
                         </v-chip-group>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <h3 v-on="on">Random location generator</h3>
+                            </template>
+                            <span>
+                                Determines how random location is picked, 'uniform' picks randomly on earth, while 'weighted' chooses based on the amount of StreetView coverage in that area.
+                                <br>
+                                'uniform' generally finds a more remote location, while 'weighted' is more likely to go to populated areas.
+                            </span>
+                        </v-tooltip>
+                        <v-chip-group class="chips" active-class="primary--text" mandatory v-model="rules.distribution">
+                            <v-chip v-for="dType in distributionTypes">
+                                {{dType}}
+                            </v-chip>
+                        </v-chip-group>
                         <p v-if="rules.svType===2">
                             <v-icon color="warning">warning</v-icon>
                             In regions with low StreetView coverage PhotoSpheres will occur disproportionally often.
@@ -74,9 +89,8 @@
                                 {{objectives[rules.objective]}}
                                 <v-icon right>priority_high</v-icon>
                             </v-chip>
-                            <v-chip>
-                                StreetView: {{svTypes[rules.svType]}}
-                            </v-chip>
+                            <v-chip>StreetView: {{svTypes[rules.svType]}}</v-chip>
+                            <v-chip>RNG: {{distributionTypes[rules.distribution]}}</v-chip>
                         </div>
                     </div>
                 </v-form>
@@ -122,6 +136,7 @@
             difficultyRules: Rules.presets,
             rounds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             objectives: ["Guess starting location", "Guess camera location"],
+            distributionTypes: Rules.distributionTypes,
             svTypes: Rules.svTypes,
         }),
         async mounted() {
