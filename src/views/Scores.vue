@@ -2,6 +2,7 @@
     <div class="scores" v-if="map !== null">
         <div class="scores-container">
             <v-img :src="image" class="banner-image"
+                   aspect-ratio="3/5"
                    gradient="to top, rgba(25,32,72,.7), rgba(100,115,201,.13)">
                 <h1 class="score-title">Highscores for {{map.name}}</h1>
             </v-img>
@@ -23,22 +24,25 @@
                         :items="scores"
                         class="data-table"
                         item-key="number"
+                        :items-per-page="10"
                         :single-expand="singleExpand"
+                        disable-sort
                         :expanded.sync="expanded"
+                        :mobile-breakpoint="400"
                         loading-text="Loading scores... Please wait">
                     <template v-slot:expanded-item="{ headers, item }">
-                        <td colspan="2"></td>
-                        <td colspan="1">
-                            <p class="individual-score" v-for="(_, i) of item.scores">Round {{i+1}}:</p>
-                        </td>
-                        <td colspan="1">
-                            <p class="individual-score text-right" v-for="{score, distance} of item.scores"
-                               :key="distance">
-                                {{score}}</p>
-                        </td>
-                        <td colspan="1">
-                            <p class="individual-score text-right" v-for="{distance} of item.scores" :key="distance">
-                                {{formatDistance(distance)}}</p>
+                        <td :colspan="headers.length">
+                            <div class="stats">
+                                <span v-for="{text, value} in unlistedStats" :key="value" class="stat">
+                                    <span v-if="value==='distance'">{{text}}: <span class="stat-value">{{formatDistance(item[value])}}</span></span>
+                                    <span v-else>{{text}}: <span class="stat-value">{{item[value]}}</span></span>
+                                </span>
+                            </div>
+                            <p class="round-score" v-for="({score, distance}, i) in item.scores" :key="i">
+                                <span class="round-text">Round {{i+1}}</span><br>
+                                <span class="score-text">Score:</span> <span class="round-value">{{score}}</span><br>
+                                <span class="score-text">Distance:</span> <span class="round-value">{{formatDistance(distance)}}</span>
+                            </p>
                         </td>
                     </template>
                 </v-data-table>
@@ -62,14 +66,6 @@
             return {
                 expanded: [],
                 singleExpand: false,
-                headers: [
-                    {text: '#', sortable: false, value: 'number',},
-                    {text: 'User', sortable: false, value: 'user',},
-                    {text: 'Score', sortable: false, align: 'right', value: 'totalScore',},
-                    {text: 'Total Distance', value: 'totalDistance', sortable: false, align: 'right'},
-                    {text: 'Time Taken', value: 'timeTaken', sortable: false, align: 'right'},
-                    {text: 'Date', value: 'date', sortable: false,},
-                ],
                 selectedDifficulty: 'Normal',
                 scoreTypes: Rules.presetNames.filter(p => p !== 'Custom'),
                 compoundScores: [{id: "Global", scores: [], loading: false,}],
@@ -77,9 +73,11 @@
                 image: '',
                 loading: false,
                 refresh: false,
+                windowWidth: window.innerWidth,
             }
         },
         async mounted() {
+            window.onresize = () => this.windowWidth = window.innerWidth;
             if (this.$route.query.hasOwnProperty('refresh'))
                 this.refresh = this.$route.query['refresh'] === 'true';
             if (this.$route.query.hasOwnProperty('map')) {
@@ -197,6 +195,52 @@
             }
         },
         computed: {
+            unlistedStats() {
+                if (this.windowWidth < 400) {
+                    return [
+                        {text: 'Total Distance', value: 'totalDistance',},
+                        {text: 'Time Taken', value: 'timeTaken',},
+                        {text: 'Date', value: 'date',}
+                    ]
+                } else if (this.windowWidth < 650) {
+                    return [
+                        {text: 'Time Taken', value: 'timeTaken'},
+                        {text: 'Date', value: 'date',}
+                    ]
+                }
+                return [{text: 'Date', value: 'date',}];
+            },
+            headers() {
+                if (this.windowWidth < 400) {
+                    return [
+                        {text: 'User', value: 'user',},
+                        {text: 'Score', align: 'right', value: 'totalScore',},
+                    ];
+                } else if (this.windowWidth < 600) {
+                    return [
+                        {text: 'User', value: 'user',},
+                        {text: 'Score', align: 'right', value: 'totalScore',},
+                        {text: 'Total Distance', value: 'totalDistance', align: 'right'},
+                    ];
+                } else if (this.windowWidth < 650) {
+                    return [
+                        {text: '#', value: 'number', align: 'right'},
+                        {text: 'User', value: 'user',},
+                        {text: 'Score', align: 'right', value: 'totalScore',},
+                        {text: 'Total Distance', value: 'totalDistance', align: 'right'},
+                    ];
+                }
+                return [
+                    {text: '#', value: 'number', align: 'right'},
+                    {text: 'User', value: 'user',},
+                    {text: 'Score', align: 'right', value: 'totalScore',},
+                    {text: 'Total Distance', value: 'totalDistance', align: 'right'},
+                    {text: 'Time Taken', value: 'timeTaken', align: 'right'},
+                ];
+            },
+            mobile() {
+                this.windowWidth < 630;
+            },
             difficultyId() {
                 return Rules.presetNames.indexOf(this.selectedDifficulty);
             },
@@ -248,6 +292,13 @@
             margin: 0;
             width: 100%;
         }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .banner-image {
+            height: 300px;
+        }
     }
 
     .data-table {
@@ -275,5 +326,41 @@
         margin: 0;
         font-size: 12px;
         opacity: 0.8;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .stat {
+        display: inline-block;
+        margin: 0;
+        padding: 15px;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    .stat-value {
+        color: white;
+    }
+
+    .round-score {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 13px;
+    }
+
+    .score-text {
+        font-style: italic;
+    }
+
+    .round-text {
+        text-transform: uppercase;
+    }
+
+    .round-value {
+        font-weight: bold;
+        color: white;
     }
 </style>

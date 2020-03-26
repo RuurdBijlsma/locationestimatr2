@@ -2,6 +2,7 @@
     <div class="rules">
         <v-card class="rules-card">
             <v-img v-if="image !== '' && map !== null" :src="image" class="banner-image"
+                   aspect-ratio="3/5"
                    gradient="to top, rgba(25,32,72,.7), rgba(100,115,201,.13)">
                 <h1 class="game-title">{{map.name}}</h1>
             </v-img>
@@ -162,7 +163,7 @@
 
     @media screen and (max-width: 550px) {
         .rules {
-            margin-top: 0px !important;
+            margin-top: 0 !important;
         }
 
         .rules-card {
@@ -180,7 +181,8 @@
     }
 
     .banner-image {
-        height: 300px;
+        min-height:300px;
+        width:100%;
     }
 
     .game-title {
