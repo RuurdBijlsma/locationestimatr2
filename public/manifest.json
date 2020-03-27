@@ -1,7 +1,7 @@
 {
   "name": "LocationEstimatr",
   "short_name": "Location Estimatr",
-  "start_url": "index.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#222030",
   "theme_color": "#02c780",
