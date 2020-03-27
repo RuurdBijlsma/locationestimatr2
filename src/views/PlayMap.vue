@@ -66,6 +66,10 @@
                 let coordinates = this.$route.query['area_coordinates'].split(',').map(n => +n);
                 let radius = +this.$route.query['area_radius'] * 1000;
                 this.map = await MapManager.areaToGeoMap(coordinates, radius);
+                this.$store.dispatch('getUrl', 'images/my_area.jpg').then(imageUrl => {
+                    console.log("IMAGE URL", imageUrl);
+                    this.image = imageUrl;
+                });
             } else if (this.$route.query.hasOwnProperty('map')) {
                 let mapInfo = await this.$store.dispatch('getMap', this.$route.query.map);
                 if (mapInfo.image === 'id')
@@ -89,7 +93,7 @@
                 this.$refs.game.start(this.map, this.rules, this.challenge);
             }
         },
-        watch:{
+        watch: {
             map() {
                 document.title = `Play ${this.map.name} - LocationEstimatr`;
             },
