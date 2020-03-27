@@ -2,23 +2,34 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /home-maps/{map}{
-        allow read: if request.auth != null
+        allow read: if request.auth.uid != null
         allow write: if false
     }
     match /maps/{map}{
-        allow read, create: if request.auth != null
+        allow read, create: if request.auth.uid != null
         allow update: if false
     }
+    match /map-counts/{map}{
+        allow read: if request.auth.uid != null
+        allow create: if request.auth.uid != null && request.resource.data.plays == 1
+        allow update: if request.auth.uid != null &&
+                            (request.resource.data.plays == resource.data.plays ||
+        					request.resource.data.plays == resource.data.plays + 1) &&
+                            (request.resource.data.likes == resource.data.likes ||
+        					request.resource.data.likes == resource.data.likes + 1) &&
+                            (request.resource.data.dislikes == resource.data.dislikes ||
+        					request.resource.data.dislikes == resource.data.dislikes + 1)
+    }
     match /map-collections/{collection}{
-        allow read: if request.auth != null
+        allow read: if request.auth.uid != null
         allow write: if false
     }
     match /scores/{score}{
-        allow read, create: if request.auth != null
+        allow read, create: if request.auth.uid != null
         allow update: if false
     }
     match /challenges/{challenge}{
-    	allow get, create: if request.auth != null
+    	allow get, create: if request.auth.uid != null
     	allow list, write: if false
     }
     match /reports/{report}{

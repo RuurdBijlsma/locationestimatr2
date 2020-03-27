@@ -47,15 +47,33 @@
                 </v-form>
             </div>
             <div class="play-again">
+                <v-btn title="Like this map" :loading="loadingLike" :disabled="loadingDislike" v-if="!rated" icon
+                       @click="likeMap">
+                    <v-icon>mdi-thumb-up</v-icon>
+                </v-btn>
+                <v-btn title="Dislike this map" :loading="loadingDislike" :disabled="loadingLike" v-if="!rated" icon
+                       @click="dislikeMap">
+                    <v-icon>mdi-thumb-down</v-icon>
+                </v-btn>
                 <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
                 <v-btn text to="/">Play Other Map</v-btn>
                 <v-btn @click="playAgain" :color="$store.state.color">Play Again</v-btn>
             </div>
+            <v-snackbar v-model="rateSnack">
+                {{ snackText }}
+                <v-btn color="pink"
+                       text
+                       @click="rateSnack = false">
+                    Close
+                </v-btn>
+            </v-snackbar>
         </div>
     </div>
 </template>
 
 <script>
+    import GeoMap from "../js/GeoMap";
+
     const lastUser = localStorage.getItem('lastUser') ? localStorage.lastUser : '';
     export default {
         name: 'RoundScore',
@@ -75,6 +93,10 @@
             },
             submitting: {
                 type: Boolean,
+                default: false,
+            },
+            map: {
+                type: GeoMap,
                 default: false,
             },
             challenge: {
@@ -115,11 +137,32 @@
             nextButtonEnabled: false,
             user: lastUser,
             challengeGuess: null,
+            rated: false,
+            loadingLike: false,
+            loadingDislike: false,
+            rateSnack: false,
+            snackText: '',
         }),
         async mounted() {
 
         },
         methods: {
+            async likeMap() {
+                this.loadingLike = true;
+                await this.$store.dispatch('addLike', this.map.id);
+                this.loadingLike = false;
+                this.rateSnack=true;
+                this.snackText = 'Map has been liked! :)';
+                this.rated = true;
+            },
+            async dislikeMap() {
+                this.loadingDislike = true;
+                await this.$store.dispatch('addDislike', this.map.id);
+                this.loadingDislike = false;
+                this.rateSnack=true;
+                this.snackText = 'Map has been disliked! >:(';
+                this.rated = true;
+            },
             getChallengeUrl() {
                 this.$emit('challengeUrl');
             },

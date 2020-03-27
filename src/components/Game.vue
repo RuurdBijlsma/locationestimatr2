@@ -48,6 +48,7 @@
                      @nextRound="nextRoundEvent"
                      :guesses="previousGuesses"
                      class="roundScore"
+                     :map="map"
                      :submitting="submitting"
                      v-show="showRoundOverview" :google-map="googleMap"
                      ref="roundScore"
@@ -467,6 +468,7 @@
                     this.nextRound(this.nextLocation);
                 } else {
                     this.timeTaken = performance.now() - this.startTime;
+                    this.$store.dispatch('addPlay', this.map.id);
                 }
             },
             showOverview(guess, target, distance, points, isLastRound) {

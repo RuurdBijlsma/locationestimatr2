@@ -41,6 +41,20 @@ async function getCached(key, action, cacheLifetime = 1000 * 60 * 60 * 24) {
     return cache[key].data;
 }
 
+async function addCount(mapId, field) {
+    let doc = await db.collection('map-counts').doc(mapId);
+    let mapCountData = (await doc.get()).data();
+    let updatedData = {};
+    if (mapCountData === undefined) {
+        updatedData[field] = 1;
+        await doc.set(updatedData);
+    } else {
+        let mapCount = mapCountData[field] === undefined ? 0 : mapCountData[field];
+        updatedData[field] = mapCount + 1;
+        await doc.update(updatedData);
+    }
+}
+
 export default new Vuex.Store({
     state: {
         color: '#02c780',
@@ -57,7 +71,16 @@ export default new Vuex.Store({
     },
     getters: {},
     actions: {
-        async reportMap({commit, state}, {mapId, rules}){
+        async addDislike({commit}, mapId) {
+            await addCount(mapId, 'dislikes');
+        },
+        async addLike({commit}, mapId) {
+            await addCount(mapId, 'likes');
+        },
+        async addPlay({commit}, mapId) {
+            await addCount(mapId, 'plays');
+        },
+        async reportMap({commit, state}, {mapId, rules}) {
             await db.collection('reports').add({
                 mapId, rules, user: state.user.uid,
             });
