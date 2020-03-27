@@ -12,16 +12,25 @@ const routes = [
             {
                 path: '',
                 name: 'Home',
+                meta: {
+                    title: route => "LocationEstimatr",
+                },
                 component: () => import('../views/Play')
             },
             {
                 path: '/explore',
                 name: 'Explore',
+                meta: {
+                    title: route => "Explore - LocationEstimatr",
+                },
                 component: () => import('../views/Explore')
             },
             {
                 path: '/create',
                 name: 'CreateMap',
+                meta: {
+                    title: route => "Create Map - LocationEstimatr",
+                },
                 component: () => import('../views/CreateMap'),
                 children: [{
                     path: '/create/polygon',
@@ -36,6 +45,9 @@ const routes = [
             {
                 path: '/settings',
                 name: 'Settings',
+                meta: {
+                    title: route => "Settings - LocationEstimatr",
+                },
                 component: () => import('../views/Settings')
             },
         ]
@@ -43,11 +55,15 @@ const routes = [
     {
         path: '/play',
         name: 'PlayMap',
+        meta: {
+            title: route => "Play - LocationEstimatr",
+        },
         component: () => import('../views/PlayMap')
     },
     {
         path: '/scores',
         name: 'Scores',
+        meta: {},
         component: () => import('../views/Scores')
     },
 
@@ -56,6 +72,13 @@ const routes = [
 const router = new VueRouter({
     routes,
     mode: 'history',
+});
+
+router.afterEach((to, from) => {
+    Vue.nextTick(() => {
+        if (to.meta.hasOwnProperty('title'))
+            document.title = to.meta.title(to)
+    })
 });
 
 export default router

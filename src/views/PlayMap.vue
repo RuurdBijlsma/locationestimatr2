@@ -89,6 +89,11 @@
                 this.$refs.game.start(this.map, this.rules, this.challenge);
             }
         },
+        watch:{
+            map() {
+                document.title = `Play ${this.map.name} - LocationEstimatr`;
+            },
+        },
         computed: {
             isSvg() {
 

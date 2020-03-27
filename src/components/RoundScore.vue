@@ -38,7 +38,7 @@
                     </p>
                 </template>
             </v-data-table>
-            <div v-if="!hsDisabled">
+            <div v-if="!hsDisabled" class="hs">
                 <p class="caption">Submit to scoreboard to see other high scores</p>
                 <v-form class="highscore-submit" @submit="submitHighScore">
                     <v-text-field v-model="user" label="Username" dense class="hs-input" outlined required
@@ -46,10 +46,8 @@
                     <v-btn text type="submit" :loading="submitting" class="hs-button">Submit</v-btn>
                 </v-form>
             </div>
-            <div class="challenge">
-                <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
-            </div>
             <div class="play-again">
+                <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
                 <v-btn text to="/">Play Other Map</v-btn>
                 <v-btn @click="playAgain" :color="$store.state.color">Play Again</v-btn>
             </div>
@@ -449,6 +447,10 @@
         margin: 10px;
     }
 
+    .hs {
+        margin-bottom: -15px;
+    }
+
     .data-table {
         margin: 10px;
     }
@@ -483,7 +485,7 @@
         margin: 0 auto 20px;
     }
 
-    .challenge {
-        margin-bottom: 20px;
+    .play-again > * {
+        margin: 10px;
     }
 </style>

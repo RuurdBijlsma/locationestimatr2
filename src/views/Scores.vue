@@ -48,7 +48,8 @@
                 </v-data-table>
             </div>
             <div class="bottom-buttons">
-                <v-btn :to="`/play?map=${map.id}&difficulty=${difficultyId}`" filled color="primary">Play this map</v-btn>
+                <v-btn :to="`/play?map=${map.id}&difficulty=${difficultyId}`" filled color="primary">Play this map
+                </v-btn>
                 <v-btn to="/" outlined>Homepage</v-btn>
             </div>
         </div>
@@ -76,6 +77,10 @@
             }
         },
         async mounted() {
+            if (this.map !== null)
+                document.title = `${this.map.name} Highscores - LocationEstimatr`;
+            else
+                document.title = `Highscores - LocationEstimatr`;
             window.onresize = () => this.windowWidth = window.innerWidth;
             if (this.$route.query.hasOwnProperty('refresh'))
                 this.refresh = this.$route.query['refresh'] === 'true';
@@ -194,7 +199,10 @@
             },
             singleExpand() {
                 console.log(this.singleExpand)
-            }
+            },
+            map() {
+                document.title = `${this.map.name} Highscores - LocationEstimatr`;
+            },
         },
         computed: {
             unlistedStats() {
@@ -271,7 +279,7 @@
     }
 
     .select {
-        max-width: 200px;
+        max-width: 300px;
         display: inline-block;
     }
 

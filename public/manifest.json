@@ -1,39 +1,77 @@
 {
-  "name": "Location Estimatr",
-  "short_name": "LocationEstimatr",
-  "start_url": ".",
+  "name": "LocationEstimatr",
+  "short_name": "Location Estimatr",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#222031",
-  "description": "Guess where you are in StreetView",
+  "background_color": "#222030",
+  "theme_color": "#02c780",
+  "description": "You get placed in a random StreetView location, then guess where you are.",
   "icons": [
     {
-      "src": "images/icons/favicon-16x16.png",
+      "src": "img/icons/favicon-16x16.png",
       "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "apple-touch-icon-76x76.png",
+      "src": "img/icons/apple-touch-icon-76x76.png",
       "sizes": "76x76",
       "type": "image/png"
     },
     {
-      "src": "images/icons/favicon-32x32.png",
+      "src": "img/icons/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "images/icons/msapplication-icon-144x144.png",
+      "src": "img/icons/msapplication-icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "images/icons/android-chrome-512x512.png",
+      "src": "img/icons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "images/icons/android-chrome-192x192.png",
+      "src": "img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "img/screenshots/1.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "img/screenshots/2.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "img/screenshots/3.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "img/screenshots/4.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "img/screenshots/5.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "img/screenshots/6.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "img/screenshots/7.png",
+      "sizes": "1280x720",
       "type": "image/png"
     }
   ]
