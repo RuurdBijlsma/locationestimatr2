@@ -81,6 +81,7 @@
                 // console.log("Loading called")
                 await this.$store.dispatch('loadHomeMaps')
                 console.log("LOADED", this.$store.state.homeMaps)
+                this.$emit('loadedMaps');
             }
         },
         watch: {

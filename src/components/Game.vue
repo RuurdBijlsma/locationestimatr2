@@ -1,6 +1,6 @@
 <template>
     <div class="game" ref="game" v-show="rules !== null && map !== null">
-        <div class="game-part" v-show="!dontAllowPlay">
+        <div class="game-part" v-show="!dontAllowPlay" v-if="!svFailed">
             <div class="game-info" v-if="rules !== null">
                 <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
                 <span v-if="!rules.unlimitedTime" class="time">Time: <span class="font-weight-bold">{{roundTime}}</span></span>
@@ -32,6 +32,11 @@
                     </v-btn>
                 </div>
             </div>
+        </div>
+        <div v-if="svFailed" class="sv-failed error">
+            <h1>Couldn't find valid StreetView location in this map!</h1>
+            <v-btn outlined to="/">Change Map</v-btn>
+            <v-btn outlined @click="reload">Change Rules</v-btn>
         </div>
         <!--        <div class="loading-text">-->
         <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">
@@ -120,6 +125,7 @@
             visualize: localStorage.getItem('visualize') && localStorage.visualize === 'true',
             svType: 0,
             distribution: 0,
+            svFailed: false,
         }),
         async mounted() {
             window.onresize = () => this.windowWidth = window.innerWidth;
@@ -288,6 +294,9 @@
                 }
                 this.challengeLoading = false;
             },
+            reload() {
+                location.reload();
+            },
             async homeFlag() {
                 await this.svElement.setLocation(...this.currentDestination);
             },
@@ -355,6 +364,12 @@
                 } else {
                     console.log("Using random location", this.svType, this.distribution);
                     this.nextLocation = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
+                    if (this.nextLocation === false) {
+                        this.svFailed = true;
+
+                        let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.preset;
+                        await this.$store.dispatch('reportMap', {mapId: this.map.id, rules});
+                    }
                 }
                 this.findingRandomLocation = false;
                 //TODO locationload
@@ -681,5 +696,18 @@
             height: 256px;
             margin-left: calc(50% - 128px);
         }
+    }
+
+    .sv-failed {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .sv-failed > h1 {
+        padding: 20px;
+    }
+
+    .sv-failed > button {
+        margin: 15px;
     }
 </style>

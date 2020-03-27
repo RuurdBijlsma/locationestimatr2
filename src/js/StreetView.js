@@ -28,6 +28,8 @@ export default class StreetView extends EventEmitter {
         //We can get initialTile by using the geo map polygon without having to access the google sv coverage
         //{x: 4833, y: 3249, zoom: 13} //cyprus city streets
         let tile = await this.randomValidTile(endZoom, type);
+        if (tile === false)
+            return false;
         let canvas = document.createElement("canvas");
         let context = canvas.getContext("2d");
         let img = tile.img;
@@ -49,7 +51,7 @@ export default class StreetView extends EventEmitter {
 
         if (pixelCounts.count === 0) {
             console.error("No blue pixel found");
-            return this.randomValidLocation(endZoom, type);
+            return this.randomValidLocation(endZoom, type, distribution);
         }
         let randomSvPixel = Math.floor(Math.random() * pixelCounts.count);
         let randomSvIndex = pixelCounts.indices[randomSvPixel];
@@ -93,6 +95,10 @@ export default class StreetView extends EventEmitter {
             }
 
             if (validTiles.length === 0) {
+                if(this.tileEquals(chosenTile, initialTile)){
+                    // No valid tiles from initial tile, there's nothing to do
+                    return false;
+                }
                 failedTiles.push(chosenTile);
                 let fromTile = chosenTile;
                 if (previousTiles.length > 0)

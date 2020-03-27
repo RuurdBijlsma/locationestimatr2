@@ -21,5 +21,9 @@ service cloud.firestore {
     	allow get, create: if request.auth != null
     	allow list, write: if false
     }
+    match /reports/{report}{
+    	allow get, create: if request.auth.uid == request.resource.data.user
+    	allow list, write: if false
+    }
   }
 }

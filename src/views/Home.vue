@@ -54,9 +54,9 @@
             </v-navigation-drawer>
         </aside>
         <main class="middle-content">
-            <router-view></router-view>
+            <router-view @loadedMaps="loaded"></router-view>
         </main>
-        <v-footer absolute padless class="footer" v-if="$route.path==='/'">
+        <v-footer absolute padless class="footer" v-if="$route.path==='/' && showFooter">
             <v-card flat tile width="100%">
                 <v-card-text class="white--text bottom-row">
                     <span class="made-by">Made by <a href="https://github.com/ruurdbijlsma" target="_blank">Ruurd Bijlsma</a></span>
@@ -103,11 +103,17 @@
                 drawer: true,
                 loggedIn: false,
                 windowWidth: window.innerWidth,
+                showFooter: false,
             }
         },
         mounted() {
             window.onresize = () => {
                 this.windowWidth = window.innerWidth
+            };
+        },
+        methods: {
+            loaded() {
+                this.showFooter = true;
             }
         },
         watch: {},

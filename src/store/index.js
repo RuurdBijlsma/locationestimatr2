@@ -57,6 +57,11 @@ export default new Vuex.Store({
     },
     getters: {},
     actions: {
+        async reportMap({commit, state}, {mapId, rules}){
+            await db.collection('reports').add({
+                mapId, rules, user: state.user.uid,
+            });
+        },
         async getScoresByDifficultyAndMap({commit}, {difficulty, map, refresh, limit = 50}) {
             console.log({difficulty, map});
             let getScores = async () => {
