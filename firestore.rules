@@ -11,14 +11,22 @@ service cloud.firestore {
     }
     match /map-counts/{map}{
         allow read: if request.auth.uid != null
-        allow create: if request.auth.uid != null && request.resource.data.plays == 1
+        allow create: if request.auth.uid != null &&
+                             (request.resource.data.plays == 1 || request.resource.data.likes == 1 || request.resource.data.dislikes == 1 ||
+                              request.resource.data.plays == 0 || request.resource.data.likes == 0 || request.resource.data.dislikes == 0)
         allow update: if request.auth.uid != null &&
                             (request.resource.data.plays == resource.data.plays ||
-        					request.resource.data.plays == resource.data.plays + 1) &&
+        					request.resource.data.plays == resource.data.plays + 1 ||
+        					request.resource.data.plays == 0 ||
+        					request.resource.data.plays == 1) &&
                             (request.resource.data.likes == resource.data.likes ||
-        					request.resource.data.likes == resource.data.likes + 1) &&
+        					request.resource.data.likes == resource.data.likes + 1 ||
+                            request.resource.data.likes == 0 ||
+                            request.resource.data.likes == 1) &&
                             (request.resource.data.dislikes == resource.data.dislikes ||
-        					request.resource.data.dislikes == resource.data.dislikes + 1)
+        					request.resource.data.dislikes == resource.data.dislikes + 1 ||
+                            request.resource.data.dislikes == 0 ||
+                            request.resource.data.dislikes == 1)
     }
     match /map-collections/{collection}{
         allow read: if request.auth.uid != null

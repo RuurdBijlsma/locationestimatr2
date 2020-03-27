@@ -44,14 +44,14 @@ async function getCached(key, action, cacheLifetime = 1000 * 60 * 60 * 24) {
 async function addCount(mapId, field) {
     let doc = await db.collection('map-counts').doc(mapId);
     let mapCountData = (await doc.get()).data();
-    let updatedData = {};
     if (mapCountData === undefined) {
+        let updatedData = {plays: 0, likes: 0, dislikes: 0};
         updatedData[field] = 1;
         await doc.set(updatedData);
     } else {
         let mapCount = mapCountData[field] === undefined ? 0 : mapCountData[field];
-        updatedData[field] = mapCount + 1;
-        await doc.update(updatedData);
+        mapCountData[field] = mapCount + 1;
+        await doc.update(mapCountData);
     }
 }
 

@@ -154,12 +154,22 @@
                 if (this.challengeMap || this.challengeRules)
                     return;
                 try {
-                    this.$router.replace({
-                        query: {
-                            map: this.map.id,
-                            difficulty: this.difficultyId
-                        }
-                    })
+                    if (this.$route.query.hasOwnProperty('area_coordinates') && this.$route.query.hasOwnProperty('area_radius')) {
+                        this.$router.replace({
+                            query: {
+                                area_coordinates: this.$route.query.area_coordinates,
+                                area_radius: this.$route.query.area_radius,
+                                difficulty: this.difficultyId,
+                            }
+                        });
+                    } else {
+                        this.$router.replace({
+                            query: {
+                                map: this.map.id,
+                                difficulty: this.difficultyId,
+                            }
+                        });
+                    }
                 } catch (e) {
                 }
             },

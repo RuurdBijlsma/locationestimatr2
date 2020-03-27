@@ -271,8 +271,7 @@
                     let guesses = this.previousGuesses.map(g => {
                         return {guess: g.guess, target: g.target}
                     });
-                    let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.preset;
-                    rules = JSON.parse(JSON.stringify(rules));
+                    let rules = this.rules.presetName === 'Custom' ? JSON.parse(JSON.stringify(this.rules)) : this.rules.preset;
                     this.challengeUrl = await this.$store.dispatch('getChallengeUrl', {
                         guesses,
                         rules,
@@ -303,7 +302,7 @@
             },
             async submitHighScore(user, totalScore, scores) {
                 this.submitting = true;
-                let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.preset;
+                let rules = this.rules.presetName === 'Custom' ? JSON.parse(JSON.stringify(this.rules)) : this.rules.preset;
                 await this.$store.dispatch('submitHighScore', {
                     totalScore,
                     totalDistance: scores.map(s => s.distance).reduce((a, b) => a + b),
@@ -368,7 +367,7 @@
                     if (this.nextLocation === false) {
                         this.svFailed = true;
 
-                        let rules = this.rules.presetName === 'Custom' ? this.rules : this.rules.preset;
+                        let rules = this.rules.presetName === 'Custom' ? JSON.parse(JSON.stringify(this.rules)) : this.rules.preset;
                         await this.$store.dispatch('reportMap', {mapId: this.map.id, rules});
                     }
                 }
