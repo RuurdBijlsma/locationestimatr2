@@ -14,6 +14,7 @@
     import Rules from "../components/Rules";
     import RulesObject from '../js/Rules'
     import Game from "../components/Game";
+    import StreetView from "../js/StreetView";
 
     export default {
         name: 'PlayMap',
@@ -84,6 +85,9 @@
             } else {
                 alert("Malformed URL :(");
             }
+            console.log("Loaded Map?", this.map);
+            let sv = new StreetView(this.map);
+            console.log("SV", sv, sv.boundsToSmallestContainingTile(this.map.getBounds()));
         },
         methods: {
             startGame(rules) {

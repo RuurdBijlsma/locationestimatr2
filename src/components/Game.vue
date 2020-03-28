@@ -62,7 +62,7 @@
                 <v-card-subtitle>
                     <p>Share this link with someone so they can play on the locations you played and compare
                         scores!</p>
-                    <v-text-field ref="challengeUrlField" :value="challengeUrl"></v-text-field>
+                    <v-text-field ref="challengeUrlField" readonly :value="challengeUrl"></v-text-field>
                     <p class="caption" v-if="isCopied">
                         <v-icon :color="$store.state.color">done</v-icon>
                         Copied link to clipboard

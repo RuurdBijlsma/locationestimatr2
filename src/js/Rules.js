@@ -66,7 +66,7 @@ export default class Rules {
                 roundCount: 5,
                 objective: 0,
                 svType: 1,
-                distribution: 0,
+                distribution: 1,
                 preset: 1,
             }),
             'Normal': new Rules({

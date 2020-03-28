@@ -55,27 +55,145 @@ async function addCount(mapId, field) {
     }
 }
 
+async function getMapById(id) {
+    let mapData = (await db.collection('maps').doc(id).get()).data();
+    if (mapData.image === 'id')
+        mapData.image = await storage.child('images/user/' + id).getDownloadURL();
+    mapData.id = id;
+    return mapData;
+}
+
+async function getMapsByIds(ids) {
+    return await Promise.all(ids.map(getMapById));
+}
+
 export default new Vuex.Store({
     state: {
         color: '#02c780',
-        user: null,
         homeMaps: [],
+        realAccount: false,
     },
     mutations: {
-        'setUser': (state, user) => {
-            state.user = user;
+        'setRealAccount': (state, real) => {
+            state.realAccount = real;
         },
         'setHomeMaps': (state, maps) => {
             state.homeMaps = maps;
         }
     },
-    getters: {},
+    getters: {
+        user: (state, getters) => {
+            return firebase.auth().currentUser;
+        }
+    },
     actions: {
+        async getExploreMaps({commit}) {
+            let get = async () => {
+                let popularMapIds = await db.collection('map-counts')
+                    .orderBy('plays', 'desc')
+                    .limit(8)
+                    .get()
+                let popMaps = [];
+                popularMapIds.forEach(map => popMaps.push(map.id));
+                let likedMapIds = await db.collection('map-counts')
+                    .orderBy('likes', 'desc')
+                    .limit(8)
+                    .get();
+                let likeMaps = [];
+                likedMapIds.forEach(map => likeMaps.push(map.id));
+                console.log(popMaps, likeMaps);
+                let [pMaps, lMaps] = await Promise.all([
+                    getMapsByIds(popMaps),
+                    getMapsByIds(likeMaps)
+                ]);
+                return {popular: pMaps, liked: lMaps};
+            };
+            return getCached('explore', get);
+        },
+        async getUser({commit, dispatch}, userId) {
+            let get = async () => {
+                let user = (await db.collection('users').doc(userId).get()).data();
+
+                let [userMaps, userLikes] = await Promise.all([
+                    getMapsByIds(user.maps),
+                    getMapsByIds(user.likes),
+                ]);
+                // let maps = await Promise.all([
+                //     ...user.maps.map(map => getCached('userMap:' + map, async map => getMapById(map))),
+                //     ...user.likes.map(map => getCached('userMap:' + map, async map => getMapById(map))),
+                // ]);
+                // console.log(user.maps);
+                // let userMaps = maps.slice(0, user.maps.length);
+                // let userLikes = maps.slice(user.maps.length);
+
+                user.maps = userMaps;
+                user.likes = userLikes;
+                return user;
+            };
+            return await getCached('user:' + userId, get, 1000 * 60 * 5);
+        },
+        async logout({commit}) {
+            await firebase.auth().signOut();
+            commit('setRealAccount', false);
+            // await firebase.auth().signInAnonymously();
+        },
+        async login({commit}, {email, password}) {
+            try {
+                let loginInfo = await firebase.auth().signInWithEmailAndPassword(email, password);
+                commit('setRealAccount', loginInfo.user);
+                return {
+                    user: loginInfo.user,
+                    error: false,
+                };
+            } catch (e) {
+                return {
+                    user: false,
+                    error: e,
+                };
+            }
+        },
+        async forgotPassword({commit}, {email}) {
+            return await firebase.auth().sendPasswordResetEmail(email);
+        },
+        async register({commit}, {email, password, user}) {
+            try {
+                let registerInfo = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                commit('setRealAccount', registerInfo.user);
+                await db.collection('users').doc(registerInfo.user.uid).set({
+                    name: user,
+                    date: new Date,
+                    maps: [],
+                    likes: []
+                });
+                return {
+                    user: registerInfo.user,
+                    error: false,
+                };
+            } catch (e) {
+                return {
+                    user: false,
+                    error: e,
+                };
+            }
+        },
         async addDislike({commit}, mapId) {
             await addCount(mapId, 'dislikes');
         },
-        async addLike({commit}, mapId) {
-            await addCount(mapId, 'likes');
+        async addLike({commit, dispatch}, mapId) {
+            let tasks = [
+                addCount(mapId, 'likes'),
+                new Promise(async resolve => {
+                    let {user, data} = await dispatch('getUserData');
+
+                    let likes = data.likes || [];
+                    console.log('user likes', likes);
+                    if (!likes.includes(mapId)) {
+                        likes.push(mapId);
+                        await user.update({likes});
+                    }
+                    resolve();
+                })];
+            await Promise.all(tasks);
         },
         async addPlay({commit}, mapId) {
             await addCount(mapId, 'plays');
@@ -111,13 +229,48 @@ export default new Vuex.Store({
             // console.log(scores);
             return await getCached(`scores:${difficulty}:${map}:${limit}`, getScores, cacheLifetime);
         },
-        async uploadUserMap({commit}, data) {
-            return new Promise(async (resolve, error) => {
-                let image = data.image;
-                if (data.image)
-                    data.image = 'id';
-                let doc = await db.collection('maps').add(data);
-                if (image) {
+        async initializeUser({commit}) {
+            let uid = firebase.auth().getUid();
+            let user = db.collection('users').doc(uid);
+            let userData = (await user.get()).data();
+            if (userData === undefined) {
+                console.log("Initializing USER", uid);
+                await user.set({likes: [], maps: [], name: '', date: new Date});
+            }
+        },
+        async getUserData({commit, dispatch}) {
+            let uid = firebase.auth().getUid();
+            let user = db.collection('users').doc(uid);
+            let userData = (await user.get()).data();
+            if (userData === undefined) {
+                await dispatch('initializeUser');
+                user = db.collection('users').doc(uid);
+                userData = (await user.get()).data();
+            }
+            return {user, data: userData};
+        },
+        async uploadUserMap({commit, state}, data) {
+            let image = data.image;
+            if (data.image)
+                data.image = 'id';
+            if (state.realAccount) {
+                data.realUser = true;
+            }
+            data.user = firebase.auth().getUid();
+            let doc = await db.collection('maps').add(data);
+
+            let tasks = [];
+            tasks.push(new Promise(async resolve => {
+                let {user, data} = await dispatch('getUserData');
+                let userMaps = data.maps || [];
+                console.log('user maps', userMaps);
+                userMaps.push(doc.id);
+                await user.update({maps: userMaps});
+                resolve();
+            }));
+
+            if (image) {
+                tasks.push(new Promise((resolve, error) => {
                     const metadata = {contentType: image.type};
                     const uploadTask = storage.child('images/user/' + doc.id).put(image, metadata);
                     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, snapshot => {
@@ -129,8 +282,12 @@ export default new Vuex.Store({
                     }, () => {
                         resolve(doc.id);
                     });
-                }
-            });
+                }));
+            }
+
+            console.log(tasks[0], tasks[1]);
+            let [_, mapId] = await Promise.all(tasks);
+            return mapId;
         },
         async getChallengeUrl({commit}, data) {
             console.log("Challenge data", data.radius);
@@ -180,6 +337,7 @@ export default new Vuex.Store({
         },
         async loadHomeMaps({commit}) {
             if (this.state.homeMaps.length === 0) {
+                console.log("Loading home maps");
                 let fromHomeMapsFromDb = async () => {
                     const mapsCollection = await db.collection('home-maps').orderBy('order').get();
                     const homeMaps = [];
@@ -198,6 +356,8 @@ export default new Vuex.Store({
                 };
                 let homeMaps = await getCached('homeMaps', fromHomeMapsFromDb);
                 commit('setHomeMaps', homeMaps);
+            } else {
+                console.log("Don't have to load home maps silly")
             }
         }
     },

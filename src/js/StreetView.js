@@ -4,6 +4,9 @@ export default class StreetView extends EventEmitter {
     constructor(map) {
         super();
         this.map = map;
+        this.bounds = this.map.getBounds();
+        this.smallestContainingTile = this.boundsToSmallestContainingTile(this.bounds);
+        console.log("Smallest containing tile:", this.smallestContainingTile);
         this.debug = false;
         this.typeColors = [
             {color: [84, 160, 185, 131], id: 'sv'},
@@ -27,7 +30,7 @@ export default class StreetView extends EventEmitter {
         this.distribution = distribution;
         //We can get initialTile by using the geo map polygon without having to access the google sv coverage
         //{x: 4833, y: 3249, zoom: 13} //cyprus city streets
-        let tile = await this.randomValidTile(endZoom, type);
+        let tile = await this.randomValidTile(endZoom, type, this.smallestContainingTile);
         if (tile === false)
             return false;
         let canvas = document.createElement("canvas");
@@ -95,7 +98,7 @@ export default class StreetView extends EventEmitter {
             }
 
             if (validTiles.length === 0) {
-                if(this.tileEquals(chosenTile, initialTile)){
+                if (this.tileEquals(chosenTile, initialTile)) {
                     // No valid tiles from initial tile, there's nothing to do
                     return false;
                 }
@@ -223,12 +226,30 @@ export default class StreetView extends EventEmitter {
         return degrees * Math.PI / 180;
     }
 
+    boundsToSmallestContainingTile(bounds) {
+        console.log({bounds});
+        let ne = bounds.getNorthEast();
+        let sw = bounds.getSouthWest();
+        let startZoom = 0;
+        let endZoom = 18;
+        let resultTile = {x: 0, y: 0, zoom: startZoom};
+        for (let zoom = startZoom; zoom <= endZoom; zoom++) {
+            let neTile = this.latLonToTile(ne.lat(), ne.lng(), zoom);
+            let swTile = this.latLonToTile(sw.lat(), sw.lng(), zoom);
+            let equals = this.tileEquals(neTile, swTile);
+            if (!equals)
+                break;
+            resultTile = neTile;
+        }
+        return resultTile;
+    }
+
     latLonToTile(latDeg, lonDeg, zoom) {
         let latRad = this.toRadians(latDeg);
         let n = 2.0 ** zoom;
         let xTile = Math.floor((lonDeg + 180.0) / 360.0 * n);
         let yTile = Math.floor((1.0 - Math.log(Math.tan(latRad) + (1 / Math.cos(latRad))) / Math.PI) / 2.0 * n);
-        return [xTile, yTile];
+        return {x: xTile, y: yTile, zoom};
     }
 
     getUrl(x, y, zoom) {

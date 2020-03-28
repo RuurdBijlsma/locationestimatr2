@@ -6,6 +6,7 @@
         <p class="caption">Drag polygon points to move them</p>
         <p class="caption">Click on a polygon point to select it, then click somewhere in the map to place a polygon
             point after the selected point. Press delete to remove a selected point.</p>
+        <p class="error--text caption">{{error}}</p>
         <div class="controls">
             <v-file-input small-chips v-model="kmlFile" label="Import KML" outlined dense accept=".kml"
                           title="Import .kml file into editor" class="kml-input"></v-file-input>
@@ -90,6 +91,7 @@
                 svCoverage: null,
                 invalid: false,
                 showCoverage: false,
+                error: '',
             }
         },
         async mounted() {
@@ -381,6 +383,7 @@
                     date: new Date(),
                 });
                 this.uploading = false;
+                // console.warn("EMIT HERE");
                 this.$emit('uploaded', mapId);
             },
         },

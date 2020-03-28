@@ -31,10 +31,20 @@
             //
         }),
         async mounted() {
-            firebase.auth().signInAnonymously().then(s => {
-                this.$store.commit('setUser', s.user);
-            }).catch(err => {
-                console.log("Login error", err);
+            firebase.auth().onAuthStateChanged(user => {
+                console.log("AuthStateChanged", user);
+                if (user === null) {
+                    console.log("User is null, setting login to anonymous");
+                    firebase.auth().signInAnonymously().catch(err => {
+                        console.log("Login error", err);
+                    });
+                } else {
+                    if (user.email !== null) {
+                        this.$store.commit('setRealAccount', user);
+                    } else {
+                        this.$store.dispatch('initializeUser');
+                    }
+                }
             });
         }
     };

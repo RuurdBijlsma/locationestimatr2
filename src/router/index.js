@@ -50,6 +50,30 @@ const routes = [
                 },
                 component: () => import('../views/Settings')
             },
+            {
+                path: '/login',
+                name: 'Login',
+                meta: {
+                    title: route => "Login - LocationEstimatr",
+                },
+                component: () => import('../views/Login')
+            },
+            {
+                path: '/register',
+                name: 'Register',
+                meta: {
+                    title: route => "Register - LocationEstimatr",
+                },
+                component: () => import('../views/Register')
+            },
+            {
+                path: '/user',
+                name: 'Profile',
+                meta: {
+                    title: route => "Profile - LocationEstimatr",
+                },
+                component: () => import('../views/Profile')
+            },
         ]
     },
     {

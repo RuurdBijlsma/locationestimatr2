@@ -17,6 +17,13 @@
                 <v-list dense
                         nav
                         class="py-0">
+                    <v-list-item two-line v-if="$store.state.realAccount">
+                        <v-list-item-content>
+                            <v-list-item-title class="account" @click="goProfile()">{{$store.state.realAccount.email}}
+                            </v-list-item-title>
+                            <v-list-item-subtitle class="logout" @click="logout()">Logout</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
                     <v-list-item to="/" exact>
                         <v-list-item-icon>
                             <v-icon>home</v-icon>
@@ -50,12 +57,24 @@
                         </v-list-item-action>
                         <v-list-item-title class="text--darken-1">Settings</v-list-item-title>
                     </v-list-item>
+                    <div v-if="!$store.state.realAccount">
+                        <v-divider></v-divider>
+                        <v-list-item to="login">
+                            <v-list-item-title class="text--darken-1">Login</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item to="register">
+                            <v-list-item-title class="text--darken-1">Register</v-list-item-title>
+                        </v-list-item>
+                    </div>
                 </v-list>
             </v-navigation-drawer>
         </aside>
         <main class="middle-content">
-            <router-view @loadedMaps="loaded"></router-view>
+            <router-view @loadedMaps="loaded" @snack="showSnack"></router-view>
         </main>
+        <v-snackbar v-model="snack">{{ snackText }}
+            <v-btn color="pink" text @click="snack = false">Close</v-btn>
+        </v-snackbar>
         <v-footer absolute padless class="footer" v-if="$route.path==='/' && showFooter">
             <v-card flat tile width="100%">
                 <v-card-text class="white--text bottom-row">
@@ -89,6 +108,14 @@
                     <span>Settings</span>
                     <v-icon>settings</v-icon>
                 </v-btn>
+                <v-btn v-if="$store.state.realAccount" :to="`/user?id=${$store.state.realAccount.uid}`" class="bottom-button">
+                    <span>Profile</span>
+                    <v-icon>face</v-icon>
+                </v-btn>
+                <v-btn v-else to="/login" class="bottom-button">
+                    <span>Login</span>
+                    <v-icon>account_circle</v-icon>
+                </v-btn>
             </v-bottom-navigation>
         </div>
     </div>
@@ -104,6 +131,8 @@
                 loggedIn: false,
                 windowWidth: window.innerWidth,
                 showFooter: false,
+                snack: false,
+                snackText: '',
             }
         },
         mounted() {
@@ -112,6 +141,21 @@
             };
         },
         methods: {
+            async goProfile() {
+                try {
+                    await this.$router.push('/user?id=' + this.$store.state.realAccount.uid)
+                } catch (e) {
+                    console.log(e.message);
+                }
+            },
+            async logout() {
+                await this.$store.dispatch('logout');
+                this.showSnack("Logged out successfully");
+            },
+            showSnack(text) {
+                this.snackText = text;
+                this.snack = true;
+            },
             loaded() {
                 this.showFooter = true;
             }
@@ -231,5 +275,20 @@
     .made-by {
         padding: 7px 0;
         display: inline-block;
+    }
+
+    .logout, .account {
+        cursor: pointer;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+    }
+
+    .account:hover {
+        text-decoration: underline;
     }
 </style>
