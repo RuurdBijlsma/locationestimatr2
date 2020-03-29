@@ -6,13 +6,19 @@ export default class StreetView extends EventEmitter {
         this.map = map;
         this.bounds = this.map.getBounds();
         this.smallestContainingTile = this.boundsToSmallestContainingTile(this.bounds);
+        // this.smallestContainingTile = {x: 547, y: 377, zoom: 10};
         console.log("Smallest containing tile:", this.smallestContainingTile);
         this.debug = false;
         this.typeColors = [
-            {color: [84, 160, 185, 131], id: 'sv'},
-            {color: [84, 160, 185, 255], id: 'sv'},
-            {color: [165, 224, 250, 108], id: 'photo'},
+            {color: [84, 160, 185], id: 'sv'},
+            {color: [165, 224, 250], id: 'photo'},
         ];
+        //Has opacity:
+        // this.typeColors = [
+        //     {color: [84, 160, 185, 131], id: 'sv'},
+        //     {color: [84, 160, 185, 255], id: 'sv'},
+        //     {color: [165, 224, 250, 108], id: 'photo'},
+        // ];
 
         if (this.debug) {
             let div = document.createElement('div');
@@ -63,87 +69,64 @@ export default class StreetView extends EventEmitter {
         return this.tilePixelToLatLon(tile.x, tile.y, tile.zoom, x, y);
     }
 
-    async randomValidTile(endZoom, type, initialTile = {x: 0, y: 0, zoom: 0}) {
-        let chosenTile = initialTile;
-        // let chosenTile = {x: 76, y: 50, zoom: 7};
-        let previousTiles = [chosenTile];
-        let failedTiles = [];
-        while (chosenTile.zoom < endZoom) {
-            let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
-            this.emit('subTiles', subTiles);
-
-            console.log("TYPE", type, "DISTRIBUTION", this.distribution);
-            let validTiles = subTiles
-                //Change type to photo to have only photo spheres
-                .filter(tile =>
-                    (type === 'sv' || type === 'both') && tile.types.sv ||
-                    (type === 'photo' || type === 'both') && tile.types.photo ||
-                    tile.zoom < 7 && tile.types.sv)
-                .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom))
-                .filter(tile => !this.isFailedTile(tile, failedTiles));
-            if (this.debug) {
-                console.log(validTiles);
-                this.debugImg.forEach(img => {
-                    img.src = '';
-                });
-                validTiles.forEach((tile, i) => {
-                    if (this.debugImg[i] && tile.img) {
-                        this.debugImg[i].src = tile.img.src
-                    }
-                });
-                if (chosenTile.zoom === 5) {
-                    console.log(validTiles);
-                    return;
-                }
-            }
-
-            if (validTiles.length === 0) {
-                if (this.tileEquals(chosenTile, initialTile)) {
-                    // No valid tiles from initial tile, there's nothing to do
-                    return false;
-                }
-                failedTiles.push(chosenTile);
-                let fromTile = chosenTile;
-                if (previousTiles.length > 0)
-                    chosenTile = previousTiles.splice(-2)[0];
-                else
-                    chosenTile = initialTile;
-                console.log("Took a wrong turn when getting a random tile, going back to zoom " + chosenTile.zoom, chosenTile, 'from', fromTile);
-            } else {
-                chosenTile = this.pickRandomSubTile(validTiles);
-                previousTiles.push(chosenTile);
-            }
-        }
-
-        return chosenTile;
+    async waitSleep(time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time);
+        });
     }
 
-    isFailedTile(tile, failedTiles) {
-        for (let fail of failedTiles)
-            if (this.tileEquals(tile, fail))
-                return true;
+    async randomValidTile(endZoom, type, chosenTile = {x: 0, y: 0, zoom: 0}) {
+        if (chosenTile.zoom >= endZoom) {
+            return chosenTile;
+        }
+        const photoSphereZoomLevel = 12;
+
+        let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
+        this.emit('subTiles', subTiles);
+        console.log("TYPE", type, "DISTRIBUTION", this.distribution);
+
+        let validTiles = subTiles
+            .filter(tile =>
+                (type === 'sv' || type === 'both') && tile.types.sv ||
+                (type === 'photo' || type === 'both') && tile.types.photo ||
+                //When under photosphere zoom level, also consider sv tiles valid tiles, because photospheres aren't visible yet
+                tile.zoom <= photoSphereZoomLevel && tile.types.sv)
+            .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom));
+
+        if (this.debug) {
+            console.log("validTiles", validTiles);
+            this.debugImg.forEach(img => {
+                img.src = '';
+            });
+            validTiles.forEach((tile, i) => {
+                if (this.debugImg[i] && tile.img) {
+                    this.debugImg[i].src = tile.img.src
+                }
+            });
+            if (chosenTile.zoom >= 12) {
+                // return;
+            }
+            // await this.waitSleep(4000);
+        }
+
+        //When under photosphere zoom level don't use distribution weighted, because there is no photosphere coverage yet to weight
+        let shuffleFun = this.distribution === 'uniform' || (type === 'photo' && chosenTile.zoom + 1 <= photoSphereZoomLevel) ?
+            array => this.shuffle(array) :
+            array => this.shuffleWeighted(array, item => item.coverage[type]);
+        let shuffledTiles = shuffleFun(validTiles);
+        for (let tile of shuffledTiles) {
+            let subTile = await this.randomValidTile(endZoom, type, tile);
+            console.log("subTile", subTile);
+            // await this.waitSleep(2000);
+            if (subTile !== false)
+                return subTile;
+        }
+        console.log("Back tracking");
         return false;
     }
 
     tileEquals(tileA, tileB) {
         return (tileA.x === tileB.x && tileA.y === tileB.y && tileA.zoom === tileB.zoom);
-    }
-
-    pickRandomSubTile(tiles) {
-        if (this.distribution === "uniform") {
-            return tiles[Math.floor(tiles.length * Math.random())];
-        }
-
-        let totalCoverage = tiles.map(tile => tile.coverage).reduce((a, b) => a + b);
-        let random = Math.random() * totalCoverage;
-
-        for (let tile of tiles) {
-            random -= tile.coverage;
-            if (random <= 0)
-                return tile;
-        }
-
-        console.error("Count not find tile");
     }
 
     tileIntersectsMap(tileX, tileY, zoom) {
@@ -281,7 +264,7 @@ export default class StreetView extends EventEmitter {
         if (rgba[2] === 0)
             return 'empty';
 
-        const allowedColorDiff = 3;
+        const allowedColorDiff = 4;
         typeLoop:
             for (let {id, color} of this.typeColors) {
                 for (let i = 0; i < rgba.length; i++) {
@@ -301,7 +284,7 @@ export default class StreetView extends EventEmitter {
         canvas.height = img.height;
         context.drawImage(img, 0, 0);
         let data = context.getImageData(0, 0, img.width, img.height).data;
-        let coverage = 0;
+        let coverage = {sv: 0, photo: 0, empty: 0};
         let types = {
             empty: false,
             sv: false,
@@ -309,31 +292,58 @@ export default class StreetView extends EventEmitter {
         };
         for (let i = 0; i < data.length; i += 4) {
             //If tile is known to have both sv and photo, don't keep checking for there is no more information to get
-            if (!(types.sv && types.photo)) {
-                let color = data.slice(i, i + 4);
-                let colorType = this.getColorType(color);
-                if (this.debug) {
-                    // console.log(JSON.stringify([...color]), colorType);
-                }
-                types[colorType] = true;
-            }
+            // if (!(types.sv && types.photo)) {
 
-            coverage += data[i + 2]; // Blue pixel data
+            //Has opacity
+            // let color = data.slice(i, i + 4);
+            let color = data.slice(i, i + 3);
+            let colorType = this.getColorType(color);
+            if (this.debug) {
+                // console.log(JSON.stringify([...color]), colorType);
+            }
+            types[colorType] = true;
+            coverage[colorType]++;
+            // }
+
+            // coverage += data[i + 2]; // Blue pixel data
         }
         return {coverage, types};
     }
-}
 
-Array.prototype.shuffle = function () {
-    const input = this;
+    shuffleWeighted(array, weightField = item => item.weight) {
+        if (array.length === 0)
+            return array;
+        let result = [];
+        let len = array.length;
+        let totalWeights = array.map(weightField).reduce((a, b) => a + b);
+        for (let i = 0; i < len; i++) {
+            let randomWeightValue = Math.random() * totalWeights;
+            let weightedRandomIndex = -1;
+            for (let j = 0; j < array.length; j++) {
+                let item = array[j];
+                if (weightField(item) > randomWeightValue) {
+                    weightedRandomIndex = j;
+                    break;
+                }
+                randomWeightValue -= weightField(item);
+            }
+            let item = array.splice(weightedRandomIndex, 1)[0];
+            totalWeights -= weightField(item);
+            result.push(item);
+        }
+        return result;
 
-    for (let i = input.length - 1; i >= 0; i--) {
-
-        const randomIndex = Math.floor(Math.random() * (i + 1));
-        const itemAtIndex = input[randomIndex];
-
-        input[randomIndex] = input[i];
-        input[i] = itemAtIndex;
     }
-    return input;
+
+    shuffle(input) {
+        for (let i = input.length - 1; i >= 0; i--) {
+
+            const randomIndex = Math.floor(Math.random() * (i + 1));
+            const itemAtIndex = input[randomIndex];
+
+            input[randomIndex] = input[i];
+            input[i] = itemAtIndex;
+        }
+        return input;
+    }
 }
