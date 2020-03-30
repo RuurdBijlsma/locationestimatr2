@@ -83,12 +83,49 @@
                         <v-btn outlined class="gh-button" href="https://github.com/ruurdbijlsma/locationestimatr2"
                                target="_blank">View on Github
                         </v-btn>
+                        <v-dialog
+                                v-model="dialog"
+                                width="500">
+                            <template v-slot:activator="{ on }">
+                                <v-btn outlined v-on="on">Write Feedback</v-btn>
+                            </template>
+
+                            <v-card>
+                                <v-card-title primary-title>
+                                    Feedback
+                                </v-card-title>
+                                <v-card-subtitle>Write feedback on how to improve the website or anything else.</v-card-subtitle>
+
+                                <v-card-text>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.
+                                </v-card-text>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                            color="primary"
+                                            text
+                                            @click="dialog = false"
+                                    >
+                                        I accept
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </div>
                 </v-card-text>
             </v-card>
         </v-footer>
         <div class="bottom-content">
             <v-bottom-navigation
+                    shift
                     :color="$store.state.color"
                     v-if="mobile"
                     grow>
@@ -97,18 +134,19 @@
                     <v-icon>home</v-icon>
                 </v-btn>
                 <v-btn to="/explore" class="bottom-button">
-                    <span>Explore Maps</span>
+                    <span>Explore</span>
                     <v-icon>explore</v-icon>
                 </v-btn>
                 <v-btn to="/create" class="bottom-button">
-                    <span>Map Maker</span>
+                    <span>Make</span>
                     <v-icon>map</v-icon>
                 </v-btn>
                 <v-btn to="/settings" class="bottom-button">
                     <span>Settings</span>
                     <v-icon>settings</v-icon>
                 </v-btn>
-                <v-btn v-if="$store.state.realAccount" :to="`/user?id=${$store.state.realAccount.uid}`" class="bottom-button">
+                <v-btn v-if="$store.state.realAccount" :to="`/user?id=${$store.state.realAccount.uid}`"
+                       class="bottom-button">
                     <span>Profile</span>
                     <v-icon>face</v-icon>
                 </v-btn>
@@ -133,6 +171,7 @@
                 showFooter: false,
                 snack: false,
                 snackText: '',
+                dialog: false,
             }
         },
         mounted() {
@@ -253,8 +292,8 @@
     }
 
     .bottom-button {
-        padding: 9px !important;
-        display: inline-block;
+        /*padding: 9px !important;*/
+        /*display: inline-block;*/
         height: 100% !important;
     }
 
@@ -272,6 +311,10 @@
 
     }
 
+    .buttons > * {
+        margin-left: 10px;
+    }
+
     .made-by {
         padding: 7px 0;
         display: inline-block;
@@ -284,8 +327,9 @@
         -khtml-user-select: none; /* Konqueror HTML */
         -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Opera and Firefox */
+        user-select: none;
+        /* Non-prefixed version, currently
+                                         supported by Chrome, Opera and Firefox */
     }
 
     .account:hover {

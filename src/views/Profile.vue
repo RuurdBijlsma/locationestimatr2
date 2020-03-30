@@ -3,20 +3,19 @@
         <div v-if="$route.query.id">
             <div v-if="user !== null">
                 <h1>Profile for {{user.name}}</h1>
-                <v-divider></v-divider>
-                <div v-if="user.likes.length > 0">
-                    <h3>
-                        <v-icon class="icon" :color="$store.state.color">thumb_up</v-icon>
-                        Liked Maps
-                    </h3>
-                    <map-grid :maps="user.likes" img-prefix="../"></map-grid>
-                </div>
                 <div v-if="user.maps.length > 0">
-                    <h3>
-                        <v-icon class="icon" :color="$store.state.color">create</v-icon>
+                    <h3 class="subtitle">
+                        <v-icon class="sub-icon" :color="$store.state.color">create</v-icon>
                         Maps Created By {{user.name}}
                     </h3>
                     <map-grid :maps="user.maps" img-prefix="../"></map-grid>
+                </div>
+                <div v-if="user.likes.length > 0">
+                    <h3 class="subtitle">
+                        <v-icon class="sub-icon" :color="$store.state.color">thumb_up</v-icon>
+                        Liked Maps
+                    </h3>
+                    <map-grid :maps="user.likes" img-prefix="../"></map-grid>
                 </div>
             </div>
         </div>
@@ -51,13 +50,13 @@
     .profile {
         text-align: center;
     }
-
-    h3 {
-        margin: 20px 0;
+    .subtitle {
+        font-size: 23px;
+        margin: 20px;
     }
 
-    .icon {
-        margin: 6px;
-        margin-top: 4px;
+    .sub-icon {
+        margin-right: 10px;
+        margin-top:-1px;
     }
 </style>

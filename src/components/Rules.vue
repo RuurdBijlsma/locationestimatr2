@@ -142,6 +142,8 @@
         async mounted() {
             if (this.$route.query.hasOwnProperty('difficulty')) {
                 this.selectedDifficulty = Rules.presetNames[this.$route.query['difficulty']];
+            } else if (localStorage.getItem('lastPlayedDifficulty') !== null) {
+                this.selectedDifficulty = Rules.presetNames[localStorage.lastPlayedDifficulty];
             }
         },
         methods: {
@@ -154,6 +156,7 @@
                 if (this.challengeMap || this.challengeRules)
                     return;
                 try {
+                    localStorage.lastPlayedDifficulty = this.difficultyId;
                     if (this.$route.query.hasOwnProperty('area_coordinates') && this.$route.query.hasOwnProperty('area_radius')) {
                         this.$router.replace({
                             query: {

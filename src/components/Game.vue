@@ -8,7 +8,13 @@
                     <span class="font-weight-bold">{{movesLeft}}</span></span>
             </div>
             <div class="street-view" ref="streetView"></div>
-            <div class="return-home" ref="returnHome">
+            <div class="return-home full-screen" ref="returnHome" title="Toggle fullscreen">
+                <v-btn @click="toggleFullScreen()" class="return-home-button" color="#222222" fab dark>
+                    <v-icon v-if="fullscreen">fullscreen_exit</v-icon>
+                    <v-icon v-else>fullscreen</v-icon>
+                </v-btn>
+            </div>
+            <div class="return-home" ref="returnHome" title="Teleport to start location">
                 <v-btn @click="homeFlag()" class="return-home-button" color="#222222" fab dark>
                     <v-icon>flag</v-icon>
                 </v-btn>
@@ -101,6 +107,7 @@
             findingRandomLocation: false,
             currentDestination: null,
             guessedLocation: null,
+            fullscreen: false,
             prepared: false,
             showRoundOverview: false,
             nextLocation: null,
@@ -129,7 +136,13 @@
             svFailed: false,
         }),
         async mounted() {
-            window.onresize = () => this.windowWidth = window.innerWidth;
+            this.fullscreen = document.fullscreenElement;
+            document.onfullscreenchange = e=>{
+                this.fullscreen = document.fullscreenElement;
+            };
+            window.onresize = () => {
+                this.windowWidth = window.innerWidth;
+            };
             document.onmouseup = e => {
                 this.resizeDown = false;
                 this.resizeEvent(e);
@@ -150,6 +163,30 @@
             };
         },
         methods: {
+            toggleFullScreen() {
+                let elem = document.documentElement;
+                if (!this.fullscreen) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.mozRequestFullScreen) { /* Firefox */
+                        elem.mozRequestFullScreen();
+                    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                        elem.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) { /* Firefox */
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { /* IE/Edge */
+                        document.msExitFullscreen();
+                    }
+                }
+            },
             async start(map, rules, challenge) {
                 this.map = map;
                 this.rules = rules;
@@ -710,5 +747,10 @@
 
     .sv-failed > button {
         margin: 15px;
+    }
+
+
+    .full-screen{
+        margin-bottom:63px;
     }
 </style>

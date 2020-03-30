@@ -1,6 +1,6 @@
 <template>
     <v-app dark>
-        <router-view></router-view>
+        <router-view v-if="loggedIn"></router-view>
     </v-app>
     <!--    <div id="app">-->
     <!--    </div>-->
@@ -28,9 +28,11 @@
         name: 'App',
         components: {},
         data: () => ({
-            //
+            loggedIn: false,
         }),
         async mounted() {
+            if (!navigator.onLine)
+                this.loggedIn = true;
             firebase.auth().onAuthStateChanged(user => {
                 console.log("AuthStateChanged", user);
                 if (user === null) {
@@ -39,6 +41,7 @@
                         console.log("Login error", err);
                     });
                 } else {
+                    this.loggedIn = true;
                     if (user.email !== null) {
                         this.$store.commit('setRealAccount', user);
                     } else {

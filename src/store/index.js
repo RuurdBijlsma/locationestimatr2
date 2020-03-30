@@ -56,11 +56,32 @@ async function addCount(mapId, field) {
 }
 
 async function getMapById(id) {
-    let mapData = (await db.collection('maps').doc(id).get()).data();
-    if (mapData.image === 'id')
-        mapData.image = await storage.child('images/user/' + id).getDownloadURL();
-    mapData.id = id;
-    return mapData;
+    let get = async () => {
+        let mapData = (await db.collection('maps').doc(id).get()).data();
+        let mapCountsTask = new Promise(async resolve => {
+            let mapCounts = (await db.collection('map-counts').doc(id).get()).data();
+            if (mapCounts === undefined)
+                mapCounts = {likes: 0, dislikes: 0, plays: 0};
+            mapData.counts = mapCounts;
+            resolve();
+        });
+        let imageTask = new Promise(async resolve => {
+            if (mapData.image === 'id')
+                mapData.image = await storage.child('images/user/' + id).getDownloadURL();
+            resolve();
+        });
+        let userTask = new Promise(async resolve => {
+            if (mapData.realUser && mapData.user)
+                mapData.userInfo = (await db.collection('users').doc(mapData.user).get()).data();
+            resolve();
+        });
+        await Promise.all([mapCountsTask, imageTask, userTask]);
+        mapData.id = id;
+        delete mapData.maps;
+        // console.log(mapData);
+        return mapData;
+    };
+    return getCached('shallowMap:' + id, get);
 }
 
 async function getMapsByIds(ids) {
@@ -87,12 +108,23 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async deleteAccount({commit}) {
+            try {
+                await db.collection('users').doc(firebase.auth().getUid()).delete();
+                commit('setRealAccount', false);
+                console.warn("DELETING ACCOUNT");
+                await firebase.auth().currentUser.delete();
+                await firebase.auth().signInAnonymously();
+            } catch (e) {
+                alert(e.message);
+            }
+        },
         async getExploreMaps({commit}) {
             let get = async () => {
                 let popularMapIds = await db.collection('map-counts')
                     .orderBy('plays', 'desc')
                     .limit(8)
-                    .get()
+                    .get();
                 let popMaps = [];
                 popularMapIds.forEach(map => popMaps.push(map.id));
                 let likedMapIds = await db.collection('map-counts')
@@ -249,7 +281,7 @@ export default new Vuex.Store({
             }
             return {user, data: userData};
         },
-        async uploadUserMap({commit, state}, data) {
+        async uploadUserMap({commit, state, dispatch}, data) {
             let image = data.image;
             if (data.image)
                 data.image = 'id';
@@ -345,12 +377,7 @@ export default new Vuex.Store({
                         homeMaps.push(map.data());
                     });
                     await Promise.all(homeMaps.map(async m => {
-                        m.maps = await Promise.all(m.maps.map(async h => {
-                            let mapData = (await h.get()).data();
-                            delete mapData.maps;
-                            mapData.id = h.id;
-                            return mapData;
-                        }))
+                        m.maps = await Promise.all(m.maps.map(async h => await getMapById(h.id)))
                     }));
                     return homeMaps;
                 };

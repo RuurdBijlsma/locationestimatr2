@@ -12,8 +12,7 @@
         </div>
         <div class="map-collection" v-for="collection in $store.state.homeMaps" :key="collection.name">
             <div class="map-collection-title">
-                <v-icon :color="$store.state.color">{{collection.icon}}</v-icon>
-                <span class="title">{{collection.name}}</span>
+                <h3 class="subtitle"><v-icon class="sub-icon" :color="$store.state.color">{{collection.icon}}</v-icon>{{collection.name}}</h3>
             </div>
             <map-grid class="maps" :maps="collection.maps"></map-grid>
         </div>
@@ -48,6 +47,15 @@
 </script>
 
 <style scoped>
+    .subtitle {
+        font-size: 23px;
+        margin: 20px;
+    }
+
+    .sub-icon {
+        margin-right: 10px;
+        margin-top:-1px;
+    }
     .play {
         text-align: center;
     }

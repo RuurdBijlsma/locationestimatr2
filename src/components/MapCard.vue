@@ -2,9 +2,22 @@
     <v-lazy class="map-card" min-height="207" transition="fade-transition">
         <div class="card">
             <v-img class="white--text align-end map-background"
-                   aspect-ratio="3/5"
+                   aspect-ratio="5/3"
                    :src="image">
-                <v-card-title class="card-title text-truncate d-inline-block">{{map.name}}</v-card-title>
+                <v-card-title class="card-title text-truncate d-inline-block" :title="map.name">{{map.name}}
+                </v-card-title>
+                <v-card-subtitle class="card-subtitle">
+                    <span v-if="map.counts" class="map-counts">
+                        <span :title="`${map.counts.plays} completions`" class="map-count-info"><v-icon class="map-count-info-icon" x-small>visibility</v-icon>{{map.counts.plays}}</span>
+                        <span :title="`${map.counts.likes} likes`" class="map-count-info"><v-icon class="map-count-info-icon" x-small>thumb_up</v-icon>{{map.counts.likes}}</span>
+                        <span :title="`${map.counts.dislikes} dislikes`" class="map-count-info"><v-icon class="map-count-info-icon" x-small>thumb_down</v-icon>{{map.counts.dislikes}}</span>
+                    </span>
+                    <router-link class="map-user-link" v-if="map.realUser && map.user" :to="`/user?id=${map.user}`" :title="map.userInfo.name">
+                        {{map.userInfo.name}}
+                    </router-link>
+                    <router-link class="map-user-link anonymous" v-else-if="map.user" :to="`/user?id=${map.user}`" title="Anonymous">Anonymous
+                    </router-link>
+                </v-card-subtitle>
             </v-img>
             <div class="card-bottom">
                 <div v-if="map.type === 'area'" class="area-actions">
@@ -80,7 +93,7 @@
     .card {
         background-color: rgba(0, 0, 0, 0.8);
         border-radius: 0.7em;
-        box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
         transition: 0.15s;
         text-align: left;
         min-width: 230px;
@@ -93,12 +106,15 @@
     }
 
     .map-background {
-        pointer-events: none;
         height: calc(100% - 52px);
         width: 100%;
         display: inline-block;
         border-top-right-radius: 0.7em;
         border-top-left-radius: 0.7em;
+    }
+
+    .map-background >>> v-image__image {
+        pointer-events: none;
     }
 
     .card-bottom {
@@ -107,10 +123,27 @@
 
     .card-title {
         text-shadow: 0 0 10px black;
-        background-image: linear-gradient(to top, rgba(30, 30, 30, 0.6), transparent);
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
         position: absolute;
         bottom: 0px;
+        padding-bottom: 20px;
         width: 100%
+    }
+
+    .card-subtitle {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        overflow: hidden;
+        position: absolute;
+        bottom: -15px;
+        font-weight: lighter;
+        font-size: 12px;
+        opacity: 0.8;
+    }
+
+    .card-subtitle * {
+        color: white;
     }
 
     .area-actions {
@@ -122,7 +155,7 @@
         width: 50px;
         font-size: 12px;
         height: 10px;
-        margin: -10px 10px 0px;
+        margin: -11px 10px 0px;
     }
 
     .radius-field >>> input {
@@ -131,5 +164,22 @@
 
     .area-play {
         margin-left: 10px;
+    }
+
+    .map-count-info {
+        margin-right: 8px;
+    }
+
+    .map-count-info-icon {
+        margin-top: -3px;
+        margin-right: 3px;
+    }
+
+    .map-counts {
+        margin-right: 5px;
+    }
+
+    .anonymous{
+        font-style: italic;
     }
 </style>
