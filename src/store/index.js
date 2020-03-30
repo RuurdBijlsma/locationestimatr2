@@ -88,13 +88,17 @@ async function getMapsByIds(ids) {
     return await Promise.all(ids.map(getMapById));
 }
 
+const color = localStorage.getItem('color') === null ? '#02c780' : localScores.color;
 export default new Vuex.Store({
     state: {
-        color: '#02c780',
+        color,
         homeMaps: [],
         realAccount: false,
     },
     mutations: {
+        'setColor': (state, color) => {
+            state.color = color;
+        },
         'setRealAccount': (state, real) => {
             state.realAccount = real;
         },

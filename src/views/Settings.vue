@@ -2,7 +2,13 @@
     <div class="settings">
         <h1 class="title lighten-4">Settings</h1>
         <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"></v-switch>
+        <br>
+        <v-text-field label="Theme Color" v-model="color"></v-text-field>
+        <br>
         <v-btn @click="clearCache()">Clear Cache</v-btn>
+        <br>
+        <v-btn @click="resetColor()">Reset Theme Color</v-btn>
+        <br>
         <v-btn @click="deleteAccount()" v-if="$store.state.realAccount" color="error">Delete Account</v-btn>
     </div>
 </template>
@@ -13,13 +19,17 @@
         components: {},
         data() {
             return {
+                color: '',
                 showVisual: localStorage.getItem('visualize') && localStorage.visualize === 'true',
             }
         },
         mounted() {
-
+            this.color = this.$store.state.color;
         },
         methods: {
+            resetColor() {
+                this.color = '#02c780';
+            },
             deleteAccount() {
                 if (confirm("Are you sure you want to delete your account? This is irreversible!")) {
                     this.$store.dispatch('deleteAccount');
@@ -34,11 +44,17 @@
         watch: {
             showVisual() {
                 localStorage.visualize = this.showVisual;
-            }
+            },
+            color() {
+                this.$store.commit('setColor', this.color);
+                localStorage.color = this.color;
+            },
         },
     }
 </script>
 
 <style scoped>
-
+    button {
+        margin: 10px;
+    }
 </style>
