@@ -12,7 +12,7 @@
                         <span :title="`${map.counts.likes} likes`" class="map-count-info"><v-icon class="map-count-info-icon" x-small>thumb_up</v-icon>{{map.counts.likes}}</span>
                         <span :title="`${map.counts.dislikes} dislikes`" class="map-count-info"><v-icon class="map-count-info-icon" x-small>thumb_down</v-icon>{{map.counts.dislikes}}</span>
                     </span>
-                    <router-link class="map-user-link" v-if="map.realUser && map.user" :to="`/user?id=${map.user}`" :title="map.userInfo.name">
+                    <router-link class="map-user-link" v-if="map.realUser && map.user" :to="`/user?id=${map.user}`" :title="map.realUser && map.userInfo.name">
                         {{map.userInfo.name}}
                     </router-link>
                     <router-link class="map-user-link anonymous" v-else-if="map.user" :to="`/user?id=${map.user}`" title="Anonymous">Anonymous

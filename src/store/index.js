@@ -71,8 +71,16 @@ async function getMapById(id) {
             resolve();
         });
         let userTask = new Promise(async resolve => {
-            if (mapData.realUser && mapData.user)
+            if (mapData.realUser && mapData.user) {
                 mapData.userInfo = (await db.collection('users').doc(mapData.user).get()).data();
+                if (mapData.userInfo === undefined) {
+                    mapData.userInfo = {
+                        name: '[Deleted]',
+                        maps: [],
+                        likes: [],
+                    }
+                }
+            }
             resolve();
         });
         await Promise.all([mapCountsTask, imageTask, userTask]);
