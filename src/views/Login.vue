@@ -14,7 +14,7 @@
                     </p>
                     <p class="error--text caption">{{error}}</p>
                     <v-btn text @click="forgot">Forgot Password</v-btn>
-                    <v-btn type="submit" text :color="$store.state.color">Login</v-btn>
+                    <v-btn type="submit" text color="primary">Login</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>

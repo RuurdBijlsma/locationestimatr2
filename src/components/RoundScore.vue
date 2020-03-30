@@ -15,11 +15,11 @@
                     points
                 </p>
             </div>
-            <v-btn v-if="isLastRound" :disabled="!nextButtonEnabled" large dark rounded :color="$store.state.color"
+            <v-btn v-if="isLastRound" :disabled="!nextButtonEnabled" large dark rounded color='primary'
                    @click="showGameOverview">
                 Show Game Overview
             </v-btn>
-            <v-btn v-else :disabled="!nextButtonEnabled" large dark rounded :color="$store.state.color"
+            <v-btn v-else :disabled="!nextButtonEnabled" large dark rounded color='primary'
                    @click="nextRound">
                 Next Round
             </v-btn>
@@ -57,7 +57,7 @@
                 </v-btn>
                 <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
                 <v-btn text to="/">Play Other Map</v-btn>
-                <v-btn @click="playAgain" :color="$store.state.color">Play Again</v-btn>
+                <v-btn @click="playAgain" color='primary'>Play Again</v-btn>
             </div>
             <v-snackbar v-model="rateSnack">
                 {{ snackText }}

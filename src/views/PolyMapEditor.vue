@@ -35,7 +35,7 @@
                           dense></v-text-field>
             <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on }">
-                    <v-btn text :color="$store.state.color" type="submit" :loading="uploading">
+                    <v-btn text color='primary' type="submit" :loading="uploading">
                         Upload Map
                     </v-btn>
                 </template>

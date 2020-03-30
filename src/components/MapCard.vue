@@ -26,14 +26,14 @@
                                   class="radius-field"></v-text-field>
                     <span>KM</span>
                 </div>
-                <v-btn v-if="map.type === 'area'" class="area-play" :color="$store.state.color" small text
+                <v-btn v-if="map.type === 'area'" class="area-play" color='primary' small text
                        @mouseup.middle="openMyArea(true)" @mouseup.left="openMyArea(false)">
                     Play
                 </v-btn>
-                <v-btn v-else :color="$store.state.color" small text :to="`/play?map=${map.id}`">
+                <v-btn v-else color='primary' small text :to="`/play?map=${map.id}`">
                     Play
                 </v-btn>
-                <v-btn :color="$store.state.color" small text :to="`/scores?map=${map.id}`"
+                <v-btn color='primary' small text :to="`/scores?map=${map.id}`"
                        v-if="map.type !== 'area'">Scores
                 </v-btn>
             </div>

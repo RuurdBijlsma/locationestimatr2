@@ -31,6 +31,8 @@
             loggedIn: false,
         }),
         async mounted() {
+            console.log(this.$vuetify);
+            this.$vuetify.theme.themes.dark.primary = localStorage.getItem('color') === null ? '#02c780' : localStorage.color;
             if (!navigator.onLine)
                 this.loggedIn = true;
             firebase.auth().onAuthStateChanged(user => {

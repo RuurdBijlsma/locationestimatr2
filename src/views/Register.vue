@@ -19,7 +19,7 @@
                             @click:append="show = !show"
                     ></v-text-field>
                     <p class="error--text">{{error}}</p>
-                    <v-btn type="submit" text :color="$store.state.color">Register</v-btn>
+                    <v-btn type="submit" text color='primary'>Register</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>

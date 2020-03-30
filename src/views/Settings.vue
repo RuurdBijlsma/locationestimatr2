@@ -3,7 +3,7 @@
         <h1 class="title lighten-4">Settings</h1>
         <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"></v-switch>
         <br>
-        <v-text-field label="Theme Color" v-model="color"></v-text-field>
+        <v-color-picker mode="hexa" v-model="color" hide-mode-switch></v-color-picker>
         <br>
         <v-btn @click="clearCache()">Clear Cache</v-btn>
         <br>
@@ -24,7 +24,7 @@
             }
         },
         mounted() {
-            this.color = this.$store.state.color;
+            this.color = this.$vuetify.theme.themes.dark.primary;
         },
         methods: {
             resetColor() {
@@ -46,8 +46,10 @@
                 localStorage.visualize = this.showVisual;
             },
             color() {
-                this.$store.commit('setColor', this.color);
-                localStorage.color = this.color;
+                if(this.color){
+                    this.$vuetify.theme.themes.dark.primary = this.color;
+                    localStorage.color = this.color;
+                }
             },
         },
     }

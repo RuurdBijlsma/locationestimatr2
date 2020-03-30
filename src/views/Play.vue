@@ -12,7 +12,7 @@
         </div>
         <div class="map-collection" v-for="collection in $store.state.homeMaps" :key="collection.name">
             <div class="map-collection-title">
-                <h3 class="subtitle"><v-icon class="sub-icon" :color="$store.state.color">{{collection.icon}}</v-icon>{{collection.name}}</h3>
+                <h3 class="subtitle"><v-icon class="sub-icon" color='primary'>{{collection.icon}}</v-icon>{{collection.name}}</h3>
             </div>
             <map-grid class="maps" :maps="collection.maps"></map-grid>
         </div>

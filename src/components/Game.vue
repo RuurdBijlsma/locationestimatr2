@@ -23,7 +23,7 @@
             <div class="guess-map" ref="guessMap">
                 <v-btn @click="showCoverage" title="Show current map area and StreetView coverage." fab small
                        class="show-coverage">
-                    <v-icon :color="showingCoverage ? $store.state.color : undefined">layers</v-icon>
+                    <v-icon :color="showingCoverage ? 'primary' : undefined">layers</v-icon>
                 </v-btn>
                 <div class="resize-map" ref="resizeTrigger" @mousedown="resizeDownEvent"
                      @touchstart="resizeDownEvent($event.touches[0])">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="small-map" ref="smallMap"></div>
                 <div class="guess-bottom">
-                    <v-btn @click="makeGuess()" :color="$store.state.color" text large class="guess-button"
+                    <v-btn @click="makeGuess()" color='primary' text large class="guess-button"
                            :disabled="!guessButtonEnabled">
                         Make Guess
                     </v-btn>
@@ -70,7 +70,7 @@
                         scores!</p>
                     <v-text-field ref="challengeUrlField" readonly :value="challengeUrl"></v-text-field>
                     <p class="caption" v-if="isCopied">
-                        <v-icon :color="$store.state.color">done</v-icon>
+                        <v-icon color='primary'>done</v-icon>
                         Copied link to clipboard
                     </p>
                 </v-card-subtitle>

@@ -85,7 +85,7 @@
                                 {{objectives[rules.objective]}}
                             </v-chip>
                             <v-chip title="With this objective you try to guess where the StreetView camera is at the time of guessing, instead of where you started."
-                                    v-if="rules.objective === 1" light :color="$store.state.color">
+                                    v-if="rules.objective === 1" light color='primary'>
                                 {{objectives[rules.objective]}}
                                 <v-icon right>priority_high</v-icon>
                             </v-chip>
@@ -96,7 +96,7 @@
                 </v-form>
             </v-card-text>
             <v-card-actions>
-                <v-btn :color="$store.state.color" text @click="$emit('startGame', exportRules())">Start game</v-btn>
+                <v-btn color='primary' text @click="$emit('startGame', exportRules())">Start game</v-btn>
             </v-card-actions>
         </v-card>
     </div>

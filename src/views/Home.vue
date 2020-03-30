@@ -12,7 +12,7 @@
                     class="drawer"
                     permanent
                     v-model="drawer"
-                    :color="$store.state.color"
+                    color='primary'
                     dark>
                 <v-list dense
                         nav
@@ -108,7 +108,7 @@
         <div class="bottom-content">
             <v-bottom-navigation
                     shift
-                    :color="$store.state.color"
+                    color='primary'
                     v-if="mobile"
                     grow>
                 <v-btn to="/" class="bottom-button">

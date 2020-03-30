@@ -5,14 +5,14 @@
                 <h1>Profile for {{user.name}}</h1>
                 <div v-if="user.maps.length > 0">
                     <h3 class="subtitle">
-                        <v-icon class="sub-icon" :color="$store.state.color">create</v-icon>
+                        <v-icon class="sub-icon" color='primary'>create</v-icon>
                         Maps Created By {{user.name}}
                     </h3>
                     <map-grid :maps="user.maps" img-prefix="../"></map-grid>
                 </div>
                 <div v-if="user.likes.length > 0">
                     <h3 class="subtitle">
-                        <v-icon class="sub-icon" :color="$store.state.color">thumb_up</v-icon>
+                        <v-icon class="sub-icon" color='primary'>thumb_up</v-icon>
                         Liked Maps
                     </h3>
                     <map-grid :maps="user.likes" img-prefix="../"></map-grid>
