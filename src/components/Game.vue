@@ -110,7 +110,6 @@
             fullscreen: false,
             prepared: false,
             showRoundOverview: false,
-            nextLocation: null,
             startTime: 0,
             timeTaken: -1,
             submitting: false,
@@ -134,10 +133,11 @@
             svType: 0,
             distribution: 0,
             svFailed: false,
+            locations: [],
         }),
         async mounted() {
             this.fullscreen = document.fullscreenElement;
-            document.onfullscreenchange = e=>{
+            document.onfullscreenchange = e => {
                 this.fullscreen = document.fullscreenElement;
             };
             window.onresize = () => {
@@ -215,9 +215,10 @@
                 this.currentRound = 0;
                 this.previousGuesses = [];
 
+                this.preloadAllRoundLocations();
                 let [_, nextLocation] = await Promise.all([
                     this.initGoogle(),
-                    this.loadNextLocation()
+                    this.getRoundLocation(1)
                 ]);
                 await this.nextRound(nextLocation);
 
@@ -260,7 +261,7 @@
                     if (a.y === b.y)
                         return a.x - b.x;
                     return a.y - b.y;
-                })
+                });
                 let gridWidth = 2;
                 let imgSize = this.canvas.width / gridWidth;
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -392,52 +393,54 @@
                     }, 500);
                 }
             },
-            async loadNextLocation() {
-                console.log("loadNextLocation");
-                this.findingRandomLocation = true;
-                if (this.challenge !== null) {
-                    this.nextLocation = this.challenge.guesses[this.currentRound].target;
-                    console.log("Using challenge location, round: ", this.currentRound, 'location:', this.nextLocation);
-                } else {
-                    console.log("Using random location", this.svType, this.distribution);
-                    this.nextLocation = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
-                    if (this.nextLocation === false) {
-                        this.svFailed = true;
+            async preloadAllRoundLocations() {
+                this.locations = [];
 
+                if (this.challenge !== null) {
+                    let challengeLocations = JSON.parse(JSON.stringify(this.challenge.guesses.map(g => g.target)));
+                    challengeLocations.unshift(undefined);
+                    this.locations = challengeLocations;
+                } else {
+                    for (let round = 1; round <= this.rules.roundCount; round++) {
+                        this.locations[round] = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
+                        console.log("Finished loading location for round:", round, this.locations);
+                        this.$emit('roundLocation:' + round);
+                    }
+                }
+            },
+            async getRoundLocation(round) {
+                return new Promise(async resolve => {
+                    console.log("loadNextLocation, round:", round);
+                    this.findingRandomLocation = true;
+                    if (this.locations[round] === undefined)
+                        await this.waitFor('roundLocation:' + round);
+                    let nextLocation = this.locations[round];
+
+                    if (nextLocation === false) {
+                        this.svFailed = true;
                         let rules = this.rules.presetName === 'Custom' ? JSON.parse(JSON.stringify(this.rules)) : this.rules.preset;
                         await this.$store.dispatch('reportMap', {mapId: this.map.id, rules});
                     }
-                }
-                this.findingRandomLocation = false;
-                //TODO locationload
-                this.$emit('locationLoad');
-                return this.nextLocation;
+                    this.findingRandomLocation = false;
+                    resolve(nextLocation);
+                })
             },
-            async nextRound(nextLocation) {
+            async nextRound() {
                 if (this.mapMarker !== null)
                     this.mapMarker.setMap(null);
                 this.mapMarker = null;
                 console.log("nextRound");
-                //TODO WHY THIS?
-                // if (this.svElement.panorama)
-                //     this.resetRestrictions();
-                this.currentDestination = nextLocation;
+                this.currentDestination = await this.getRoundLocation(++this.currentRound);
+                console.log("NEXT ROUND", this.currentDestination);
                 this.guessButtonEnabled = false;
-
-                if (++this.currentRound < this.rules.roundCount)
-                    this.loadNextLocation();
 
                 console.log("Setting location to ", this.currentDestination);
                 await this.svElement.setLocation(...this.currentDestination);
                 this.applyRules();
-                //TODO: CHECK TIMEOUT HERE
-                // setTimeout(() => {
-                //Ensure location in this.currentDestination is as accurate as possible
+
                 this.currentDestination = this.svElement.getLocation();
-                console.log("SV Getlocation returned", this.currentDestination)
-                this.$emit("nextRound");
+                console.log("SV Getlocation returned", this.currentDestination);
                 console.log("Next round load complete");
-                // }, 500);
             },
             attachMap(element) {
                 console.log("Attach map to", element);
@@ -501,7 +504,7 @@
                 let isLastRound = this.currentRound === this.rules.roundCount;
                 this.showOverview(this.guessedLocation, targetDestination, distance, points, isLastRound);
                 if (!isLastRound) {
-                    this.nextRound(this.nextLocation);
+                    this.nextRound();
                 } else {
                     this.timeTaken = performance.now() - this.startTime;
                     this.$store.dispatch('addPlay', this.map.id);
@@ -526,7 +529,7 @@
             async nextRoundEvent() {
                 this.dontAllowPlay = true;
                 this.attachMap(this.$refs.smallMap);
-                console.log("NExt round event, nextlocation: ", this.nextLocation);
+                console.log("NExt round event, nextlocation: ", this.locations[this.currentRound + 1]);
                 this.showRoundOverview = false;
                 if (this.findingRandomLocation)
                     await this.waitFor('locationLoad');
@@ -750,7 +753,7 @@
     }
 
 
-    .full-screen{
-        margin-bottom:63px;
+    .full-screen {
+        margin-bottom: 63px;
     }
 </style>

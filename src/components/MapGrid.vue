@@ -1,15 +1,28 @@
 <template>
     <div class="map-grid">
-        <map-card v-for="map in maps" :key="map.name" :map="map" :img-prefix="imgPrefix"></map-card>
+        <v-text-field class="search" v-if="showSearch" outlined label="Filter Maps" v-model="mapFilter"></v-text-field>
+        <div class="inner-grid">
+            <map-card v-for="map in filteredMaps"
+                      :key="map.name" :map="map" :img-prefix="imgPrefix"></map-card>
+        </div>
+        <h3 v-if="filteredMaps.length===0">
+            <v-icon>sentiment_dissatisfied</v-icon>
+            No maps found
+        </h3>
     </div>
 </template>
 
 <script>
     import MapCard from "./MapCard";
+
     export default {
         name: 'MapGrid',
         components: {MapCard},
         props: {
+            showSearch: {
+                type: Boolean,
+                default: false,
+            },
             maps: {
                 type: Array,
                 default: [],
@@ -20,19 +33,31 @@
             }
         },
         data() {
-            return {}
+            return {
+                mapFilter: '',
+            }
         },
         async mounted() {
 
         },
         methods: {},
         watch: {},
-        computed: {}
+        computed: {
+            filteredMaps() {
+                return this.maps.filter(m => m.name.toLowerCase().includes(this.mapFilter.toLowerCase()))
+            }
+        }
     }
 </script>
 
 <style scoped>
-    .map-grid {
+    .search {
+        margin: 0 auto;
+        width: 90%;
+        max-width: 700px;
+    }
+
+    .inner-grid {
         display: inline-grid;
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 2em;
@@ -42,19 +67,19 @@
     }
 
     @media screen and (max-width: calc(1100px + 487px)) {
-        .map-grid {
+        .inner-grid {
             grid-template-columns: repeat(3, 1fr) !important;
         }
     }
 
     @media screen and (max-width: calc(700px + 487px)) {
-        .map-grid {
+        .inner-grid {
             grid-template-columns: repeat(2, 1fr) !important;
         }
     }
 
     @media screen and (max-width: calc(621px)) {
-        .map-grid {
+        .inner-grid {
             grid-template-columns: repeat(1, 1fr) !important;
         }
     }

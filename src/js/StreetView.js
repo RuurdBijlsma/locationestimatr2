@@ -83,7 +83,7 @@ export default class StreetView extends EventEmitter {
 
         let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
         this.emit('subTiles', subTiles);
-        console.log("TYPE", type, "DISTRIBUTION", this.distribution);
+        // console.log("TYPE", type, "DISTRIBUTION", this.distribution);
 
         let validTiles = subTiles
             .filter(tile =>
@@ -116,7 +116,7 @@ export default class StreetView extends EventEmitter {
         let shuffledTiles = shuffleFun(validTiles);
         for (let tile of shuffledTiles) {
             let subTile = await this.randomValidTile(endZoom, type, tile);
-            console.log("subTile", subTile);
+            // console.log("subTile", subTile);
             // await this.waitSleep(2000);
             if (subTile !== false)
                 return subTile;

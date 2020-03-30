@@ -4,6 +4,10 @@ import * as firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/storage";
 
+const minute = 1000 * 60;
+const day = minute * 60 * 24;
+const year = day * 365;
+
 Vue.use(Vuex);
 const db = firebase.firestore();
 const storage = firebase.storage().ref();
@@ -28,16 +32,16 @@ async function getCached(key, action, cacheLifetime = 1000 * 60 * 60 * 24) {
         if (!navigator.onLine)
             console.warn("Using old cache because browser is offline");
     }
-    if (data) {
+    if (data !== undefined) {
         console.log(`Not using cached ${key}`);
         cache[key] = {
             data,
             date: +new Date()
         };
+        localStorage.cache = JSON.stringify(cache);
     } else {
         console.log(`Using cached ${key}`);
     }
-    localStorage.cache = JSON.stringify(cache);
     return cache[key].data;
 }
 
@@ -58,6 +62,9 @@ async function addCount(mapId, field) {
 async function getMapById(id) {
     let get = async () => {
         let mapData = (await db.collection('maps').doc(id).get()).data();
+        //map has been deleted :O
+        if (mapData === undefined)
+            return false;
         let mapCountsTask = new Promise(async resolve => {
             let mapCounts = (await db.collection('map-counts').doc(id).get()).data();
             if (mapCounts === undefined)
@@ -89,10 +96,12 @@ async function getMapById(id) {
         // console.log(mapData);
         return mapData;
     };
-    return getCached('shallowMap:' + id, get);
+    return getCached('shallowMap:' + id, get, year);
 }
 
 async function getMapsByIds(ids) {
+    // console.log({ids})
+    // console.log({result});
     return await Promise.all(ids.map(getMapById));
 }
 
@@ -151,9 +160,11 @@ export default new Vuex.Store({
                     getMapsByIds(popMaps),
                     getMapsByIds(likeMaps)
                 ]);
+                pMaps = pMaps.filter(p => p !== false);
+                lMaps = lMaps.filter(p => p !== false);
                 return {popular: pMaps, liked: lMaps};
             };
-            return getCached('explore', get);
+            return getCached('explore', get, day);
         },
         async getUser({commit, dispatch}, userId) {
             let get = async () => {
@@ -163,19 +174,16 @@ export default new Vuex.Store({
                     getMapsByIds(user.maps),
                     getMapsByIds(user.likes),
                 ]);
-                // let maps = await Promise.all([
-                //     ...user.maps.map(map => getCached('userMap:' + map, async map => getMapById(map))),
-                //     ...user.likes.map(map => getCached('userMap:' + map, async map => getMapById(map))),
-                // ]);
-                // console.log(user.maps);
-                // let userMaps = maps.slice(0, user.maps.length);
-                // let userLikes = maps.slice(user.maps.length);
+
+                userMaps = userMaps.filter(p => p !== false);
+                userLikes = userLikes.filter(p => p !== false);
+
 
                 user.maps = userMaps;
                 user.likes = userLikes;
                 return user;
             };
-            return await getCached('user:' + userId, get, 1000 * 60 * 5);
+            return await getCached('user:' + userId, get, 5 * minute);
         },
         async logout({commit}) {
             await firebase.auth().signOut();
@@ -204,6 +212,10 @@ export default new Vuex.Store({
             try {
                 let registerInfo = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 commit('setRealAccount', registerInfo.user);
+                await registerInfo.user.sendEmailVerification();
+                await registerInfo.user.updateProfile({
+                    displayName: user,
+                });
                 await db.collection('users').doc(registerInfo.user.uid).set({
                     name: user,
                     date: new Date,
@@ -267,7 +279,7 @@ export default new Vuex.Store({
                 return list;
             };
             //5 Minutes cache lifetime
-            let cacheLifetime = 1000 * 60 * 5;
+            let cacheLifetime = 15 * minute;
             if (refresh)
                 cacheLifetime = 0;
 
@@ -356,7 +368,7 @@ export default new Vuex.Store({
         },
         async getChallenge({commit, dispatch}, challengeId) {
             let getChallengeFromDb = async () => (await db.collection('challenges').doc(challengeId).get()).data();
-            let challenge = await getCached('challenge:' + challengeId, getChallengeFromDb);
+            let challenge = await getCached('challenge:' + challengeId, getChallengeFromDb, year);
             let map = 'my_area';
             if (challenge.map !== 'my_area') {
                 map = await dispatch('getMap', challenge.map);
@@ -364,7 +376,7 @@ export default new Vuex.Store({
             return {challenge, map};
         },
         async getMap({commit}, mapKey) {
-            let getMapFromDb = async () => {
+            let get = async () => {
                 let map = (await db.collection('maps').doc(mapKey).get()).data();
                 if (map.type === 'collection') {
                     map.maps = await Promise.all(map.maps.map(async map => {
@@ -375,29 +387,33 @@ export default new Vuex.Store({
                 }
                 return map;
             };
-            return await getCached('map:' + mapKey, getMapFromDb);
+            return await getCached('map:' + mapKey, get, year);
         },
         async getUrl({commit}, imageUrl) {
-            return storage.child(imageUrl).getDownloadURL()
+            let get = async () => storage.child(imageUrl).getDownloadURL();
+            return getCached('storage:image:' + imageUrl, get, year);
         },
         async loadHomeMaps({commit}) {
             if (this.state.homeMaps.length === 0) {
                 console.log("Loading home maps");
-                let fromHomeMapsFromDb = async () => {
+                let get = async () => {
                     const mapsCollection = await db.collection('home-maps').orderBy('order').get();
                     const homeMaps = [];
                     mapsCollection.forEach(map => {
                         homeMaps.push(map.data());
                     });
-                    await Promise.all(homeMaps.map(async m => {
-                        m.maps = await Promise.all(m.maps.map(async h => await getMapById(h.id)))
+                    await Promise.all(homeMaps.map(async hm => {
+                        let maps = await getMapsByIds(hm.maps.map(m => m.id));
+                        maps = maps.filter(m => m !== false);
+                        hm.maps = maps;
                     }));
+                    console.log(homeMaps);
                     return homeMaps;
                 };
-                let homeMaps = await getCached('homeMaps', fromHomeMapsFromDb);
+                let homeMaps = await getCached('homeMaps', get, day);
                 commit('setHomeMaps', homeMaps);
             } else {
-                console.log("Don't have to load home maps silly")
+                // console.log("Don't have to load home maps silly")
             }
         }
     },

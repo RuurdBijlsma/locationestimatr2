@@ -24,6 +24,11 @@
                             <v-list-item-subtitle class="logout" @click="logout()">Logout</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
+                    <v-list-item v-else @click="goProfile()">
+                        <v-list-item-content>
+                            <v-list-item-title>My Maps</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
                     <v-list-item to="/" exact>
                         <v-list-item-icon>
                             <v-icon>home</v-icon>
@@ -177,7 +182,7 @@
             },
             async goProfile() {
                 try {
-                    await this.$router.push('/user?id=' + this.$store.state.realAccount.uid)
+                    await this.$router.push('/user?id=' + this.$store.getters.user.uid)
                 } catch (e) {
                     console.log(e.message);
                 }

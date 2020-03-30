@@ -14,7 +14,7 @@
             <div class="map-collection-title">
                 <h3 class="subtitle"><v-icon class="sub-icon" color='primary'>{{collection.icon}}</v-icon>{{collection.name}}</h3>
             </div>
-            <map-grid class="maps" :maps="collection.maps"></map-grid>
+            <map-grid class="maps" :show-search="collection.searchEnabled" :maps="collection.maps"></map-grid>
         </div>
     </div>
 </template>

@@ -56,7 +56,7 @@
                     <v-icon>mdi-thumb-down</v-icon>
                 </v-btn>
                 <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
-                <v-btn text to="/">Play Other Map</v-btn>
+                <v-btn text @click="$router.push('/')">Homepage</v-btn>
                 <v-btn @click="playAgain" color='primary'>Play Again</v-btn>
             </div>
             <v-snackbar v-model="rateSnack">
@@ -522,13 +522,11 @@
     }
 
     .play-again {
-        width: 340px;
-        display: flex;
-        justify-content: space-around;
         margin: 0 auto 20px;
     }
 
     .play-again > * {
         margin: 10px;
+        display: inline-block;
     }
 </style>
