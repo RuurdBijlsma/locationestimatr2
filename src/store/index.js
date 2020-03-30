@@ -108,6 +108,12 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async submitFeedback({commit}, feedback) {
+            db.collection('feedback').add({
+                date: new Date,
+                message: feedback,
+            });
+        },
         async deleteAccount({commit}) {
             try {
                 await db.collection('users').doc(firebase.auth().getUid()).delete();

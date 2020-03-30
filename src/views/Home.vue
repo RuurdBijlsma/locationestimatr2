@@ -83,39 +83,21 @@
                         <v-btn outlined class="gh-button" href="https://github.com/ruurdbijlsma/locationestimatr2"
                                target="_blank">View on Github
                         </v-btn>
-                        <v-dialog
-                                v-model="dialog"
-                                width="500">
+                        <v-dialog v-model="dialog" width="500">
                             <template v-slot:activator="{ on }">
                                 <v-btn outlined v-on="on">Write Feedback</v-btn>
                             </template>
-
-                            <v-card>
-                                <v-card-title primary-title>
-                                    Feedback
-                                </v-card-title>
-                                <v-card-subtitle>Write feedback on how to improve the website or anything else.</v-card-subtitle>
-
+                            <v-card :loading="loadingFeedback">
+                                <v-card-title primary-title> Feedback</v-card-title>
+                                <v-card-subtitle>Write feedback or report bugs below. (No user data is sent)
+                                </v-card-subtitle>
                                 <v-card-text>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                    deserunt mollit anim id est laborum.
+                                    <v-textarea v-model="feedback"></v-textarea>
                                 </v-card-text>
-
                                 <v-divider></v-divider>
-
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn
-                                            color="primary"
-                                            text
-                                            @click="dialog = false"
-                                    >
-                                        I accept
-                                    </v-btn>
+                                    <v-btn color="primary" text @click="sendFeedback">Send Feedback</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -172,6 +154,8 @@
                 snack: false,
                 snackText: '',
                 dialog: false,
+                feedback: '',
+                loadingFeedback: false,
             }
         },
         mounted() {
@@ -180,6 +164,17 @@
             };
         },
         methods: {
+            async sendFeedback() {
+                this.loadingFeedback = true;
+                if (this.feedback.length !== 0) {
+                    await this.$store.dispatch('submitFeedback', this.feedback);
+                    this.showSnack("Feedback sent!");
+                } else {
+                    this.showSnack("Feedback can't be empty");
+                }
+                this.loadingFeedback = false;
+                this.dialog = false;
+            },
             async goProfile() {
                 try {
                     await this.$router.push('/user?id=' + this.$store.state.realAccount.uid)
