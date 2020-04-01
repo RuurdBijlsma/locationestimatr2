@@ -4,14 +4,24 @@ export default class StreetView extends EventEmitter {
     constructor(map) {
         super();
         this.map = map;
+        this.coverageCache = this.importCoverageCache();
         this.bounds = this.map.getBounds();
         this.smallestContainingTile = this.boundsToSmallestContainingTile(this.bounds);
+
+        this.canvas = document.createElement("canvas");
+        this.context = this.canvas.getContext("2d");
+        //Google maps coverage images are 256x256
+        this.canvas.width = 256;
+        this.canvas.height = 256;
+
         // this.smallestContainingTile = {x: 547, y: 377, zoom: 10};
         console.log("Smallest containing tile:", this.smallestContainingTile);
-        this.debug = false;
+        // this.debug = true;
         this.typeColors = [
             {color: [84, 160, 185], id: 'sv'},
-            {color: [165, 224, 250], id: 'photo'},
+            {color: [84, 160, 185], id: 'sv'},
+            {color: [84, 160, 185], id: 'sv'},
+            {color: [165, 224, 250, 102], id: 'photo'},
         ];
         //Has opacity:
         // this.typeColors = [
@@ -41,6 +51,8 @@ export default class StreetView extends EventEmitter {
             return false;
         let canvas = document.createElement("canvas");
         let context = canvas.getContext("2d");
+        if (tile.img === false)
+            tile.img = await this.getTileImage(tile.x, tile.y, tile.zoom);
         let img = tile.img;
         canvas.width = img.width;
         canvas.height = img.height;
@@ -66,6 +78,8 @@ export default class StreetView extends EventEmitter {
         let randomSvIndex = pixelCounts.indices[randomSvPixel];
         let x = (randomSvIndex / 4) % img.width;
         let y = Math.floor((randomSvIndex / 4) / img.width);
+        console.log("Saving cache to file");
+        this.saveCoverageCache();
         return this.tilePixelToLatLon(tile.x, tile.y, tile.zoom, x, y);
     }
 
@@ -87,39 +101,45 @@ export default class StreetView extends EventEmitter {
 
         let validTiles = subTiles
             .filter(tile =>
-                (type === 'sv' || type === 'both') && tile.types.sv ||
-                (type === 'photo' || type === 'both') && tile.types.photo ||
+                type === 'sv' && tile.types.sv ||
+                type === 'photo' && tile.types.photo ||
+                type === 'both' && (tile.types.photo || tile.types.sv) ||
                 //When under photosphere zoom level, also consider sv tiles valid tiles, because photospheres aren't visible yet
                 tile.zoom <= photoSphereZoomLevel && tile.types.sv)
             .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom));
 
+        let shuffleFun = this.distribution === 'uniform' ?
+            array => this.shuffle(array) :
+            array => this.shuffleWeighted(array, item => item.coverage[chosenTile.zoom + 1 <= photoSphereZoomLevel ? 'both' : type]);
+        let shuffledTiles = shuffleFun(validTiles);
+
         if (this.debug) {
-            console.log("validTiles", validTiles);
+            console.log("valid shuffled tiles", shuffledTiles);
             this.debugImg.forEach(img => {
                 img.src = '';
             });
-            validTiles.forEach((tile, i) => {
+            shuffledTiles.forEach((tile, i) => {
                 if (this.debugImg[i] && tile.img) {
                     this.debugImg[i].src = tile.img.src
                 }
             });
-            if (chosenTile.zoom >= 12) {
+            if (chosenTile.zoom >= 0) {
                 // return;
             }
             // await this.waitSleep(4000);
         }
 
-        //When under photosphere zoom level don't use distribution weighted, because there is no photosphere coverage yet to weight
-        let shuffleFun = this.distribution === 'uniform' || (type === 'photo' && chosenTile.zoom + 1 <= photoSphereZoomLevel) ?
-            array => this.shuffle(array) :
-            array => this.shuffleWeighted(array, item => item.coverage[type]);
-        let shuffledTiles = shuffleFun(validTiles);
         for (let tile of shuffledTiles) {
             let subTile = await this.randomValidTile(endZoom, type, tile);
             // console.log("subTile", subTile);
             // await this.waitSleep(2000);
-            if (subTile !== false)
+            if (subTile !== false) {
+                if (this.debug) {
+                    console.log("FINAL TILE", subTile);
+                    // this.debugImg[0].src = subTile.img.src;
+                }
                 return subTile;
+            }
         }
         console.log("Back tracking");
         return false;
@@ -240,7 +260,7 @@ export default class StreetView extends EventEmitter {
         // return `https://mts1.googleapis.com/vt?hl=en-US&lyrs=svv|cb_client:apiv3&style=40,18&x=${x}&y=${y}&z=${zoom}`;
     }
 
-    async getTile(x, y, zoom) {
+    async getTileImage(x, y, zoom) {
         return new Promise(async resolve => {
             let response = await fetch(this.getUrl(x, y, zoom));
             let blob = await response.blob();
@@ -249,14 +269,28 @@ export default class StreetView extends EventEmitter {
             reader.onload = e => {
                 const img = new Image();
                 img.src = e.target.result;
-                img.onload = () => {
-                    let {coverage, types} = this.getTileCoverage(img);
-
-                    resolve({
-                        coverage, types, img, x, y, zoom
-                    });
-                }
+                img.onload = () => resolve(img);
             }
+        });
+    }
+
+    async getTile(x, y, zoom) {
+        return new Promise(async resolve => {
+            if (this.coverageCacheContains(x, y, zoom)) {
+                let {coverage, types} = this.getCoverageCache(x, y, zoom);
+                console.log("Using cache!");
+                resolve({
+                    coverage, types, img: false, x, y, zoom
+                });
+                return;
+            }
+            let img = await this.getTileImage(x, y, zoom);
+            let c = this.getTileCoverage(x, y, zoom, img);
+            this.setCoverageCache(x, y, zoom, c);
+            let {coverage, types} = this.getCoverageCache(x, y, zoom);
+            resolve({
+                coverage, types, img, x, y, zoom
+            });
         });
     }
 
@@ -267,7 +301,7 @@ export default class StreetView extends EventEmitter {
         const allowedColorDiff = 4;
         typeLoop:
             for (let {id, color} of this.typeColors) {
-                for (let i = 0; i < rgba.length; i++) {
+                for (let i = 0; i < color.length; i++) {
                     const componentDifference = Math.abs(color[i] - rgba[i]);
                     if (componentDifference > allowedColorDiff)
                         continue typeLoop;
@@ -277,37 +311,64 @@ export default class StreetView extends EventEmitter {
         return 'empty';
     }
 
-    getTileCoverage(img) {
-        let canvas = document.createElement("canvas");
-        let context = canvas.getContext("2d");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        context.drawImage(img, 0, 0);
-        let data = context.getImageData(0, 0, img.width, img.height).data;
-        let coverage = {sv: 0, photo: 0, empty: 0};
-        let types = {
-            empty: false,
-            sv: false,
-            photo: false,
-        };
+    getTileCoverage(x, y, zoom, img) {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.drawImage(img, 0, 0);
+        let data = this.context.getImageData(0, 0, img.width, img.height).data;
+        //Coverage [sv, photo]
+        let coverage = [0, 0];
+        //Skip every other column?
         for (let i = 0; i < data.length; i += 4) {
-            //If tile is known to have both sv and photo, don't keep checking for there is no more information to get
-            // if (!(types.sv && types.photo)) {
-
-            //Has opacity
-            // let color = data.slice(i, i + 4);
-            let color = data.slice(i, i + 3);
+            //Skip every other row
+            // if (i % (img.width * 2) === 0)
+            //     i += img.width;
+            let color = data.slice(i, i + 4);
             let colorType = this.getColorType(color);
-            if (this.debug) {
-                // console.log(JSON.stringify([...color]), colorType);
-            }
-            types[colorType] = true;
-            coverage[colorType]++;
-            // }
-
-            // coverage += data[i + 2]; // Blue pixel data
+            if (colorType === 'sv')
+                coverage[0]++;
+            if (colorType === 'photo')
+                coverage[1]++;
         }
-        return {coverage, types};
+        return coverage;
+    }
+
+    coverageCacheContains(x, y, zoom) {
+        return this.coverageCache[zoom] && this.coverageCache[zoom][x] && this.coverageCache[zoom][x][y];
+    }
+
+    getCoverageCache(x, y, zoom) {
+        let [svCoverage, photoCoverage] = this.coverageCache[zoom][x][y];
+        return {
+            types: {
+                sv: svCoverage > 0,
+                photo: photoCoverage > 0,
+            },
+            coverage: {
+                sv: svCoverage,
+                photo: photoCoverage,
+                both: svCoverage + photoCoverage,
+            }
+        }
+    }
+
+    setCoverageCache(x, y, zoom, value) {
+
+        if (!this.coverageCache[zoom])
+            this.coverageCache[zoom] = {};
+        if (!this.coverageCache[zoom][x])
+            this.coverageCache[zoom][x] = {};
+        this.coverageCache[zoom][x][y] = value;
+    }
+
+
+    importCoverageCache() {
+        if (this.debug)
+            return {};
+        return localStorage.getItem('tileCoverage') === null ? {} : JSON.parse(localStorage.tileCoverage);
+    }
+
+    saveCoverageCache() {
+        localStorage.tileCoverage = JSON.stringify(this.coverageCache);
     }
 
     shuffleWeighted(array, weightField = item => item.weight) {

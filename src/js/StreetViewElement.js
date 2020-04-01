@@ -73,7 +73,7 @@ export default class StreetViewElement {
                     });
             }
             //TODO IS THIS NECESSARY??
-            setTimeout(() => resolve(), 500);
+            setTimeout(() => resolve(), 1000);
         });
     }
 }

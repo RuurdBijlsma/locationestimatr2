@@ -157,6 +157,7 @@
                     return;
                 try {
                     localStorage.lastPlayedDifficulty = this.difficultyId;
+                    this.customRoundIndex = this.rules.roundCount - 1;
                     if (this.$route.query.hasOwnProperty('area_coordinates') && this.$route.query.hasOwnProperty('area_radius')) {
                         this.$router.replace({
                             query: {

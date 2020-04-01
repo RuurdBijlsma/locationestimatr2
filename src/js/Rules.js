@@ -66,7 +66,7 @@ export default class Rules {
                 roundCount: 5,
                 objective: 0,
                 svType: 1,
-                distribution: 1,
+                distribution: 0,
                 preset: 1,
             }),
             'Normal': new Rules({
@@ -108,6 +108,19 @@ export default class Rules {
                 distribution: 0,
                 preset: 4,
             }),
+            // 'Custom': new Rules({
+            //     zoomAllowed: true,
+            //     panAllowed: true,
+            //     unlimitedTime: true,
+            //     unlimitedMoves: true,
+            //     timeLimit: 30,
+            //     moveLimit: 5,
+            //     roundCount: 1,
+            //     objective: 0,
+            //     svType: 1,
+            //     distribution: 0,
+            //     preset: 4,
+            // }),
         }
     }
 }

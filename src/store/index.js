@@ -94,6 +94,7 @@ async function getMapById(id) {
         mapData.id = id;
         delete mapData.maps;
         // console.log(mapData);
+        delete mapData.kml;
         return mapData;
     };
     return getCached('shallowMap:' + id, get, year);

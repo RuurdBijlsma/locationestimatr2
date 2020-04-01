@@ -1,6 +1,6 @@
 <template>
     <div class="game" ref="game" v-show="rules !== null && map !== null">
-        <div class="game-part" v-show="!dontAllowPlay" v-if="!svFailed">
+        <div class="game-part" v-if="!svFailed">
             <div class="game-info" v-if="rules !== null">
                 <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
                 <span v-if="!rules.unlimitedTime" class="time">Time: <span class="font-weight-bold">{{roundTime}}</span></span>
@@ -110,6 +110,7 @@
             fullscreen: false,
             prepared: false,
             showRoundOverview: false,
+            currentSvRound: -1,
             startTime: 0,
             timeTaken: -1,
             submitting: false,
@@ -220,7 +221,7 @@
                     this.initGoogle(),
                     this.getRoundLocation(1)
                 ]);
-                await this.nextRound(nextLocation);
+                await this.preloadStreetView(nextLocation);
 
                 console.log("Start game");
                 this.startTime = performance.now();
@@ -364,9 +365,26 @@
                     return Math.round(seconds);
                 return (Math.round(seconds * 10) / 10).toFixed(1);
             },
+            async waitSleep(time) {
+                return new Promise(resolve => {
+                    setTimeout(resolve, time);
+                });
+            },
             async startRound() {
+                this.dontAllowPlay = true;
                 this.attachMap(this.$refs.smallMap);
                 setTimeout(() => this.fitMapToGeoMap(), 30);
+                let round = ++this.currentRound;
+                if (this.locations[round] === undefined) {
+                    let event = 'roundLocation:' + round;
+                    await this.waitFor(event);
+                }
+                if (this.currentSvRound !== round) {
+                    console.log("Current svround is not round", this.currentSvRound, round);
+                    let event = 'svRound:' + round;
+                    await this.waitFor(event)
+                    console.log("SV round wait COMPLETE!");
+                }
                 this.dontAllowPlay = false;
                 console.log("Round start. Start timer here, reset allowed moves");
                 if (!this.rules.unlimitedTime) {
@@ -393,6 +411,22 @@
                     }, 500);
                 }
             },
+            async preloadStreetView() {
+                if (this.mapMarker !== null)
+                    this.mapMarker.setMap(null);
+                this.mapMarker = null;
+                let preloadingRound = this.currentRound + 1;
+                this.currentDestination = await this.getRoundLocation(preloadingRound);
+                this.guessButtonEnabled = false;
+                console.log("SetLocation", this.currentDestination);
+                await this.svElement.setLocation(...this.currentDestination);
+                this.applyRules();
+                this.currentDestination = this.svElement.getLocation();
+
+                this.currentSvRound = preloadingRound;
+                let event = 'svRound:' + preloadingRound;
+                this.$emit(event);
+            },
             async preloadAllRoundLocations() {
                 this.locations = [];
 
@@ -412,8 +446,15 @@
                 return new Promise(async resolve => {
                     console.log("loadNextLocation, round:", round);
                     this.findingRandomLocation = true;
-                    if (this.locations[round] === undefined)
-                        await this.waitFor('roundLocation:' + round);
+                    if (this.locations[round] === undefined) {
+                        let event = 'roundLocation:' + round;
+                        console.log("Waiting for event:", event);
+                        this.$on(event, () => {
+                            console.log("YAAAAA EVENT DONE");
+                        });
+                        await this.waitFor(event);
+                        console.log("EVENT DONEYAAA??????")
+                    }
                     let nextLocation = this.locations[round];
 
                     if (nextLocation === false) {
@@ -421,26 +462,10 @@
                         let rules = this.rules.presetName === 'Custom' ? JSON.parse(JSON.stringify(this.rules)) : this.rules.preset;
                         await this.$store.dispatch('reportMap', {mapId: this.map.id, rules});
                     }
+                    console.log("Setting finding random location to False");
                     this.findingRandomLocation = false;
                     resolve(nextLocation);
                 })
-            },
-            async nextRound() {
-                if (this.mapMarker !== null)
-                    this.mapMarker.setMap(null);
-                this.mapMarker = null;
-                console.log("nextRound");
-                this.currentDestination = await this.getRoundLocation(++this.currentRound);
-                console.log("NEXT ROUND", this.currentDestination);
-                this.guessButtonEnabled = false;
-
-                console.log("Setting location to ", this.currentDestination);
-                await this.svElement.setLocation(...this.currentDestination);
-                this.applyRules();
-
-                this.currentDestination = this.svElement.getLocation();
-                console.log("SV Getlocation returned", this.currentDestination);
-                console.log("Next round load complete");
             },
             attachMap(element) {
                 console.log("Attach map to", element);
@@ -504,7 +529,7 @@
                 let isLastRound = this.currentRound === this.rules.roundCount;
                 this.showOverview(this.guessedLocation, targetDestination, distance, points, isLastRound);
                 if (!isLastRound) {
-                    this.nextRound();
+                    this.preloadStreetView();
                 } else {
                     this.timeTaken = performance.now() - this.startTime;
                     this.$store.dispatch('addPlay', this.map.id);
@@ -527,13 +552,9 @@
                 return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(...from), new google.maps.LatLng(...to));
             },
             async nextRoundEvent() {
-                this.dontAllowPlay = true;
                 this.attachMap(this.$refs.smallMap);
                 console.log("NExt round event, nextlocation: ", this.locations[this.currentRound + 1]);
                 this.showRoundOverview = false;
-                if (this.findingRandomLocation)
-                    await this.waitFor('locationLoad');
-                this.dontAllowPlay = false;
                 this.startRound();
             },
             waitFor(event) {
