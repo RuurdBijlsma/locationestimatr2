@@ -1,5 +1,7 @@
 import Google from './Google'
 import GeoMap from './GeoMap'
+import PointMap from "./PointMap";
+import PolyMap from "./PolyMap";
 
 class MapManager {
     async areaToGeoMap(coordinates, radius, name = 'My Area', id = 'my_area') {
@@ -15,8 +17,11 @@ class MapManager {
                 paths = await this.kmlsToPaths(...map.maps.map(map => map.kml));
                 break;
             case 'area':
-                paths = await this.getAreaPaths(map.lat, map.lon, map.radius);
+                paths = await this.getAreaPaths(map.lat, map.lng, map.radius);
                 break;
+            case 'points':
+                await Google.wait();
+                return this.getMapByPoints(map.points, map.name, id);
             case 'kml':
             default:
                 paths = await this.kmlsToPaths(map.kml);
@@ -25,6 +30,29 @@ class MapManager {
 
         console.log("?MAP ID", map);
         return await this.getMapByPaths(paths, map.name, id);
+    }
+
+    getMapByPoints(points, mapName, id) {
+        // let bounds = new Google.maps.LatLngBounds();
+        // for (let {position} of points) {
+        //     bounds.extend(new Google.maps.LatLng(...position));
+        // }
+        // let ne = bounds.getNorthEast();
+        // let sw = bounds.getSouthWest();
+        // let bottom = sw.lat();
+        // let left = sw.lng();
+        // let top = ne.lat();
+        // let right = ne.lng();
+        //
+        // let topLeft = new Google.maps.LatLng(top, left);
+        // let topRight = new Google.maps.LatLng(top, right);
+        // let bottomLeft = new Google.maps.LatLng(bottom, left);
+        // let bottomRight = new Google.maps.LatLng(bottom, right);
+        // let path = [topLeft, topRight, bottomLeft, bottomRight];
+        // let area = Google.maps.geometry.spherical.computeArea(path);
+        // console.log({area, path});
+        // let minimumDistanceForPoints = Math.sqrt(area) * 2;
+        return new PointMap(points, 50000, mapName, id);
     }
 
     async getMapByPaths(paths, mapName, id) {
@@ -45,10 +73,11 @@ class MapManager {
         poly.getPaths().forEach(path => {
             area += Google.maps.geometry.spherical.computeArea(path);
         });
+        console.log({area});
 
         let minimumDistanceForPoints = Math.sqrt(area) * 2;
 
-        return new GeoMap(poly, minimumDistanceForPoints, mapName, id);
+        return new PolyMap(poly, minimumDistanceForPoints, mapName, id);
     }
 
     async getAreaPaths(lat, lon, radius, numSides = 20) {

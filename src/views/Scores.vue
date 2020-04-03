@@ -59,6 +59,7 @@
 
 <script>
     import Rules from "../js/Rules";
+    import PointRules from "../js/PointRules";
 
     export default {
         name: 'Scores',
@@ -98,11 +99,14 @@
             } else {
                 alert("Malformed URL :(");
             }
-            if (this.$route.query.hasOwnProperty('difficulty'))
-                this.selectedDifficulty = Rules.presetNames[+this.$route.query['difficulty']];
+            this.updateSelectedDifficulty();
             await this.loadScores();
         },
         methods: {
+            updateSelectedDifficulty() {
+                if (this.$route.query.hasOwnProperty('difficulty'))
+                    this.selectedDifficulty = this.presetNames[+this.$route.query['difficulty']];
+            },
             parseScores(rawScores) {
                 return rawScores.map((score, i) => {
                     let date = new Date(score.date);
@@ -202,9 +206,14 @@
             },
             map() {
                 document.title = `${this.map.name} Highscores - LocationEstimatr`;
+                this.scoreTypes = this.presetNames.filter(p => p !== 'Custom');
+                this.selectedDifficulty = this.scoreTypes[this.difficultyId];
             },
         },
         computed: {
+            presetNames() {
+                return this.map !== null && this.map.type === 'points' ? PointRules.presetNames : Rules.presetNames;
+            },
             unlistedStats() {
                 if (this.windowWidth < 400) {
                     return [
@@ -252,7 +261,7 @@
                 this.windowWidth < 630;
             },
             difficultyId() {
-                return Rules.presetNames.indexOf(this.selectedDifficulty);
+                return this.presetNames.indexOf(this.selectedDifficulty);
             },
         }
     }

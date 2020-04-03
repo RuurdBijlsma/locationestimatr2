@@ -346,11 +346,7 @@
                 e.preventDefault();
                 this.dialog = true;
                 let pointsExist = Math.max(...this.markerGroups.map(group => group.length));
-                if (pointsExist < 3) {
-                    this.invalid = true;
-                    return;
-                }
-                this.invalid = false;
+                this.invalid = pointsExist < 3;
             },
             async getImage() {
                 return new Promise(resolve => {
@@ -367,7 +363,7 @@
                         });
                         canvas.toBlob(blob => {
                             resolve(blob);
-                        }, 'image.png')
+                        }, 'image/png')
                     }, 1500);
                 });
             },

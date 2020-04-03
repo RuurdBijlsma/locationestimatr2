@@ -95,4 +95,11 @@
         position: fixed;
         top: 0;
     }
+
+    .debug-img {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 5;
+    }
 </style>

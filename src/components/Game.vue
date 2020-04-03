@@ -88,6 +88,7 @@
     import StreetView from "../js/StreetView";
     import StreetViewElement from "../js/StreetViewElement";
     import RoundScore from "./RoundScore";
+    import PolyMap from "../js/PolyMap";
 
     export default {
         name: 'Game',
@@ -192,6 +193,7 @@
                 this.map = map;
                 this.rules = rules;
                 this.challenge = challenge;
+                console.log("Starting game", map, rules, challenge);
                 if (this.challenge !== null)
                     this.challenge.guesses.forEach(challenge => {
                         let guess = challenge.guess;
@@ -217,11 +219,8 @@
                 this.previousGuesses = [];
 
                 this.preloadAllRoundLocations();
-                let [_, nextLocation] = await Promise.all([
-                    this.initGoogle(),
-                    this.getRoundLocation(1)
-                ]);
-                await this.preloadStreetView(nextLocation);
+                await this.initGoogle();
+                await this.preloadStreetView();
 
                 console.log("Start game");
                 this.startTime = performance.now();
@@ -275,11 +274,13 @@
             showCoverage() {
                 if (this.showingCoverage) {
                     this.svCoverage.setMap(null);
-                    this.map.polygon.setMap(null);
+                    if (this.map instanceof PolyMap)
+                        this.map.polygon.setMap(null);
                     this.showingCoverage = false;
                 } else {
                     this.svCoverage.setMap(this.googleMap);
-                    this.map.polygon.setMap(this.googleMap);
+                    if (this.map instanceof PolyMap)
+                        this.map.polygon.setMap(this.googleMap);
                     this.showingCoverage = true;
                 }
             },
@@ -416,27 +417,49 @@
                     this.mapMarker.setMap(null);
                 this.mapMarker = null;
                 let preloadingRound = this.currentRound + 1;
-                this.currentDestination = await this.getRoundLocation(preloadingRound);
+                let {position, pov} = await this.getRoundLocation(preloadingRound);
+                this.currentDestination = position;
                 this.guessButtonEnabled = false;
                 console.log("SetLocation", this.currentDestination);
                 await this.svElement.setLocation(...this.currentDestination);
+                console.log("SetPov", pov);
+                await this.svElement.panorama.setPov(pov);
                 this.applyRules();
-                this.currentDestination = this.svElement.getLocation();
 
                 this.currentSvRound = preloadingRound;
                 let event = 'svRound:' + preloadingRound;
                 this.$emit(event);
             },
+            positionDistance(positionA, positionB) {
+                return (positionA[0] - positionB[0]) ** 2 + (positionA[1] - positionB[1]) ** 2;
+            },
             async preloadAllRoundLocations() {
                 this.locations = [];
+                const defaultPov = {heading: 0, pitch: 0, zoom: 1};
 
                 if (this.challenge !== null) {
                     let challengeLocations = JSON.parse(JSON.stringify(this.challenge.guesses.map(g => g.target)));
+                    if (this.map.type === 'point') {
+                        challengeLocations = challengeLocations.map(position => {
+                            let pov = this.map.points.find(p => this.positionDistance(p.position, position) < 0.000001).pov;
+                            console.log("pov found!", pov);
+                            return {position, pov: pov || defaultPov}
+                        });
+                    } else {
+                        challengeLocations = challengeLocations.map(position => {
+                            return {position, pov: defaultPov}
+                        });
+                    }
                     challengeLocations.unshift(undefined);
                     this.locations = challengeLocations;
+                } else if (this.map.type === 'point') {
+                    let pointPositions = JSON.parse(JSON.stringify(this.map.points));
+                    pointPositions.unshift(undefined);
+                    this.locations = pointPositions;
                 } else {
                     for (let round = 1; round <= this.rules.roundCount; round++) {
-                        this.locations[round] = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
+                        let position = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
+                        this.locations[round] = {position, pov: defaultPov};
                         console.log("Finished loading location for round:", round, this.locations);
                         this.$emit('roundLocation:' + round);
                     }

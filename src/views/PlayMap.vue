@@ -1,6 +1,12 @@
 <template>
     <div class="play-map">
-        <rules v-show="true" class="rules" v-if="!gameStarted" @startGame="startGame" ref="rules"
+        <point-rules class="rules" v-if="!gameStarted && map && map.type==='point'" @startGame="startGame"
+                     ref="pointRules"
+                     :challenge-rules="challengePointRules"
+                     :image="image"
+                     :map="map"
+                     :challenge-map="challengeMap"></point-rules>
+        <rules class="rules" v-else-if="!gameStarted && map" @startGame="startGame" ref="rules"
                :challenge-rules="challengeRules"
                :image="image"
                :map="map"
@@ -13,18 +19,21 @@
     import MapManager from "../js/MapManager";
     import Rules from "../components/Rules";
     import RulesObject from '../js/Rules'
+    import PointRulesObject from '../js/PointRules'
     import Game from "../components/Game";
     import StreetView from "../js/StreetView";
+    import PointRules from "../components/PointRules";
 
     export default {
         name: 'PlayMap',
-        components: {Game, Rules},
+        components: {PointRules, Game, Rules},
         data() {
             return {
                 gameStarted: false,
                 rules: null,
                 map: null,
                 challengeRules: null,
+                challengePointRules: null,
                 challengeMap: null,
                 challenge: null,
                 image: '',
@@ -33,13 +42,22 @@
         async mounted() {
             if (this.$route.query.hasOwnProperty('challenge')) {
                 let {challenge, map} = await this.$store.dispatch('getChallenge', this.$route.query.challenge);
-                if (typeof challenge.rules === 'number')
-                    challenge.rules = RulesObject.presets[RulesObject.presetNames[challenge.rules]];
-                else
-                    challenge.rules = new RulesObject(challenge.rules);
-                console.log("Challenge rules", challenge.rules);
+                const RulesClass = map.type === 'points' ? PointRulesObject : RulesObject;
+                let r = challenge.rules;
+                if (typeof challenge.rules === 'number') {
+                    challenge.rules = RulesClass.presets[RulesClass.presetNames[challenge.rules]];
+                    console.log("HERE1");
+                } else {
+                    challenge.rules = new RulesClass(challenge.rules);
+                    console.log("HERE2");
+                }
+                console.log("Challenge rules", challenge.rules, 'RulesClass', RulesClass, RulesClass.presetNames[r]);
                 this.challenge = challenge;
-                this.challengeRules = challenge.rules;
+                if (map.type === 'points') {
+                    this.challengePointRules = challenge.rules;
+                } else {
+                    this.challengeRules = challenge.rules;
+                }
                 this.rules = challenge.rules;
                 if (map === 'my_area') {
                     if (this.$route.query.hasOwnProperty('area_coordinates') && this.$route.query.hasOwnProperty('area_radius')) {
@@ -81,6 +99,7 @@
                 });
                 console.log(mapInfo);
                 this.map = await MapManager.mapToGeoMap(mapInfo, this.$route.query.map);
+                console.log(this.map);
                 // this.startGame(this.$refs.rules.exportRules())
             } else {
                 alert("Malformed URL :(");

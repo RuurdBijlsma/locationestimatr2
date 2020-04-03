@@ -1,5 +1,5 @@
 <template>
-    <div class="rules">
+    <div class="point-rules">
         <v-card class="rules-card" width="550">
             <v-img :src="image" class="banner-image"
                    aspect-ratio="3/5"
@@ -22,12 +22,6 @@
                               label="Difficulty"
                               required></v-select>
                     <div v-if="selectedDifficulty === 'Custom' && challengeRules === null" class="custom-difficulty">
-                        <h3>Round count</h3>
-                        <v-chip-group class="chips" active-class="primary--text" mandatory v-model="customRoundIndex">
-                            <v-chip v-for="round in rounds">
-                                {{round}}
-                            </v-chip>
-                        </v-chip-group>
                         <v-switch label="Unlimited Time" v-model="rules.unlimitedTime"></v-switch>
                         <v-text-field v-if="!rules.unlimitedTime" class="number-input" outlined type="number"
                                       label="Time Limit (seconds)" v-model="rules.timeLimit"></v-text-field>
@@ -42,36 +36,10 @@
                                 {{objective}}
                             </v-chip>
                         </v-chip-group>
-                        <h3>StreetView type</h3>
-                        <v-chip-group class="chips" active-class="primary--text" mandatory v-model="rules.svType">
-                            <v-chip v-for="svType in svTypes">
-                                {{svType}}
-                            </v-chip>
-                        </v-chip-group>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <h3 v-on="on">Random location generator</h3>
-                            </template>
-                            <span>
-                                Determines how random location is picked, 'uniform' picks randomly on earth, while 'weighted' chooses based on the amount of StreetView coverage in that area.
-                                <br>
-                                'uniform' generally finds a more remote location, while 'weighted' is more likely to go to populated areas.
-                            </span>
-                        </v-tooltip>
-                        <v-chip-group class="chips" active-class="primary--text" mandatory v-model="rules.distribution">
-                            <v-chip v-for="dType in distributionTypes">
-                                {{dType}}
-                            </v-chip>
-                        </v-chip-group>
-                        <p v-if="rules.svType===2">
-                            <v-icon color="warning">warning</v-icon>
-                            In regions with low StreetView coverage PhotoSpheres will occur disproportionally often.
-                        </p>
                     </div>
                     <div v-else>
                         <div class="chips">
-                            <v-chip>{{rounds[rules.roundCount - 1]}} round{{rules.roundCount - 1 === 1 ? '' : 's'}}
-                            </v-chip>
+                            <v-chip>{{roundCount}} round{{roundCount === 1 ? '' : 's'}}</v-chip>
                             <v-chip v-if="rules.zoomAllowed">Zooming Allowed</v-chip>
                             <v-chip v-else>Zooming Restricted</v-chip>
                             <v-chip v-if="rules.panAllowed">Panning Allowed</v-chip>
@@ -89,8 +57,6 @@
                                 {{objectives[rules.objective]}}
                                 <v-icon right>priority_high</v-icon>
                             </v-chip>
-                            <v-chip>StreetView: {{svTypes[rules.svType]}}</v-chip>
-                            <v-chip>RNG: {{distributionTypes[rules.distribution]}}</v-chip>
                         </div>
                     </div>
                 </v-form>
@@ -104,15 +70,16 @@
 
 <script>
 
-    import Rules from "../js/Rules";
+    import PointRules from "../js/PointRules";
     import GeoMap from "../js/GeoMap";
+    import Rules from "../js/Rules";
 
     export default {
-        name: 'Rules',
+        name: 'PointRules',
         components: {},
         props: {
             challengeRules: {
-                type: Rules,
+                type: PointRules,
                 default: null,
             },
             challengeMap: {
@@ -129,25 +96,22 @@
             }
         },
         data: () => ({
-            customRoundIndex: 4,
             valid: true,
             selectedDifficulty: 'Normal',
-            difficulties: Rules.presetNames,
-            difficultyRules: Rules.presets,
-            rounds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            difficulties: PointRules.presetNames,
+            difficultyRules: PointRules.presets,
             objectives: ["Guess starting location", "Guess camera location"],
-            distributionTypes: Rules.distributionTypes,
-            svTypes: Rules.svTypes,
         }),
         async mounted() {
             let difficulty;
             if (this.$route.query.hasOwnProperty('difficulty')) {
-                difficulty = Rules.presetNames[this.$route.query['difficulty']]
-            } else if (localStorage.getItem('lastPlayedDifficulty') !== null) {
-                difficulty = Rules.presetNames[localStorage.lastPlayedDifficulty];
+                difficulty = +this.$route.query['difficulty']
+            } else if (localStorage.getItem('lastPlayedPointDifficulty') !== null) {
+                difficulty = +localStorage.lastPlayedPointDifficulty;
             }
-            if (difficulty)
-                this.selectedDifficulty = Math.min(Math.max(difficulty, 0), Rules.presetNames.length);
+            if (difficulty) {
+                this.selectedDifficulty = PointRules.presetNames[Math.min(Math.max(difficulty, 0), PointRules.presetNames.length)];
+            }
         },
         methods: {
             exportRules() {
@@ -159,24 +123,18 @@
                 if (this.challengeMap || this.challengeRules)
                     return;
                 try {
-                    localStorage.lastPlayedDifficulty = this.difficultyId;
-                    this.customRoundIndex = this.rules.roundCount - 1;
-                    if (this.$route.query.hasOwnProperty('area_coordinates') && this.$route.query.hasOwnProperty('area_radius')) {
-                        this.$router.replace({
-                            query: {
-                                area_coordinates: this.$route.query.area_coordinates,
-                                area_radius: this.$route.query.area_radius,
-                                difficulty: this.difficultyId,
-                            }
-                        });
-                    } else {
-                        this.$router.replace({
-                            query: {
-                                map: this.map.id,
-                                difficulty: this.difficultyId,
-                            }
-                        });
-                    }
+                    localStorage.lastPlayedPointDifficulty = this.difficultyId;
+                    console.log("Replacing route!", {
+                        selDiff: this.selectedDifficulty,
+                        map: this.map.id,
+                        difficulty: this.difficultyId
+                    });
+                    this.$router.replace({
+                        query: {
+                            map: this.map.id,
+                            difficulty: this.difficultyId,
+                        }
+                    });
                 } catch (e) {
                 }
             },
@@ -193,10 +151,15 @@
         },
         computed: {
             difficultyId() {
-                return Rules.presetNames.indexOf(this.selectedDifficulty);
+                return PointRules.presetNames.indexOf(this.selectedDifficulty);
             },
             rules() {
+                this.difficultyRules[this.selectedDifficulty].roundCount = this.roundCount;
                 return this.difficultyRules[this.selectedDifficulty];
+            },
+            roundCount() {
+                if (this.map !== null)
+                    return this.map.points.length;
             }
         }
     }

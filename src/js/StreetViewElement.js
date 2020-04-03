@@ -38,13 +38,15 @@ export default class StreetViewElement {
     restrictMove() {
         this.panorama.setOptions({linksControl: false});
         this.panorama.setOptions({clickToGo: false});
-        this.flagElement.style.display = "none";
+        if (this.flagElement)
+            this.flagElement.style.display = "none";
     }
 
     allowMove() {
         this.panorama.setOptions({linksControl: true});
         this.panorama.setOptions({clickToGo: true});
-        this.flagElement.style.display = "block";
+        if (this.flagElement)
+            this.flagElement.style.display = "block";
     }
 
     getLocation() {
