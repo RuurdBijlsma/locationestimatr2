@@ -4,10 +4,11 @@
             <v-card-title>Register</v-card-title>
             <v-card-text>
                 <v-form ref="form" @submit="submit">
-                    <v-text-field outlined v-model="email" :rules="emailRules" label="Email"
+                    <v-text-field outlined v-model="email" :rules="emailRules" label="Email" name="user"
                                   type="email"></v-text-field>
-                    <v-text-field outlined v-model="user" :rules="userRules" label="User Name"></v-text-field>
+                    <v-text-field outlined v-model="user" :rules="userRules" label="User Name" name="name"></v-text-field>
                     <v-text-field
+                            name="password"
                             v-model="password"
                             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                             :rules="passRules"

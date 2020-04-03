@@ -8,6 +8,7 @@
     "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
+    "color-converter": "^1.4.1",
     "core-js": "^3.6.4",
     "firebase": "^7.11.0",
     "html2canvas": "^1.0.0-rc.5",

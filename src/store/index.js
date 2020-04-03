@@ -110,6 +110,7 @@ export default new Vuex.Store({
     state: {
         homeMaps: [],
         realAccount: false,
+        customColor: false,
     },
     mutations: {
         'setRealAccount': (state, real) => {
@@ -117,6 +118,28 @@ export default new Vuex.Store({
         },
         'setHomeMaps': (state, maps) => {
             state.homeMaps = maps;
+        },
+        'setCustomColor': (state, customColor) => {
+            const defaultThemeColor = '#02c780';
+            state.customColor = customColor;
+            let themeColor;
+            if (customColor !== false) {
+                themeColor = customColor.colorBottom;
+            } else {
+                themeColor = defaultThemeColor;
+            }
+            let head = document.querySelector('head');
+            head.querySelector(`meta[name='theme-color']`).setAttribute('content', themeColor);
+
+            let iconLinks = head.querySelectorAll(`link[rel='icon']`);
+            iconLinks.forEach(l => l.remove());
+
+            let newLink = document.createElement('link');
+            newLink.setAttribute('rel', 'icon');
+            newLink.setAttribute('sizes', `${customColor.width}x${customColor.height}`);
+            newLink.setAttribute('href', customColor.image);
+            console.log("Setting new favicon to", customColor, newLink);
+            head.appendChild(newLink);
         }
     },
     getters: {
@@ -125,6 +148,17 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async updatePassword({commit}, newPassword) {
+            let user = firebase.auth().currentUser;
+            if (!user.isAnonymous) {
+                try {
+                    await user.updatePassword(newPassword);
+                    return true;
+                } catch (e) {
+                    return e;
+                }
+            }
+        },
         async submitFeedback({commit}, feedback) {
             db.collection('feedback').add({
                 date: new Date,
@@ -134,12 +168,13 @@ export default new Vuex.Store({
         async deleteAccount({commit}) {
             try {
                 await db.collection('users').doc(firebase.auth().getUid()).delete();
-                commit('setRealAccount', false);
                 console.warn("DELETING ACCOUNT");
                 await firebase.auth().currentUser.delete();
+                commit('setRealAccount', false);
                 await firebase.auth().signInAnonymously();
+                return true;
             } catch (e) {
-                alert(e.message);
+                return e;
             }
         },
         async getExploreMaps({commit}) {

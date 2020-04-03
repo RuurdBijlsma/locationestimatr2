@@ -1,9 +1,16 @@
 <template>
     <div class="home">
         <aside class="left-content" v-if="!mobile">
-            <div class="logo">
+            <div class="logo" v-if="$store.state.customColor === false">
                 <div class="logo-image"></div>
-                <div class="logo-text">
+                <div class="logo-text" :style="`color: ${$vuetify.theme.themes.dark.primary}`">
+                    <p>Location</p>
+                    <p>Estimatr</p>
+                </div>
+            </div>
+            <div class="logo" v-else>
+                <div class="logo-image" :style="`background-image: url(${$store.state.customColor.image})`"></div>
+                <div class="logo-text" :style="`background-image: linear-gradient(${$store.state.customColor.colorTop}, ${$store.state.customColor.colorBottom});`">
                     <p>Location</p>
                     <p>Estimatr</p>
                 </div>
@@ -78,7 +85,7 @@
             <router-view @loadedMaps="loaded" @snack="showSnack"></router-view>
         </main>
         <v-snackbar v-model="snack">{{ snackText }}
-            <v-btn color="pink" text @click="snack = false">Close</v-btn>
+            <v-btn color="primary" text @click="snack = false">Close</v-btn>
         </v-snackbar>
         <v-footer absolute padless class="footer" v-if="$route.path==='/' && showFooter">
             <v-card flat tile width="100%">
@@ -245,7 +252,7 @@
 
     .logo-text {
         font-size: 14px;
-        background: -webkit-linear-gradient(#0cde4d, #39d37a);
+        background-image: linear-gradient(#0cde4d, #39d37a);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 800;
