@@ -214,7 +214,9 @@
                     });
                 if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
                 else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
+                else if (this.map.minimumDistanceForPoints < 10000) this.zoom = 16;
                 else this.zoom = 14;
+                console.log("Using zoom level:", this.zoom, this.map.minimumDistanceForPoints);
                 this.currentRound = 0;
                 this.previousGuesses = [];
 

@@ -106,6 +106,7 @@
 
     import Rules from "../js/Rules";
     import GeoMap from "../js/GeoMap";
+    import PointRules from "../js/PointRules";
 
     export default {
         name: 'Rules',
@@ -142,12 +143,12 @@
         async mounted() {
             let difficulty;
             if (this.$route.query.hasOwnProperty('difficulty')) {
-                difficulty = Rules.presetNames[this.$route.query['difficulty']]
+                difficulty = +this.$route.query['difficulty'];
             } else if (localStorage.getItem('lastPlayedDifficulty') !== null) {
-                difficulty = Rules.presetNames[localStorage.lastPlayedDifficulty];
+                difficulty = +localStorage.lastPlayedDifficulty;
             }
-            if (difficulty)
-                this.selectedDifficulty = Math.min(Math.max(difficulty, 0), Rules.presetNames.length);
+            if (difficulty !== undefined)
+                this.selectedDifficulty = Rules.presetNames[Math.min(Math.max(difficulty, 0), Rules.presetNames.length)];
         },
         methods: {
             exportRules() {
@@ -193,7 +194,10 @@
         },
         computed: {
             difficultyId() {
-                return Rules.presetNames.indexOf(this.selectedDifficulty);
+                console.log("Getting difficulty ID", this.selectedDifficulty, Rules.presetNames);
+                let ind = Rules.presetNames.indexOf(this.selectedDifficulty);
+                console.log("Getting difficulty ID", this.selectedDifficulty, Rules.presetNames, {ind});
+                return ind === -1 ? 0 : ind;
             },
             rules() {
                 return this.difficultyRules[this.selectedDifficulty];
