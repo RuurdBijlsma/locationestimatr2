@@ -5,7 +5,8 @@
                 <span>Points: <span
                         class="font-weight-bold">{{previousGuesses.map(g=>g.score).reduce((a,b)=>a+b, 0)}}</span></span>
                 <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
-                <span v-if="!rules.unlimitedTime" class="time">Time: <span class="font-weight-bold">{{roundTime}}</span></span>
+                <span v-if="!rules.unlimitedTime" class="time">Time: <span
+                        class="font-weight-bold">{{roundTime}}</span></span>
                 <span v-if="!rules.unlimitedMoves" class="time">Moves Left:
                     <span class="font-weight-bold">{{movesLeft}}</span></span>
             </div>
@@ -188,6 +189,7 @@
                 }
             },
             async start(map, rules, challenge) {
+                this.$store.commit('setImmersive', true);
                 this.map = map;
                 this.rules = rules;
                 this.challenge = challenge;
@@ -591,8 +593,8 @@
                 });
             }
         },
-        computed:{
-            mobile(){
+        computed: {
+            mobile() {
                 return this.$store.state.windowWidth < 500;
             }
         }
@@ -600,6 +602,7 @@
 </script>
 
 <style scoped>
+
     .game-part {
         height: 100%;
     }

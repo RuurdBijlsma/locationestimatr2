@@ -18,6 +18,16 @@ if (localStorage.getItem("scores") === null)
     localStorage.scores = JSON.stringify({});
 const localScores = JSON.parse(localStorage.scores);
 
+if (document.querySelectorAll(`head link[rel='manifest']`).length === 0) {
+    let manifestLink = document.createElement('link');
+    manifestLink.setAttribute('rel', 'manifest');
+    manifestLink.setAttribute('href', './manifest.json');
+    document.querySelector('head').appendChild(manifestLink);
+    console.log("WHY IS THIS NEEDED");
+} else {
+    console.log("IT WASN'T NEEDED NOW");
+}
+
 async function getCached(key, action, cacheLifetime = 1000 * 60 * 60 * 24) {
     //Refresh cache if it doesn't exist
     let data;
@@ -112,8 +122,12 @@ export default new Vuex.Store({
         realAccount: false,
         customColor: false,
         windowWidth: window.innerWidth,
+        immersive: false,
     },
     mutations: {
+        'setImmersive': (state, immersive) => {
+            state.immersive = immersive;
+        },
         'setWindowWidth': (state, windowWidth) => {
             state.windowWidth = windowWidth;
         },

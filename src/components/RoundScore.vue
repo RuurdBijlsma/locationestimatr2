@@ -176,6 +176,7 @@
                 this.$emit('submitHighScore', this.user, this.points, this.dbGuesses);
             },
             showGameOverview() {
+                this.$store.commit('setImmersive', false);
                 this.removeOverviewLines();
                 for (let i = 0; i < this.guesses.length; i++) {
                     let {guess, target} = this.guesses[i];

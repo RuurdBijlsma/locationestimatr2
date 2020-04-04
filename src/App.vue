@@ -1,6 +1,6 @@
 <template>
     <v-app dark class="app">
-        <v-app-bar fixed color="primary" v-if="mobile">
+        <v-app-bar fixed color="primary" v-if="mobile && !($route.path.startsWith('/play') && $store.state.immersive)">
             <v-btn v-if="$route.path !== '/'" icon to="/">
                 <v-icon>home</v-icon>
             </v-btn>
@@ -11,7 +11,8 @@
                 <v-icon>home</v-icon>
             </v-btn>
         </v-app-bar>
-        <v-content class="content" :style="mobile ? `margin-top: 56px` : ''">
+        <v-content class="content"
+                   :style="mobile && !($route.path.startsWith('/play') && $store.state.immersive) ? `margin-top: 56px` : ''">
             <router-view v-if="loggedIn"></router-view>
         </v-content>
     </v-app>

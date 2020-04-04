@@ -40,6 +40,7 @@
             }
         },
         async mounted() {
+            this.$store.commit('setImmersive', false);
             if (this.$route.query.hasOwnProperty('challenge')) {
                 let {challenge, map} = await this.$store.dispatch('getChallenge', this.$route.query.challenge);
                 const RulesClass = map.type === 'points' ? PointRulesObject : RulesObject;
