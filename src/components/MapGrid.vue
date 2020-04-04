@@ -5,7 +5,7 @@
             <map-card v-for="map in filteredMaps"
                       :key="map.name" :map="map" :img-prefix="imgPrefix"></map-card>
         </div>
-        <h3 v-if="filteredMaps.length===0">
+        <h3 v-if="filteredMaps.length===0 && !loading">
             <v-icon>sentiment_dissatisfied</v-icon>
             No maps found
         </h3>
@@ -30,7 +30,11 @@
             imgPrefix: {
                 type: String,
                 default: '',
-            }
+            },
+            loading: {
+                type: Boolean,
+                default: false,
+            },
         },
         data() {
             return {

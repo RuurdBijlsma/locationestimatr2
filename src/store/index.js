@@ -138,7 +138,7 @@ export default new Vuex.Store({
             newLink.setAttribute('rel', 'icon');
             newLink.setAttribute('sizes', `${customColor.width}x${customColor.height}`);
             newLink.setAttribute('href', customColor.image);
-            console.log("Setting new favicon to", customColor, newLink);
+            // console.log("Setting new favicon to", customColor, newLink);
             head.appendChild(newLink);
         }
     },

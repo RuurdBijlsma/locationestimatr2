@@ -1,5 +1,6 @@
 <template>
-    <div class="round-score" :style="$store.state.customColor ? `background: linear-gradient(180deg, ${$store.state.customColor.colorBottom} 0%, ${$store.state.customColor.colorTop} 100%);` : ''">
+    <div class="round-score">
+        <!--:style="$store.state.customColor ? `background: linear-gradient(180deg, ${$store.state.customColor.colorBottom} 0%, ${$store.state.customColor.colorTop} 100%);` : ''"-->
         <div class="map-slot">
             <slot></slot>
         </div>
@@ -151,7 +152,7 @@
                 this.loadingLike = true;
                 await this.$store.dispatch('addLike', this.map.id);
                 this.loadingLike = false;
-                this.rateSnack=true;
+                this.rateSnack = true;
                 this.snackText = 'Map has been liked! :)';
                 this.rated = true;
             },
@@ -159,7 +160,7 @@
                 this.loadingDislike = true;
                 await this.$store.dispatch('addDislike', this.map.id);
                 this.loadingDislike = false;
-                this.rateSnack=true;
+                this.rateSnack = true;
                 this.snackText = 'Map has been disliked! >:(';
                 this.rated = true;
             },

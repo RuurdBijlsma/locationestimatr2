@@ -1,6 +1,6 @@
 <template>
     <div class="point-rules">
-        <v-card class="rules-card" width="550">
+        <v-card class="rules-card">
             <v-img :src="image" class="banner-image"
                    aspect-ratio="3/5"
                    gradient="to top, rgba(25,32,72,.7), rgba(100,115,201,.13)">
@@ -167,21 +167,15 @@
 
 <style scoped>
     .rules-card {
-        display: inline-block;
-        max-width: 550px;
-        width: 100%;
+        height: auto;
     }
 
     @media screen and (max-width: 550px) {
-        .rules {
-            margin-top: 0 !important;
-        }
-
         .rules-card {
             height: 100%;
-            margin-top: 0 !important;
         }
     }
+
 
     .chips > * {
         margin: 5px;

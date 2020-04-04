@@ -52,7 +52,7 @@ class MapManager {
         // let area = Google.maps.geometry.spherical.computeArea(path);
         // console.log({area, path});
         // let minimumDistanceForPoints = Math.sqrt(area) * 2;
-        return new PointMap(points, 50000, mapName, id);
+        return new PointMap(points, 500000, mapName, id);
     }
 
     async getMapByPaths(paths, mapName, id) {

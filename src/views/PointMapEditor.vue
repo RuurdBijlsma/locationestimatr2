@@ -1,18 +1,15 @@
 <template>
     <div class="point-map-editor">
         <h2>Create Point Map</h2>
-        <p class="caption">Click in the map below to start creating a point. Hold ctrl & left mouse button to draw a
-            point.</p>
-        <p class="caption">Drag point points to move them</p>
-        <p class="caption">Click on a point point to select it, then click somewhere in the map to place a point
-            point after the selected point. Press delete to remove a selected point.</p>
+        <p class="caption">Click exactly on a road below to preview the StreetView in that location, if you are happy with the location, create a point there with the "Create Point" button. The point of view will also be stored (camera pitch/heading and zoom).</p>
+        <p class="caption">When you have multiple points, you can click a point to select it, you can then update it with the "Update Selected Point" button, and you can delete it with the delete key.</p>
         <p class="error--text caption">{{error}}</p>
         <div class="controls">
-            <v-file-input small-chips v-model="jsonFile" label="Import JSON" outlined dense accept=".json"
+            <v-file-input small-chips v-model="jsonFile" label="Import Map" outlined dense accept=".json"
                           title="Import .json file into editor" class="json-input"></v-file-input>
             <v-btn @click="exportJson()" outlined
                    title="Export your map as a json file, which can be imported later.">
-                Export JSON
+                Export Map
             </v-btn>
         </div>
         <div class="controls">

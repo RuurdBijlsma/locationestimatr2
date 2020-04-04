@@ -141,11 +141,15 @@
     .rules {
         margin-top: 50px;
         transition: margin-top 0.3s;
+        height: auto;
+        max-width:550px;
+        width:100%;
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 550px) {
         .rules {
-            margin-top: 0;
+            margin-top: 0 !important;
+            height:100%;
         }
     }
 </style>

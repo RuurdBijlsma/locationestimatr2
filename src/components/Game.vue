@@ -2,6 +2,8 @@
     <div class="game" ref="game" v-show="rules !== null && map !== null">
         <div class="game-part" v-if="!svFailed">
             <div class="game-info" v-if="rules !== null">
+                <span>Points: <span
+                        class="font-weight-bold">{{previousGuesses.map(g=>g.score).reduce((a,b)=>a+b, 0)}}</span></span>
                 <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
                 <span v-if="!rules.unlimitedTime" class="time">Time: <span class="font-weight-bold">{{roundTime}}</span></span>
                 <span v-if="!rules.unlimitedMoves" class="time">Moves Left:
@@ -268,6 +270,8 @@
                 let imgSize = this.canvas.width / gridWidth;
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
                 tiles.map(tile => tile.img).forEach((img, i) => {
+                    if (img === false)
+                        return;
                     let x = i % gridWidth;
                     let y = Math.floor(i / gridWidth);
                     this.context.drawImage(img, x * imgSize, y * imgSize, imgSize, imgSize);
@@ -455,7 +459,10 @@
                     challengeLocations.unshift(undefined);
                     this.locations = challengeLocations;
                 } else if (this.map.type === 'point') {
-                    let pointPositions = JSON.parse(JSON.stringify(this.map.points));
+                    console.log("Not shuffled", this.map.points);
+                    //Copy points because of the unshift happening after
+                    let pointPositions = this.streetView.shuffle(JSON.parse(JSON.stringify(this.map.points)));
+                    console.log("Shuffled", pointPositions);
                     pointPositions.unshift(undefined);
                     this.locations = pointPositions;
                 } else {

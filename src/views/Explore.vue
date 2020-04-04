@@ -11,7 +11,7 @@
             Most Liked Maps
         </h3>
         <v-progress-circular class="spinner"  indeterminate v-if="loading"></v-progress-circular>
-        <map-grid :maps="maps.liked" img-prefix="../"></map-grid>
+        <map-grid :loading="loading" :maps="maps.liked" img-prefix="../"></map-grid>
     </div>
 </template>
 
