@@ -161,7 +161,6 @@
             return {
                 drawer: true,
                 loggedIn: false,
-                windowWidth: window.innerWidth,
                 showFooter: false,
                 snack: false,
                 snackText: '',
@@ -171,9 +170,6 @@
             }
         },
         mounted() {
-            window.onresize = () => {
-                this.windowWidth = window.innerWidth
-            };
         },
         methods: {
             async sendFeedback() {
@@ -209,7 +205,7 @@
         watch: {},
         computed: {
             mobile() {
-                return this.windowWidth <= 840;
+                return this.$store.state.windowWidth <= 840;
             }
         }
     }
@@ -217,7 +213,9 @@
 
 <style scoped>
     .home {
-        /*display: flex;*/
+        top: 0;
+        position: absolute;
+        width: 100%;
     }
 
     .left-content {

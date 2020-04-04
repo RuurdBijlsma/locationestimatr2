@@ -123,8 +123,6 @@
             isCopied: false,
             resizeDown: false,
             resizeOffset: {x: 0, y: 0},
-            windowWidth: window.innerWidth,
-            mobile: window.innerWidth < 500,
             svCoverage: null,
             showingCoverage: false,
             rules: null,
@@ -144,9 +142,7 @@
             document.onfullscreenchange = e => {
                 this.fullscreen = document.fullscreenElement;
             };
-            window.onresize = () => {
-                this.windowWidth = window.innerWidth;
-            };
+
             document.onmouseup = e => {
                 this.resizeDown = false;
                 this.resizeEvent(e);
@@ -595,11 +591,10 @@
                 });
             }
         },
-        watch: {
-            windowWidth() {
-                this.mobile = this.windowWidth < 500;
-                console.log(this.mobile);
-            },
+        computed:{
+            mobile(){
+                return this.$store.state.windowWidth < 500;
+            }
         }
     }
 </script>

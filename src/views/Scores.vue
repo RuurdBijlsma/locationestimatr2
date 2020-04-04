@@ -74,7 +74,6 @@
                 image: '',
                 loading: false,
                 refresh: false,
-                windowWidth: window.innerWidth,
             }
         },
         async mounted() {
@@ -82,7 +81,6 @@
                 document.title = `${this.map.name} Highscores - LocationEstimatr`;
             else
                 document.title = `Highscores - LocationEstimatr`;
-            window.onresize = () => this.windowWidth = window.innerWidth;
             if (this.$route.query.hasOwnProperty('refresh'))
                 this.refresh = this.$route.query['refresh'] === 'true';
             if (this.$route.query.hasOwnProperty('map')) {
@@ -215,13 +213,13 @@
                 return this.map !== null && this.map.type === 'points' ? PointRules.presetNames : Rules.presetNames;
             },
             unlistedStats() {
-                if (this.windowWidth < 400) {
+                if (this.$store.state.windowWidth < 400) {
                     return [
                         {text: 'Total Distance', value: 'totalDistance',},
                         {text: 'Time Taken', value: 'timeTaken',},
                         {text: 'Date', value: 'date',}
                     ]
-                } else if (this.windowWidth < 650) {
+                } else if (this.$store.state.windowWidth < 650) {
                     return [
                         {text: 'Time Taken', value: 'timeTaken'},
                         {text: 'Date', value: 'date',}
@@ -230,18 +228,18 @@
                 return [{text: 'Date', value: 'date',}];
             },
             headers() {
-                if (this.windowWidth < 400) {
+                if (this.$store.state.windowWidth < 400) {
                     return [
                         {text: 'User', value: 'user',},
                         {text: 'Score', align: 'right', value: 'totalScore',},
                     ];
-                } else if (this.windowWidth < 600) {
+                } else if (this.$store.state.windowWidth < 600) {
                     return [
                         {text: 'User', value: 'user',},
                         {text: 'Score', align: 'right', value: 'totalScore',},
                         {text: 'Total Distance', value: 'totalDistance', align: 'right'},
                     ];
-                } else if (this.windowWidth < 650) {
+                } else if (this.$store.state.windowWidth < 650) {
                     return [
                         {text: '#', value: 'number', align: 'right'},
                         {text: 'User', value: 'user',},
@@ -258,7 +256,7 @@
                 ];
             },
             mobile() {
-                this.windowWidth < 630;
+                return this.$store.state.windowWidth < 630;
             },
             difficultyId() {
                 return this.presetNames.indexOf(this.selectedDifficulty);

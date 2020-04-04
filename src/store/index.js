@@ -111,8 +111,12 @@ export default new Vuex.Store({
         homeMaps: [],
         realAccount: false,
         customColor: false,
+        windowWidth: window.innerWidth,
     },
     mutations: {
+        'setWindowWidth': (state, windowWidth) => {
+            state.windowWidth = windowWidth;
+        },
         'setRealAccount': (state, real) => {
             state.realAccount = real;
         },

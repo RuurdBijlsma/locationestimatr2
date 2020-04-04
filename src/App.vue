@@ -1,6 +1,19 @@
 <template>
-    <v-app dark>
-        <router-view v-if="loggedIn"></router-view>
+    <v-app dark class="app">
+        <v-app-bar fixed color="primary" v-if="mobile">
+            <v-btn v-if="$route.path !== '/'" icon to="/">
+                <v-icon>home</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-toolbar-title>Location Estimatr</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn v-if="$route.path !== '/'" style="visibility: hidden" icon @click="$router.push('/')">
+                <v-icon>home</v-icon>
+            </v-btn>
+        </v-app-bar>
+        <v-content class="content" :style="mobile ? `margin-top: 56px` : ''">
+            <router-view v-if="loggedIn"></router-view>
+        </v-content>
     </v-app>
     <!--    <div id="app">-->
     <!--    </div>-->
@@ -31,6 +44,7 @@
             loggedIn: false,
         }),
         async mounted() {
+            window.onresize = () => this.$store.commit('setWindowWidth', window.innerWidth);
             console.log(this.$vuetify);
             this.$vuetify.theme.themes.dark.primary = localStorage.getItem('color') === null ? '#02c780' : localStorage.color;
             let customColor = localStorage.getItem('customColor') === null ? false : JSON.parse(localStorage.customColor);
@@ -54,6 +68,11 @@
                     }
                 }
             });
+        },
+        computed: {
+            mobile() {
+                return this.$store.state.windowWidth <= 840;
+            }
         }
     };
 </script>
@@ -74,6 +93,10 @@
     #app {
         background-color: #222031;
         overflow-y: hidden;
+    }
+
+    .content {
+        overflow-y: auto;
     }
 
     input[type='number'] {
@@ -104,5 +127,9 @@
         top: 0;
         left: 0;
         z-index: 5;
+    }
+
+    .v-btn__content {
+        font-weight: bold;
     }
 </style>
