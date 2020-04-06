@@ -1,9 +1,11 @@
 import EventEmitter from 'events';
+import Google from './Google'
 
 export default class StreetView extends EventEmitter {
     constructor(map) {
         super();
         this.map = map;
+        this.googleMap = null;
         this.coverageCache = this.importCoverageCache();
         this.bounds = this.map.getBounds();
         this.smallestContainingTile = this.boundsToSmallestContainingTile(this.bounds);
@@ -15,8 +17,7 @@ export default class StreetView extends EventEmitter {
         this.canvas.height = 256;
 
         // this.smallestContainingTile = {x: 547, y: 377, zoom: 10};
-        console.log("Smallest containing tile:", this.smallestContainingTile);
-        // this.debug = true;
+        this.debug = false;
         this.typeColors = [
             {color: [84, 160, 185], id: 'sv'},
             {color: [84, 160, 185], id: 'sv'},
@@ -39,6 +40,22 @@ export default class StreetView extends EventEmitter {
             div.style.top = '0';
             div.style.left = '0';
             div.style.zIndex = '14';
+        }
+    }
+
+    get googleMap() {
+        return this._googleMap;
+    }
+
+    set googleMap(v) {
+        this._googleMap = v;
+        if (v !== null)
+            v.fitBounds(this.map.getBounds());
+    }
+
+    randomValidLocations(locationCount, endZoom = 14, type = 'sv', distribution = 'weighted', onLocation) {
+        for (let i = 0; i < locationCount; i++) {
+
         }
     }
 
@@ -89,6 +106,47 @@ export default class StreetView extends EventEmitter {
         });
     }
 
+    debugClearTiles() {
+        console.log("Clearing tiles", this.polygons);
+        if (!this.polygons)
+            this.polygons = [];
+        this.polygons.forEach(p => {
+            p.polygon.setMap(null);
+            p.infoWindow.setMap(null);
+        });
+        this.polygons = [];
+    }
+
+    debugVisualizeTile(tile, color = 'red') {
+        if (this.googleMap === null)
+            return console.warn("No googleMap set");
+
+        console.log("Visualizing tile:", tile.x, tile.y, tile.zoom);
+        let tileCoordinates = this.getTileCornerCoordinates(tile.x, tile.y, tile.zoom);
+        let path = tileCoordinates.map(tile => new Google.maps.LatLng(...tile));
+        let polygon = new Google.maps.Polygon({
+            paths: [path],
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.35,
+            draggable: false,
+            clickable: false,
+        });
+        const infoWindow = new Google.maps.InfoWindow({
+            content: JSON.stringify(tile.coverage),
+            position: path[0],
+        });
+        infoWindow.open(this.googleMap);
+
+        if (!this.polygons)
+            this.polygons = [];
+        this.polygons.push({polygon, infoWindow});
+        polygon.setMap(this.googleMap);
+        // console.log("Visualizing tile:", tile, color, this.googleMap, polygon);
+    }
+
     async randomValidTile(endZoom, type, chosenTile = {x: 0, y: 0, zoom: 0}) {
         if (chosenTile.zoom >= endZoom) {
             return chosenTile;
@@ -96,7 +154,8 @@ export default class StreetView extends EventEmitter {
         const photoSphereZoomLevel = 12;
 
         let subTiles = await this.getSubTiles(chosenTile.x, chosenTile.y, chosenTile.zoom);
-        this.emit('subTiles', subTiles);
+        if (!this.debug)
+            this.emit('subTiles', subTiles);
         // console.log("TYPE", type, "DISTRIBUTION", this.distribution);
 
         let validTiles = subTiles
@@ -108,13 +167,18 @@ export default class StreetView extends EventEmitter {
                 tile.zoom <= photoSphereZoomLevel && tile.types.sv)
             .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom));
 
+
         let shuffleFun = this.distribution === 'uniform' ?
             array => this.shuffle(array) :
             array => this.shuffleWeighted(array, item => item.coverage[chosenTile.zoom + 1 <= photoSphereZoomLevel ? 'both' : type]);
         let shuffledTiles = shuffleFun(validTiles);
 
         if (this.debug) {
-            console.log("valid shuffled tiles", shuffledTiles);
+            console.log("Valid shuffledTiles:", shuffledTiles, 'all tiles: ', subTiles);
+            this.debugClearTiles();
+            subTiles.forEach(tile => this.debugVisualizeTile(tile, '#ff0000'));
+            shuffledTiles.forEach(tile => this.debugVisualizeTile(tile, '#24ff2a'));
+
             this.debugImg.forEach(img => {
                 img.src = '';
             });
@@ -123,10 +187,10 @@ export default class StreetView extends EventEmitter {
                     this.debugImg[i].src = tile.img.src
                 }
             });
-            if (chosenTile.zoom >= 0) {
+            if (chosenTile.zoom >= 7) {
                 // return;
             }
-            // await this.waitSleep(4000);
+            await this.waitSleep(2000000);
         }
 
         for (let tile of shuffledTiles) {
@@ -149,22 +213,28 @@ export default class StreetView extends EventEmitter {
         return (tileA.x === tileB.x && tileA.y === tileB.y && tileA.zoom === tileB.zoom);
     }
 
+    getTileCornerCoordinates(tileX, tileY, zoom) {
+        return [
+            this.tilePixelToLatLon(tileX, tileY, zoom, 0, 0),// top left
+            this.tilePixelToLatLon(tileX, tileY, zoom, 256, 0),// top right
+            this.tilePixelToLatLon(tileX, tileY, zoom, 256, 256),// bottom right
+            this.tilePixelToLatLon(tileX, tileY, zoom, 0, 256),// bottom left
+        ];
+    }
+
     tileIntersectsMap(tileX, tileY, zoom) {
-        let bounds = [];
-        bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 0, 0));
-        bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 256, 256));
-        bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 0, 256));
-        bounds.push(this.tilePixelToLatLon(tileX, tileY, zoom, 256, 0));
+        let tileCoordinates = this.getTileCornerCoordinates(tileX, tileY, zoom);
         //Check if tile corners are in map bounds
-        for (let bound of bounds)
-            if (this.map.isInMap(...bound))
+        for (let coordinate of tileCoordinates)
+            if (this.map.containsLocation(...coordinate)) {
                 return true;
+            }
+        // return false;
 
         //Maybe one of the 4 tile corners don't intersect, doesn't mean the two polygons don't intersect
-        let mapsBounds = new google.maps.LatLngBounds({lat: bounds[2][0], lng: bounds[2][1]}, {
-            lat: bounds[3][0],
-            lng: bounds[3][1]
-        });
+        let mapsBounds = new Google.maps.LatLngBounds();
+        for (let coordinate of tileCoordinates)
+            mapsBounds.extend(new Google.maps.LatLng(...coordinate));
 
         // Check if map coordinates are in within tile bounds
         let mapContains = false;
@@ -175,6 +245,7 @@ export default class StreetView extends EventEmitter {
             });
         });
 
+        // console.log("Using mapContains");
         return mapContains;
     }
 
@@ -189,26 +260,11 @@ export default class StreetView extends EventEmitter {
     }
 
     async getTilesAtCoordinate(startX, endX, startY, endY, zoom) {
-        return new Promise(resolve => {
-
-            let tileCount = (endX - startX) * (endY - startY);
-            let iteration = 0;
-            let tiles = [];
-
-            for (let y = startY; y < endY; y++) {
-                for (let x = startX; x < endX; x++) {
-                    this.getTile(x, y, zoom).then(result => {
-
-                        tiles.push(result);
-                        if (++iteration >= tileCount) {
-                            resolve(tiles);
-                        }
-
-                    });
-                }
-            }
-
-        });
+        let tasks = [];
+        for (let y = startY; y < endY; y++)
+            for (let x = startX; x < endX; x++)
+                tasks.push(this.getTile(x, y, zoom));
+        return await Promise.all(tasks);
     }
 
     tilePixelToLatLon(tileX, tileY, zoom, pixelX, pixelY) {
@@ -230,7 +286,6 @@ export default class StreetView extends EventEmitter {
     }
 
     boundsToSmallestContainingTile(bounds) {
-        console.log({bounds});
         let ne = bounds.getNorthEast();
         let sw = bounds.getSouthWest();
         let startZoom = 0;
@@ -278,7 +333,7 @@ export default class StreetView extends EventEmitter {
         return new Promise(async resolve => {
             if (this.coverageCacheContains(x, y, zoom)) {
                 let {coverage, types} = this.getCoverageCache(x, y, zoom);
-                console.log("Using cache!");
+                console.log("Using cache!", x, y, zoom, coverage);
                 resolve({
                     coverage, types, img: false, x, y, zoom
                 });
@@ -311,17 +366,37 @@ export default class StreetView extends EventEmitter {
         return 'empty';
     }
 
-    getTileCoverage(x, y, zoom, img) {
+    isTileFullyContainedInMap(tileX, tileY, zoom) {
+        let coordinates = this.getTileCornerCoordinates(tileX, tileY, zoom);
+        for (let coordinate of coordinates) {
+            if (!this.map.containsLocation(...coordinate))
+                return false;
+        }
+        return true;
+    }
+
+    getTileCoverage(tileX, tileY, zoom, img) {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.drawImage(img, 0, 0);
         let data = this.context.getImageData(0, 0, img.width, img.height).data;
         //Coverage [sv, photo]
         let coverage = [0, 0];
+        let isFullyContained = this.isTileFullyContainedInMap(tileX, tileY, zoom);
         //Skip every other column?
-        for (let i = 0; i < data.length; i += 4) {
-            //Skip every other row
-            // if (i % (img.width * 2) === 0)
-            //     i += img.width;
+        for (let i = 0; i < data.length; i += 8) {
+            let x = (i / 4) % img.width;
+            let y = Math.floor((i / 4) / img.width);
+
+            if (y % 2 === 1) {//Skip every odd row
+                i += img.width * 4;
+                continue;
+            }
+            if (!isFullyContained) {
+                let location = this.tilePixelToLatLon(tileX, tileY, zoom, x, y);
+                //Dont count pixels outside of map bounds toward coverage
+                if (!this.map.containsLocation(...location))
+                    continue;
+            }
             let color = data.slice(i, i + 4);
             let colorType = this.getColorType(color);
             if (colorType === 'sv')
@@ -333,11 +408,13 @@ export default class StreetView extends EventEmitter {
     }
 
     coverageCacheContains(x, y, zoom) {
-        return this.coverageCache[zoom] && this.coverageCache[zoom][x] && this.coverageCache[zoom][x][y];
+        let id = this.map.id;
+        return this.coverageCache[id] && this.coverageCache[id][zoom] && this.coverageCache[id][zoom][x] && this.coverageCache[id][zoom][x][y];
     }
 
     getCoverageCache(x, y, zoom) {
-        let [svCoverage, photoCoverage] = this.coverageCache[zoom][x][y];
+        let id = this.map.id;
+        let [svCoverage, photoCoverage] = this.coverageCache[id][zoom][x][y];
         return {
             types: {
                 sv: svCoverage > 0,
@@ -352,12 +429,14 @@ export default class StreetView extends EventEmitter {
     }
 
     setCoverageCache(x, y, zoom, value) {
-
-        if (!this.coverageCache[zoom])
-            this.coverageCache[zoom] = {};
-        if (!this.coverageCache[zoom][x])
-            this.coverageCache[zoom][x] = {};
-        this.coverageCache[zoom][x][y] = value;
+        let id = this.map.id;
+        if (!this.coverageCache[id])
+            this.coverageCache[id] = {};
+        if (!this.coverageCache[id][zoom])
+            this.coverageCache[id][zoom] = {};
+        if (!this.coverageCache[id][zoom][x])
+            this.coverageCache[id][zoom][x] = {};
+        this.coverageCache[id][zoom][x][y] = value;
     }
 
 

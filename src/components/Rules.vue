@@ -194,9 +194,7 @@
         },
         computed: {
             difficultyId() {
-                console.log("Getting difficulty ID", this.selectedDifficulty, Rules.presetNames);
                 let ind = Rules.presetNames.indexOf(this.selectedDifficulty);
-                console.log("Getting difficulty ID", this.selectedDifficulty, Rules.presetNames, {ind});
                 return ind === -1 ? 0 : ind;
             },
             rules() {

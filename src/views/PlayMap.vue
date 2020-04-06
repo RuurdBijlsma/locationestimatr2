@@ -78,7 +78,6 @@
                 }
                 console.log(map.image);
                 this.$store.dispatch('getUrl', map.image).then(imageUrl => {
-                    console.log("IMAGE URL", imageUrl);
                     this.image = imageUrl;
                 });
                 console.log({challenge, map})
@@ -87,7 +86,6 @@
                 let radius = +this.$route.query['area_radius'] * 1000;
                 this.map = await MapManager.areaToGeoMap(coordinates, radius);
                 this.$store.dispatch('getUrl', 'images/my_area.jpg').then(imageUrl => {
-                    console.log("IMAGE URL", imageUrl);
                     this.image = imageUrl;
                 });
             } else if (this.$route.query.hasOwnProperty('map')) {
@@ -95,19 +93,21 @@
                 if (mapInfo.image === 'id')
                     mapInfo.image = '/images/user/' + this.$route.query.map;
                 this.$store.dispatch('getUrl', mapInfo.image).then(imageUrl => {
-                    console.log("IMAGE URL", imageUrl);
                     this.image = imageUrl;
                 });
                 console.log(mapInfo);
                 this.map = await MapManager.mapToGeoMap(mapInfo, this.$route.query.map);
                 console.log(this.map);
+                //Debug:
+                // let streetView = new StreetView(this.map);
+                // console.log("calling randomValidLocations");
+                // streetView.randomValidLocations(3, 14, 'sv', 'weighted', location => {
+                //     console.log("Location received:", location);
+                // });
                 // this.startGame(this.$refs.rules.exportRules())
             } else {
                 alert("Malformed URL :(");
             }
-            console.log("Loaded Map?", this.map);
-            let sv = new StreetView(this.map);
-            console.log("SV", sv, sv.boundsToSmallestContainingTile(this.map.getBounds()));
         },
         methods: {
             startGame(rules) {
@@ -143,14 +143,14 @@
         margin-top: 50px;
         transition: margin-top 0.3s;
         height: auto;
-        max-width:550px;
-        width:100%;
+        max-width: 550px;
+        width: 100%;
     }
 
     @media screen and (max-width: 550px) {
         .rules {
             margin-top: 0 !important;
-            height:100%;
+            height: 100%;
         }
     }
 </style>

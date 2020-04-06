@@ -17,7 +17,10 @@ export default class PolyMap extends GeoMap {
         return bounds;
     }
 
-    isInMap(lat, lon) {
-        return Google.maps.geometry.poly.containsLocation({lat: () => lat, lng: () => lon}, this.polygon);
+    containsLocation(lat, lon) {
+        if (this.calls === undefined)
+            this.calls = 0;
+        this.calls++;
+        return Google.maps.geometry.poly.containsLocation(new Google.maps.LatLng(lat, lon), this.polygon);
     }
 }

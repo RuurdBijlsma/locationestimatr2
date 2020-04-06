@@ -133,4 +133,8 @@
     .v-btn__content {
         font-weight: bold;
     }
+
+    .gm-style-iw.gm-style-iw-c  {
+        color: black;
+    }
 </style>

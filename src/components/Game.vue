@@ -47,12 +47,11 @@
             <v-btn outlined to="/">Change Map</v-btn>
             <v-btn outlined @click="reload">Change Rules</v-btn>
         </div>
-        <!--        <div class="loading-text">-->
-        <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">
-            <p>Loading random location...</p>
-            <v-progress-circular indeterminate></v-progress-circular>
-            <canvas v-if="visualize" class="tile-canvas" ref="tileCanvas"></canvas>
-        </div>
+        <!--        <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">-->
+        <!--            <p>Loading random location...</p>-->
+        <!--            <v-progress-circular indeterminate></v-progress-circular>-->
+        <!--            <canvas v-if="visualize" class="tile-canvas" ref="tileCanvas"></canvas>-->
+        <!--        </div>-->
         <round-score :challenge="challenge" @challengeUrl="getChallengeUrl" @submitHighScore="submitHighScore"
                      @nextRound="nextRoundEvent"
                      :guesses="previousGuesses"
@@ -239,10 +238,14 @@
                     backgroundColor: "#aadaff",
                     fullscreenControl: false,
                 });
+                this.streetView.googleMap = this.googleMap;
+                console.log("googleMap", this.googleMap);
                 this.svCoverage = new Google.maps.StreetViewCoverageLayer();
                 Google.maps.event.addListener(this.googleMap, "click", e => {
-                    if (this.googleMap.getDiv().parentElement.attributes.class.value === "small-map")
+                    if (this.googleMap.getDiv().parentElement.attributes.class.value === "small-map") {
+                        console.log("Is in map?", this.map.containsLocation(e.latLng.lat(), e.latLng.lng()));
                         this.placeGuessMarker(e.latLng);
+                    }
                 });
                 this.attachMap(this.$refs.smallMap);
             },
@@ -506,7 +509,7 @@
             },
             fitMapToGeoMap() {
                 console.log("UPDATE FIT TO GEOMAP");
-                this.googleMap.fitBounds(this.map.getBounds());
+                // this.googleMap.fitBounds(this.map.getBounds());
             },
             placeGuessMarker(location) {
                 if (this.mapMarker !== null)

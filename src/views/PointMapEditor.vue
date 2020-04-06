@@ -1,8 +1,11 @@
 <template>
     <div class="point-map-editor">
         <h2>Create Point Map</h2>
-        <p class="caption">Click exactly on a road below to preview the StreetView in that location, if you are happy with the location, create a point there with the "Create Point" button. The point of view will also be stored (camera pitch/heading and zoom).</p>
-        <p class="caption">When you have multiple points, you can click a point to select it, you can then update it with the "Update Selected Point" button, and you can delete it with the delete key.</p>
+        <p class="caption">Click exactly on a road below to preview the StreetView in that location, if you are happy
+            with the location, create a point there with the "Create Point" button. The point of view will also be
+            stored (camera pitch/heading and zoom).</p>
+        <p class="caption">When you have multiple points, you can click a point to select it, you can then update it
+            with the "Update Selected Point" button, and you can delete it with the delete key.</p>
         <p class="error--text caption">{{error}}</p>
         <div class="controls">
             <v-file-input small-chips v-model="jsonFile" label="Import Map" outlined dense accept=".json"
@@ -46,7 +49,8 @@
                     <v-card-title v-else primary-title>Are you sure</v-card-title>
                     <v-card-text v-if="!invalid">
                         Once you upload your map, you can't edit it anymore, if you want to work on this
-                        later, click "Export JSON". The current StreetView preview will be used as thumbnail image for this map.
+                        later, click "Export JSON". The current StreetView preview will be used as thumbnail image for
+                        this map.
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
