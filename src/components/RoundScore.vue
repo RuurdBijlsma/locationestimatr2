@@ -1,6 +1,7 @@
 <template>
-    <div class="round-score">
-        <!--:style="$store.state.customColor ? `background: linear-gradient(180deg, ${$store.state.customColor.colorBottom} 0%, ${$store.state.customColor.colorTop} 100%);` : ''"-->
+    <div class="round-score"
+         :style="$store.state.customColor ? `background: linear-gradient(180deg, ${$store.state.customColor.colorBottom} 0%, ${$store.state.customColor.colorTop} 100%);` : ''"
+    >
         <div class="map-slot">
             <slot></slot>
         </div>
@@ -39,26 +40,28 @@
                     </p>
                 </template>
             </v-data-table>
-            <div v-if="!hsDisabled" class="hs">
-                <p class="caption">Submit to scoreboard to see other high scores</p>
-                <v-form class="highscore-submit" @submit="submitHighScore">
-                    <v-text-field v-model="user" label="Username" dense class="hs-input" outlined required
-                                  :rules="userRules"></v-text-field>
-                    <v-btn text type="submit" :loading="submitting" class="hs-button">Submit</v-btn>
-                </v-form>
-            </div>
-            <div class="play-again">
-                <v-btn title="Like this map" :loading="loadingLike" :disabled="loadingDislike" v-if="!rated" icon
-                       @click="likeMap">
-                    <v-icon>mdi-thumb-up</v-icon>
-                </v-btn>
-                <v-btn title="Dislike this map" :loading="loadingDislike" :disabled="loadingLike" v-if="!rated" icon
-                       @click="dislikeMap">
-                    <v-icon>mdi-thumb-down</v-icon>
-                </v-btn>
-                <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
-                <v-btn text @click="$router.push('/')">Homepage</v-btn>
-                <v-btn @click="playAgain" color='primary'>Play Again</v-btn>
+            <div class="darken">
+                <div v-if="!hsDisabled" class="hs">
+                    <p class="caption">Submit to scoreboard to see other high scores</p>
+                    <v-form class="highscore-submit" @submit="submitHighScore">
+                        <v-text-field v-model="user" label="Username" dense class="hs-input" outlined required
+                                      :rules="userRules"></v-text-field>
+                        <v-btn text type="submit" :loading="submitting" class="hs-button">Submit</v-btn>
+                    </v-form>
+                </div>
+                <div class="play-again">
+                    <v-btn title="Like this map" :loading="loadingLike" :disabled="loadingDislike" v-if="!rated" icon
+                           @click="likeMap">
+                        <v-icon>mdi-thumb-up</v-icon>
+                    </v-btn>
+                    <v-btn title="Dislike this map" :loading="loadingDislike" :disabled="loadingLike" v-if="!rated" icon
+                           @click="dislikeMap">
+                        <v-icon>mdi-thumb-down</v-icon>
+                    </v-btn>
+                    <v-btn text @click="getChallengeUrl()">Challenge a friend</v-btn>
+                    <v-btn text @click="$router.push('/')">Homepage</v-btn>
+                    <v-btn @click="playAgain" color='primary'>Play Again</v-btn>
+                </div>
             </div>
             <v-snackbar v-model="rateSnack">
                 {{ snackText }}
@@ -543,10 +546,16 @@
 
     .play-again {
         margin: 0 auto 20px;
+        margin-bottom: 0px;
     }
 
     .play-again > * {
         margin: 10px;
         display: inline-block;
+    }
+
+    .darken {
+        background-color: rgba(0, 0, 0, 0.25);
+        padding-top: 2px;
     }
 </style>

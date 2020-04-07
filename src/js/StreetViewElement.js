@@ -25,7 +25,7 @@ export default class StreetViewElement {
     }
 
     removeMoveListener() {
-        google.maps.event.clearListeners(this.panorama, "position_changed");
+        Google.maps.event.clearListeners(this.panorama, "position_changed");
     }
 
     restrictPan() {
@@ -71,8 +71,15 @@ export default class StreetViewElement {
 
     async setLocation(lat, lon) {
         return new Promise(resolve => {
+            Google.maps.event.clearListeners(this.panorama, 'pano_changed');
+
+            this.panorama.addListener('pano_changed', () => {
+                console.log("Resolve pano changed");
+                Google.maps.event.clearListeners(this.panorama, 'pano_changed');
+                resolve();
+            });
             this.panorama.setPosition({lat: lat, lng: lon});
-            setTimeout(() => resolve(), 300);
+            setTimeout(() => resolve(), 1500);
         });
     }
 }
