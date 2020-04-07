@@ -16,11 +16,11 @@
                     points
                 </p>
             </div>
-            <v-btn v-if="isLastRound" :disabled="!nextButtonEnabled" large dark rounded color='primary'
+            <v-btn v-if="isLastRound" :loading="nextButtonLoading" large dark rounded color='primary'
                    @click="showGameOverview">
                 Show Game Overview
             </v-btn>
-            <v-btn v-else :disabled="!nextButtonEnabled" large dark rounded color='primary'
+            <v-btn v-else :loading="nextButtonLoading" large dark rounded color='primary'
                    @click="nextRound">
                 Next Round
             </v-btn>
@@ -73,7 +73,8 @@
 </template>
 
 <script>
-    import GeoMap from "../js/GeoMap";
+    import GeoMap from "../js/GeoMap"
+    import Google from '../js/Google'
 
     const lastUser = localStorage.getItem('lastUser') ? localStorage.lastUser : '';
     export default {
@@ -136,6 +137,7 @@
             isLastRound: false,
             roundOverview: true,
             nextButtonEnabled: false,
+            nextButtonLoading: false,
             user: lastUser,
             challengeGuess: null,
             rated: false,
@@ -176,6 +178,14 @@
                 this.$emit('submitHighScore', this.user, this.points, this.dbGuesses);
             },
             showGameOverview() {
+                if (!this.nextButtonEnabled) {
+                    this.nextButtonLoading = true;
+                    setTimeout(() => {
+                        this.showGameOverview();
+                    }, 100);
+                    return;
+                }
+                this.nextButtonLoading = false;
                 this.$store.commit('setImmersive', false);
                 this.removeOverviewLines();
                 for (let i = 0; i < this.guesses.length; i++) {
@@ -191,7 +201,7 @@
                             name: `Target Location (round ${i + 1})`,
                             color: '#02c780',
                             number: i + 1,
-                        }, '#FE6256', 800).then(() => {
+                        }, '#FE6256', 400).then(() => {
                             if (this.challenge !== null) {
                                 this.addOverviewLine({
                                     location: this.toLatLng(this.challenge.guesses[i].target),
@@ -203,10 +213,10 @@
                                     name: `Challenger Guess (round ${i + 1})`,
                                     color: '#daa604',
                                     number: i + 1,
-                                }, '#daa604', 800)
+                                }, '#daa604', 400)
                             }
                         })
-                    }, i * 500);
+                    }, i * 250);
                 }
                 let locations = this.guesses.flatMap(g => [g.guess, g.target]).map(l => this.toLatLng(l));
                 if (this.challenge !== null)
@@ -218,6 +228,14 @@
                 console.log("TOTAL SCORE", this.points);
             },
             nextRound() {
+                if (!this.nextButtonEnabled) {
+                    this.nextButtonLoading = true;
+                    setTimeout(() => {
+                        this.nextRound();
+                    }, 100);
+                    return;
+                }
+                this.nextButtonLoading = false;
                 this.removeOverviewLines();
                 this.points = 0;
                 this.$emit('nextRound');
@@ -252,7 +270,7 @@
                     location: target,
                     name: "Target Location",
                     color: '#02c780'
-                }, '#FE6256', 600)
+                }, '#FE6256', 300)
                     .then(() => {
                         if (challengeGuess !== null) {
                             this.addOverviewLine({
@@ -263,7 +281,7 @@
                                 location: challengeGuess,
                                 name: "Challenger Guess",
                                 color: '#daa604',
-                            }, '#daa604', 600).then(() => {
+                            }, '#daa604', 300).then(() => {
                                 this.nextButtonEnabled = true;
                             });
                         } else {
@@ -273,7 +291,7 @@
             },
             updateFit(...locations) {
                 console.log("UPDATE FIT");
-                const bounds = new google.maps.LatLngBounds();
+                const bounds = new Google.maps.LatLngBounds();
                 locations.forEach(l => {
                     if (l !== null)
                         bounds.extend(l)

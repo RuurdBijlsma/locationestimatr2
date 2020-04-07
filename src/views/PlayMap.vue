@@ -1,17 +1,22 @@
 <template>
     <div class="play-map">
-        <point-rules class="rules" v-if="!gameStarted && map && map.type==='point'" @startGame="startGame"
-                     ref="pointRules"
-                     :challenge-rules="challengePointRules"
-                     :image="image"
-                     :map="map"
-                     :challenge-map="challengeMap"></point-rules>
-        <rules class="rules" v-else-if="!gameStarted && map" @startGame="startGame" ref="rules"
-               :challenge-rules="challengeRules"
-               :image="image"
-               :map="map"
-               :challenge-map="challengeMap"></rules>
-        <game v-show="gameStarted" ref="game"></game>
+        <div class="rules-container" v-if="gameState < 2">
+            <point-rules class="rules" v-if="map && map.type==='point'"
+                         @startGame="startGame"
+                         ref="pointRules"
+                         :challenge-rules="challengePointRules"
+                         :image="image"
+                         :map="map"
+                         :loading="gameState === 1"
+                         :challenge-map="challengeMap"></point-rules>
+            <rules class="rules" v-else-if="map" @startGame="startGame" ref="rules"
+                   :challenge-rules="challengeRules"
+                   :image="image"
+                   :loading="gameState === 1"
+                   :map="map"
+                   :challenge-map="challengeMap"></rules>
+        </div>
+        <game ref="game" @gameLoad.once="loadGame" class="game"></game>
     </div>
 </template>
 
@@ -29,7 +34,7 @@
         components: {PointRules, Game, Rules},
         data() {
             return {
-                gameStarted: false,
+                gameState: 0,
                 rules: null,
                 map: null,
                 challengeRules: null,
@@ -111,10 +116,15 @@
         },
         methods: {
             startGame(rules) {
-                console.log({rules});
-                this.rules = rules;
-                this.gameStarted = true;
-                this.$refs.game.start(this.map, this.rules, this.challenge);
+                console.warn("Started");
+                this.gameState = 1;
+                setTimeout(() => {
+                    this.$refs.game.start(this.map, rules, this.challenge);
+                });
+            },
+            loadGame() {
+                console.warn("Loaded");
+                this.gameState = 2;
             }
         },
         watch: {
@@ -122,11 +132,7 @@
                 document.title = `Play ${this.map.name} - LocationEstimatr`;
             },
         },
-        computed: {
-            isSvg() {
-
-            },
-        }
+        computed: {}
     }
 </script>
 
@@ -134,9 +140,18 @@
     .play-map {
         height: 100%;
         width: 100%;
-        display: flex;
         overflow-y: hidden;
+    }
+
+    .rules-container {
+        /*background-color: black;*/
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        display: flex;
         justify-content: center;
+        z-index: 5;
     }
 
     .rules {
@@ -145,6 +160,13 @@
         height: auto;
         max-width: 550px;
         width: 100%;
+    }
+
+    .game {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 
     @media screen and (max-width: 550px) {

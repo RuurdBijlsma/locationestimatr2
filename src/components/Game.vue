@@ -2,12 +2,13 @@
     <div class="game" ref="game" v-show="rules !== null && map !== null">
         <div class="game-part" v-if="!svFailed">
             <div class="game-info" v-if="rules !== null">
-                <span>Points: <span
+                <span class="time">Points <span
                         class="font-weight-bold">{{previousGuesses.map(g=>g.score).reduce((a,b)=>a+b, 0)}}</span></span>
-                <span>Round: <span class="font-weight-bold">{{currentRound}}</span>/<span class="font-weight-bold">{{rules.roundCount}}</span></span>
-                <span v-if="!rules.unlimitedTime" class="time">Time: <span
+                <span class="time">Round <span class="font-weight-bold">{{currentRound}}</span>/<span
+                        class="font-weight-bold">{{rules.roundCount}}</span></span>
+                <span v-if="!rules.unlimitedTime" class="time">Time <span
                         class="font-weight-bold">{{roundTime}}</span></span>
-                <span v-if="!rules.unlimitedMoves" class="time">Moves Left:
+                <span v-if="!rules.unlimitedMoves" class="time">Moves Left
                     <span class="font-weight-bold">{{movesLeft}}</span></span>
             </div>
             <div class="street-view" ref="streetView"></div>
@@ -243,7 +244,7 @@
                 this.svCoverage = new Google.maps.StreetViewCoverageLayer();
                 Google.maps.event.addListener(this.googleMap, "click", e => {
                     if (this.googleMap.getDiv().parentElement.attributes.class.value === "small-map") {
-                        console.log("Is in map?", this.map.containsLocation(e.latLng.lat(), e.latLng.lng()));
+                        // console.log("Is in map?", this.map.containsLocation(e.latLng.lat(), e.latLng.lng()));
                         this.placeGuessMarker(e.latLng);
                     }
                 });
@@ -390,10 +391,11 @@
                 if (this.currentSvRound !== round) {
                     console.log("Current svround is not round", this.currentSvRound, round);
                     let event = 'svRound:' + round;
-                    await this.waitFor(event)
+                    await this.waitFor(event);
                     console.log("SV round wait COMPLETE!");
                 }
                 this.dontAllowPlay = false;
+                this.$emit('gameLoad');
                 console.log("Round start. Start timer here, reset allowed moves");
                 if (!this.rules.unlimitedTime) {
                     //  Start Timer grace period of 500 ms
@@ -430,7 +432,7 @@
                 console.log("SetLocation", this.currentDestination);
                 await this.svElement.setLocation(...this.currentDestination);
                 console.log("SetPov", pov);
-                await this.svElement.panorama.setPov(pov);
+                this.svElement.panorama.setPov(pov);
                 this.applyRules();
 
                 this.currentSvRound = preloadingRound;
@@ -613,8 +615,8 @@
     .game-info {
         position: absolute;
         top: 0;
-        width: 50%;
-        left: 25%;
+        width: 500px;
+        left: calc(50% - 250px);
         padding: 10px;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
@@ -638,6 +640,15 @@
     }
 
     @media screen and (max-width: 500px) {
+        .game-info {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            left: 0;
+            border-bottom-right-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+        }
+
         .street-view {
             height: calc(100% - 94px) !important;
         }

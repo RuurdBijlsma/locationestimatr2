@@ -5,7 +5,7 @@
             Popular Maps
         </h3>
         <v-progress-circular class="spinner" indeterminate v-if="loading"></v-progress-circular>
-        <map-grid :maps="maps.popular" img-prefix="../"></map-grid>
+        <map-grid :loading="loading" :maps="maps.popular" img-prefix="../"></map-grid>
         <h3 class="subtitle">
             <v-icon color='primary' class="sub-icon">thumb_up</v-icon>
             Most Liked Maps

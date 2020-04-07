@@ -96,7 +96,8 @@
                 </v-form>
             </v-card-text>
             <v-card-actions>
-                <v-btn color='primary' text @click="$emit('startGame', exportRules())">Start game</v-btn>
+                <v-btn color='primary' text @click="$emit('startGame', exportRules())" :loading="loading">Start game
+                </v-btn>
             </v-card-actions>
         </v-card>
     </div>
@@ -115,6 +116,10 @@
             challengeRules: {
                 type: Rules,
                 default: null,
+            },
+            loading: {
+                type: Boolean,
+                default: false,
             },
             challengeMap: {
                 type: GeoMap,

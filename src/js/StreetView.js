@@ -331,7 +331,7 @@ export default class StreetView extends EventEmitter {
         return new Promise(async resolve => {
             if (this.coverageCacheContains(x, y, zoom)) {
                 let {coverage, types} = this.getCoverageCache(x, y, zoom);
-                console.log("Using cache!", x, y, zoom, coverage);
+                // console.log("Using cache!", x, y, zoom, coverage);
                 resolve({
                     coverage, types, img: false, x, y, zoom
                 });
