@@ -20,8 +20,6 @@ export default class StreetView extends EventEmitter {
         this.debug = false;
         this.typeColors = [
             {color: [84, 160, 185], id: 'sv'},
-            {color: [84, 160, 185], id: 'sv'},
-            {color: [84, 160, 185], id: 'sv'},
             {color: [165, 224, 250, 102], id: 'photo'},
         ];
         //Has opacity:
@@ -382,27 +380,34 @@ export default class StreetView extends EventEmitter {
         //Coverage [sv, photo]
         let coverage = [0, 0];
         let isFullyContained = this.isTileFullyContainedInMap(tileX, tileY, zoom);
-        //Skip every other column?
-        for (let i = 0; i < data.length; i += 8) {
-            let x = (i / 4) % img.width;
-            let y = Math.floor((i / 4) / img.width);
 
-            if (y % 2 === 1) {//Skip every odd row
-                i += img.width * 4;
-                continue;
+        let chunkSize;
+        if (zoom <= 6)
+            chunkSize = 32;
+        else if (zoom <= 7)
+            chunkSize = 16;
+        else if (zoom <= 8)
+            chunkSize = 8;
+        else if (zoom <= 9)
+            chunkSize = 4;
+        else
+            chunkSize = 2;
+
+        for (let y = chunkSize / 2; y < img.height; y += chunkSize) {
+            for (let x = chunkSize / 2; x < img.width; x += chunkSize) {
+                if (!isFullyContained) {
+                    let location = this.tilePixelToLatLon(tileX, tileY, zoom, x, y);
+                    if (!this.map.containsLocation(...location))
+                        continue;
+                }
+                let i = (y * img.width + x) * 4;
+                let color = data.slice(i, i + 4);
+                let colorType = this.getColorType(color);
+                if (colorType === 'sv')
+                    coverage[0]++;
+                if (colorType === 'photo')
+                    coverage[1]++;
             }
-            if (!isFullyContained) {
-                let location = this.tilePixelToLatLon(tileX, tileY, zoom, x, y);
-                //Dont count pixels outside of map bounds toward coverage
-                if (!this.map.containsLocation(...location))
-                    continue;
-            }
-            let color = data.slice(i, i + 4);
-            let colorType = this.getColorType(color);
-            if (colorType === 'sv')
-                coverage[0]++;
-            if (colorType === 'photo')
-                coverage[1]++;
         }
         return coverage;
     }
