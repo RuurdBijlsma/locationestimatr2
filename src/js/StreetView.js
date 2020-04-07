@@ -47,7 +47,7 @@ export default class StreetView extends EventEmitter {
 
     set googleMap(v) {
         this._googleMap = v;
-        if (v !== null)
+        if (v !== null && this.debug)
             v.fitBounds(this.map.getBounds());
     }
 

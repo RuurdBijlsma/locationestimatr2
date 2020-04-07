@@ -47,11 +47,11 @@
             <v-btn outlined to="/">Change Map</v-btn>
             <v-btn outlined @click="reload">Change Rules</v-btn>
         </div>
-        <!--        <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">-->
-        <!--            <p>Loading random location...</p>-->
-        <!--            <v-progress-circular indeterminate></v-progress-circular>-->
-        <!--            <canvas v-if="visualize" class="tile-canvas" ref="tileCanvas"></canvas>-->
-        <!--        </div>-->
+        <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">
+            <p>Loading random location...</p>
+            <v-progress-circular indeterminate></v-progress-circular>
+            <canvas v-if="visualize" class="tile-canvas" ref="tileCanvas"></canvas>
+        </div>
         <round-score :challenge="challenge" @challengeUrl="getChallengeUrl" @submitHighScore="submitHighScore"
                      @nextRound="nextRoundEvent"
                      :guesses="previousGuesses"
@@ -509,7 +509,7 @@
             },
             fitMapToGeoMap() {
                 console.log("UPDATE FIT TO GEOMAP");
-                // this.googleMap.fitBounds(this.map.getBounds());
+                this.googleMap.fitBounds(this.map.getBounds());
             },
             placeGuessMarker(location) {
                 if (this.mapMarker !== null)
