@@ -48,7 +48,7 @@
             <v-btn outlined to="/">Change Map</v-btn>
             <v-btn outlined @click="reload">Change Rules</v-btn>
         </div>
-        <div class="loading-text" v-show="dontAllowPlay || this.currentRound === 0">
+        <div class="loading-text" v-show="(dontAllowPlay || this.currentRound === 0) && !svFailed">
             <p>Loading random location...</p>
             <v-progress-circular indeterminate></v-progress-circular>
             <canvas v-if="visualize" class="tile-canvas" ref="tileCanvas"></canvas>
@@ -492,12 +492,15 @@
                     }
                     let nextLocation = this.locations[round];
 
-                    if (nextLocation === false) {
+                    if (nextLocation.position === false) {
+                        // this.$emit('gameLoad')
                         this.svFailed = true;
+                        this.$emit("failed");
                         let rules = this.rules.presetName === 'Custom' ? JSON.parse(JSON.stringify(this.rules)) : this.rules.preset;
                         await this.$store.dispatch('reportMap', {mapId: this.map.id, rules});
+                        throw "Couldn't find a location"
                     }
-                    console.log("Setting finding random location to False");
+                    console.log("Returning random location", nextLocation);
                     this.findingRandomLocation = false;
                     resolve(nextLocation);
                 })

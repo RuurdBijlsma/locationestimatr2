@@ -16,7 +16,7 @@
                    :map="map"
                    :challenge-map="challengeMap"></rules>
         </div>
-        <game ref="game" @gameLoad.once="loadGame" class="game"></game>
+        <game ref="game" @gameLoad.once="loadGame" class="game" @failed="gameFail"></game>
     </div>
 </template>
 
@@ -113,17 +113,20 @@
             } else {
                 alert("Malformed URL :(");
             }
+            console.log("Map:", this.map);
         },
         methods: {
+            gameFail() {
+                console.log("Failed");
+                this.gameState = 2;
+            },
             startGame(rules) {
-                console.warn("Started");
                 this.gameState = 1;
                 setTimeout(() => {
                     this.$refs.game.start(this.map, rules, this.challenge);
                 });
             },
             loadGame() {
-                console.warn("Loaded");
                 this.gameState = 2;
             }
         },
@@ -152,6 +155,7 @@
         display: flex;
         justify-content: center;
         z-index: 5;
+        overflow-y: auto;
     }
 
     .rules {

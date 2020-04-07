@@ -9,6 +9,7 @@ export default class StreetView extends EventEmitter {
         this.coverageCache = this.importCoverageCache();
         this.bounds = this.map.getBounds();
         this.smallestContainingTile = this.boundsToSmallestContainingTile(this.bounds);
+        console.log("Smallest containing tile:", this.smallestContainingTile)
 
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
@@ -17,7 +18,7 @@ export default class StreetView extends EventEmitter {
         this.canvas.height = 256;
 
         // this.smallestContainingTile = {x: 547, y: 377, zoom: 10};
-        this.debug = false;
+        // this.debug = true;
         this.typeColors = [
             {color: [84, 160, 185], id: 'sv'},
             {color: [165, 224, 250, 102], id: 'photo'},
@@ -49,12 +50,6 @@ export default class StreetView extends EventEmitter {
         this._googleMap = v;
         if (v !== null && this.debug)
             v.fitBounds(this.map.getBounds());
-    }
-
-    randomValidLocations(locationCount, endZoom = 14, type = 'sv', distribution = 'weighted', onLocation) {
-        for (let i = 0; i < locationCount; i++) {
-
-        }
     }
 
     async randomValidLocation(endZoom = 14, type = 'sv', distribution = 'weighted') {
@@ -145,7 +140,7 @@ export default class StreetView extends EventEmitter {
         // console.log("Visualizing tile:", tile, color, this.googleMap, polygon);
     }
 
-    async randomValidTile(endZoom, type, chosenTile = {x: 0, y: 0, zoom: 0}) {
+    async randomValidTile(endZoom, type, chosenTile = {x: 0, y: 0, zoom: 0}, startZoom = chosenTile.zoom) {
         if (chosenTile.zoom >= endZoom) {
             return chosenTile;
         }
@@ -164,6 +159,14 @@ export default class StreetView extends EventEmitter {
                 //When under photosphere zoom level, also consider sv tiles valid tiles, because photospheres aren't visible yet
                 tile.zoom <= photoSphereZoomLevel && tile.types.sv)
             .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom));
+
+        if (chosenTile.zoom === startZoom && validTiles.length === 0) {
+            //OH OH SPAGHETTIOS
+            //Can't find anything in the start tile, trying to go ahead by ignoring street view coverage
+            validTiles = subTiles
+                .filter(tile => this.tileIntersectsMap(tile.x, tile.y, tile.zoom));
+            startZoom = validTiles[0].zoom;
+        }
 
 
         let shuffleFun = this.distribution === 'uniform' ?
@@ -188,11 +191,11 @@ export default class StreetView extends EventEmitter {
             if (chosenTile.zoom >= 7) {
                 // return;
             }
-            await this.waitSleep(2000000);
+            // await this.waitSleep(2000000);
         }
 
         for (let tile of shuffledTiles) {
-            let subTile = await this.randomValidTile(endZoom, type, tile);
+            let subTile = await this.randomValidTile(endZoom, type, tile, startZoom);
             // console.log("subTile", subTile);
             // await this.waitSleep(2000);
             if (subTile !== false) {
@@ -414,6 +417,8 @@ export default class StreetView extends EventEmitter {
 
     coverageCacheContains(x, y, zoom) {
         let id = this.map.id;
+        if (id === 'my_area')
+            return false;
         return this.coverageCache[id] && this.coverageCache[id][zoom] && this.coverageCache[id][zoom][x] && this.coverageCache[id][zoom][x][y];
     }
 

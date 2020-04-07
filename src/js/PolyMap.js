@@ -18,9 +18,6 @@ export default class PolyMap extends GeoMap {
     }
 
     containsLocation(lat, lon) {
-        if (this.calls === undefined)
-            this.calls = 0;
-        this.calls++;
         return Google.maps.geometry.poly.containsLocation(new Google.maps.LatLng(lat, lon), this.polygon);
     }
 }
