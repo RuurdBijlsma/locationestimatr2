@@ -660,11 +660,6 @@
             bottom: calc(200px + 94px) !important;
         }
 
-        .guess-map {
-            width: 100% !important;
-            border-radius: 0 !important;
-        }
-
         .resize-map {
             width: 100% !important;
             border-radius: 0 !important;
@@ -708,7 +703,15 @@
         min-height: 94px;
         max-width: 100%;
         max-height: 100%;
+
+        opacity: 0.5;
+        transition: opacity 0.2s;
     }
+
+    .guess-map:hover {
+        opacity: 1;
+    }
+
 
     .small-map {
         width: 100%;
