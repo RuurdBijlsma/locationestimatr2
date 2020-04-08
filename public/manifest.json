@@ -37,42 +37,5 @@
       "sizes": "192x192",
       "type": "image/png"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "img/screenshots/1.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/2.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/3.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/4.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/5.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/6.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/7.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    }
   ]
 }
