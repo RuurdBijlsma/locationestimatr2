@@ -10,7 +10,8 @@
             </div>
             <div class="logo" v-else>
                 <div class="logo-image" :style="`background-image: url(${$store.state.customColor.image})`"></div>
-                <div class="logo-text" :style="`background-image: linear-gradient(${$store.state.customColor.colorTop}, ${$store.state.customColor.colorBottom});`">
+                <div class="logo-text"
+                     :style="`background-image: linear-gradient(${$store.state.customColor.colorTop}, ${$store.state.customColor.colorBottom});`">
                     <p>Location</p>
                     <p>Estimatr</p>
                 </div>
@@ -90,9 +91,11 @@
         <v-footer absolute padless class="footer" v-if="$route.path==='/' && showFooter">
             <v-card flat tile width="100%">
                 <v-card-text class="white--text bottom-row">
-                    <span class="made-by">Made by <a href="https://github.com/ruurdbijlsma" target="_blank">Ruurd Bijlsma</a></span>
+                    <span class="made-by">Made by <a rel="noreferrer" href="https://github.com/ruurdbijlsma"
+                                                     target="_blank">Ruurd Bijlsma</a></span>
                     <div class="buttons">
-                        <v-btn outlined class="gh-button" href="https://github.com/ruurdbijlsma/locationestimatr2"
+                        <v-btn outlined class="gh-button" rel="noreferrer"
+                               href="https://github.com/ruurdbijlsma/locationestimatr2"
                                target="_blank">View on Github
                         </v-btn>
                         <v-dialog v-model="dialog" width="500">

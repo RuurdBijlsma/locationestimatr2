@@ -1,0 +1,4653 @@
+{
+  "shallowMap:world": {
+    "data": {
+      "image": "images/world.jpg",
+      "name": "World",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 8,
+        "plays": 70
+      },
+      "id": "world"
+    },
+    "date": 1586354211974
+  },
+  "shallowMap:my_area": {
+    "data": {
+      "image": "images/my_area.jpg",
+      "name": "My Area",
+      "type": "area",
+      "counts": {
+        "dislikes": 1,
+        "likes": 7,
+        "plays": 21
+      },
+      "id": "my_area"
+    },
+    "date": 1586354211975
+  },
+  "shallowMap:european_union": {
+    "data": {
+      "image": "images/european_union.jpg",
+      "name": "European Union",
+      "type": "collection",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 6
+      },
+      "id": "european_union"
+    },
+    "date": 1586354211975
+  },
+  "shallowMap:benelux": {
+    "data": {
+      "image": "images/benelux.jpg",
+      "name": "Benelux",
+      "type": "collection",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 8
+      },
+      "id": "benelux"
+    },
+    "date": 1586354211976
+  },
+  "shallowMap:africa": {
+    "data": {
+      "image": "images/africa.jpg",
+      "name": "Africa",
+      "type": "collection",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 2
+      },
+      "id": "africa"
+    },
+    "date": 1586354211976
+  },
+  "shallowMap:north_america": {
+    "data": {
+      "image": "images/north_america.jpg",
+      "name": "North America",
+      "type": "collection",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "north_america"
+    },
+    "date": 1586354211977
+  },
+  "shallowMap:south_america": {
+    "data": {
+      "image": "images/south_america.jpg",
+      "name": "South America",
+      "type": "collection",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "south_america"
+    },
+    "date": 1586354211980
+  },
+  "shallowMap:europe": {
+    "data": {
+      "image": "images/europe.jpg",
+      "name": "Europe",
+      "type": "collection",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "europe"
+    },
+    "date": 1586354211981
+  },
+  "shallowMap:south_east_asia": {
+    "data": {
+      "image": "images/south_east_asia.jpg",
+      "name": "South East Asia",
+      "type": "collection",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 1
+      },
+      "id": "south_east_asia"
+    },
+    "date": 1586354212051
+  },
+  "shallowMap:asia": {
+    "data": {
+      "image": "images/asia.jpg",
+      "name": "Asia",
+      "type": "collection",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "asia"
+    },
+    "date": 1586354212052
+  },
+  "shallowMap:oceania": {
+    "data": {
+      "image": "images/oceania.jpg",
+      "name": "Oceania",
+      "type": "collection",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 1
+      },
+      "id": "oceania"
+    },
+    "date": 1586354212052
+  },
+  "shallowMap:AL": {
+    "data": {
+      "image": "images/flags/al.svg",
+      "name": "Albania",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 4,
+        "plays": 4
+      },
+      "id": "AL"
+    },
+    "date": 1586354212053
+  },
+  "shallowMap:AS": {
+    "data": {
+      "image": "images/flags/as.svg",
+      "name": "American Samoa",
+      "type": "kml",
+      "counts": {
+        "dislikes": 1,
+        "likes": 0,
+        "plays": 1
+      },
+      "id": "AS"
+    },
+    "date": 1586354212053
+  },
+  "shallowMap:AD": {
+    "data": {
+      "image": "images/flags/ad.svg",
+      "name": "Andorra",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 7
+      },
+      "id": "AD"
+    },
+    "date": 1586354212054
+  },
+  "shallowMap:AQ": {
+    "data": {
+      "image": "images/flags/aq.svg",
+      "name": "Antarctica",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 1
+      },
+      "id": "AQ"
+    },
+    "date": 1586354212054
+  },
+  "shallowMap:AR": {
+    "data": {
+      "image": "images/flags/ar.svg",
+      "name": "Argentina",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "AR"
+    },
+    "date": 1586354212055
+  },
+  "shallowMap:AM": {
+    "data": {
+      "image": "images/flags/am.svg",
+      "name": "Armenia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "AM"
+    },
+    "date": 1586354212055
+  },
+  "shallowMap:AU": {
+    "data": {
+      "image": "images/flags/au.svg",
+      "name": "Australia",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 1
+      },
+      "id": "AU"
+    },
+    "date": 1586354212060
+  },
+  "shallowMap:AT": {
+    "data": {
+      "image": "images/flags/at.svg",
+      "name": "Austria",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "AT"
+    },
+    "date": 1586354212060
+  },
+  "shallowMap:AZ": {
+    "data": {
+      "image": "images/flags/az.svg",
+      "name": "Azerbaijan",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "AZ"
+    },
+    "date": 1586354212063
+  },
+  "shallowMap:BD": {
+    "data": {
+      "image": "images/flags/bd.svg",
+      "name": "Bangladesh",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BD"
+    },
+    "date": 1586354212066
+  },
+  "shallowMap:BB": {
+    "data": {
+      "image": "images/flags/bb.svg",
+      "name": "Barbados",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 1
+      },
+      "id": "BB"
+    },
+    "date": 1586354212067
+  },
+  "shallowMap:BY": {
+    "data": {
+      "image": "images/flags/by.svg",
+      "name": "Belarus",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BY"
+    },
+    "date": 1586354212068
+  },
+  "shallowMap:BE": {
+    "data": {
+      "image": "images/flags/be.svg",
+      "name": "Belgium",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BE"
+    },
+    "date": 1586354212068
+  },
+  "shallowMap:BM": {
+    "data": {
+      "image": "images/flags/bm.svg",
+      "name": "Bermuda",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 1
+      },
+      "id": "BM"
+    },
+    "date": 1586354212069
+  },
+  "shallowMap:BT": {
+    "data": {
+      "image": "images/flags/bt.svg",
+      "name": "Bhutan",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BT"
+    },
+    "date": 1586354212069
+  },
+  "shallowMap:BO": {
+    "data": {
+      "image": "images/flags/bo.svg",
+      "name": "Bolivia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BO"
+    },
+    "date": 1586354212073
+  },
+  "shallowMap:BW": {
+    "data": {
+      "image": "images/flags/bw.svg",
+      "name": "Botswana",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 1
+      },
+      "id": "BW"
+    },
+    "date": 1586354212074
+  },
+  "shallowMap:BR": {
+    "data": {
+      "image": "images/flags/br.svg",
+      "name": "Brazil",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BR"
+    },
+    "date": 1586354212074
+  },
+  "shallowMap:IO": {
+    "data": {
+      "image": "images/flags/io.svg",
+      "name": "British Indian Ocean Territory",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "IO"
+    },
+    "date": 1586354212083
+  },
+  "shallowMap:BG": {
+    "data": {
+      "image": "images/flags/bg.svg",
+      "name": "Bulgaria",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "BG"
+    },
+    "date": 1586354212084
+  },
+  "shallowMap:KH": {
+    "data": {
+      "image": "images/flags/kh.svg",
+      "name": "Cambodia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "KH"
+    },
+    "date": 1586354212084
+  },
+  "shallowMap:CA": {
+    "data": {
+      "image": "images/flags/ca.svg",
+      "name": "Canada",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CA"
+    },
+    "date": 1586354212088
+  },
+  "shallowMap:CV": {
+    "data": {
+      "image": "images/flags/cv.svg",
+      "name": "Cape Verde",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CV"
+    },
+    "date": 1586354212089
+  },
+  "shallowMap:CL": {
+    "data": {
+      "image": "images/flags/cl.svg",
+      "name": "Chile",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CL"
+    },
+    "date": 1586354212090
+  },
+  "shallowMap:CN": {
+    "data": {
+      "image": "images/flags/cn.svg",
+      "name": "China",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CN"
+    },
+    "date": 1586354212091
+  },
+  "shallowMap:CX": {
+    "data": {
+      "image": "images/flags/cx.svg",
+      "name": "Christmas Island",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 1
+      },
+      "id": "CX"
+    },
+    "date": 1586354212092
+  },
+  "shallowMap:CC": {
+    "data": {
+      "image": "images/flags/cc.svg",
+      "name": "Cocos (Keeling) Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CC"
+    },
+    "date": 1586354212092
+  },
+  "shallowMap:CO": {
+    "data": {
+      "image": "images/flags/co.svg",
+      "name": "Colombia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CO"
+    },
+    "date": 1586354212101
+  },
+  "shallowMap:CR": {
+    "data": {
+      "image": "images/flags/cr.svg",
+      "name": "Costa Rica",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CR"
+    },
+    "date": 1586354212102
+  },
+  "shallowMap:HR": {
+    "data": {
+      "image": "images/flags/hr.svg",
+      "name": "Croatia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "HR"
+    },
+    "date": 1586354212103
+  },
+  "shallowMap:CY": {
+    "data": {
+      "image": "images/flags/cy.svg",
+      "name": "Cyprus",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 2,
+        "plays": 5
+      },
+      "id": "CY"
+    },
+    "date": 1586354212108
+  },
+  "shallowMap:CZ": {
+    "data": {
+      "image": "images/flags/cz.svg",
+      "name": "Czech Republic",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CZ"
+    },
+    "date": 1586354212108
+  },
+  "shallowMap:DK": {
+    "data": {
+      "image": "images/flags/dk.svg",
+      "name": "Denmark",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "DK"
+    },
+    "date": 1586354212109
+  },
+  "shallowMap:DO": {
+    "data": {
+      "image": "images/flags/do.svg",
+      "name": "Dominican Republic",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "DO"
+    },
+    "date": 1586354212119
+  },
+  "shallowMap:EC": {
+    "data": {
+      "image": "images/flags/ec.svg",
+      "name": "Ecuador",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "EC"
+    },
+    "date": 1586354212120
+  },
+  "shallowMap:EE": {
+    "data": {
+      "image": "images/flags/ee.svg",
+      "name": "Estonia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "EE"
+    },
+    "date": 1586354212121
+  },
+  "shallowMap:SZ": {
+    "data": {
+      "image": "images/flags/sz.svg",
+      "name": "Eswatini (Swaziland)",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "SZ"
+    },
+    "date": 1586354212125
+  },
+  "shallowMap:FK": {
+    "data": {
+      "image": "images/flags/fk.svg",
+      "name": "Falkland Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "FK"
+    },
+    "date": 1586354212126
+  },
+  "shallowMap:FO": {
+    "data": {
+      "image": "images/flags/fo.svg",
+      "name": "Faroe Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "FO"
+    },
+    "date": 1586354212127
+  },
+  "shallowMap:FI": {
+    "data": {
+      "image": "images/flags/fi.svg",
+      "name": "Finland",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "FI"
+    },
+    "date": 1586354212135
+  },
+  "shallowMap:FR": {
+    "data": {
+      "image": "images/flags/fr.svg",
+      "name": "France",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "FR"
+    },
+    "date": 1586354212136
+  },
+  "shallowMap:PF": {
+    "data": {
+      "image": "images/flags/pf.svg",
+      "name": "French Polynesia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PF"
+    },
+    "date": 1586354212137
+  },
+  "shallowMap:DE": {
+    "data": {
+      "image": "images/flags/de.svg",
+      "name": "Germany",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "DE"
+    },
+    "date": 1586354212137
+  },
+  "shallowMap:GH": {
+    "data": {
+      "image": "images/flags/gh.svg",
+      "name": "Ghana",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GH"
+    },
+    "date": 1586354212138
+  },
+  "shallowMap:GI": {
+    "data": {
+      "image": "images/flags/gi.svg",
+      "name": "Gibraltar",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GI"
+    },
+    "date": 1586354212139
+  },
+  "shallowMap:GR": {
+    "data": {
+      "image": "images/flags/gr.svg",
+      "name": "Greece",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GR"
+    },
+    "date": 1586354212139
+  },
+  "shallowMap:GL": {
+    "data": {
+      "image": "images/flags/gl.svg",
+      "name": "Greenland",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GL"
+    },
+    "date": 1586354212140
+  },
+  "shallowMap:GU": {
+    "data": {
+      "image": "images/flags/gu.svg",
+      "name": "Guam",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GU"
+    },
+    "date": 1586354212231
+  },
+  "shallowMap:GT": {
+    "data": {
+      "image": "images/flags/gt.svg",
+      "name": "Guatemala",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GT"
+    },
+    "date": 1586354212235
+  },
+  "shallowMap:HU": {
+    "data": {
+      "image": "images/flags/hu.svg",
+      "name": "Hungary",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "HU"
+    },
+    "date": 1586354212238
+  },
+  "shallowMap:IS": {
+    "data": {
+      "image": "images/flags/is.svg",
+      "name": "Iceland",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "IS"
+    },
+    "date": 1586354212242
+  },
+  "shallowMap:IN": {
+    "data": {
+      "image": "images/flags/in.svg",
+      "name": "India",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "IN"
+    },
+    "date": 1586354212250
+  },
+  "shallowMap:ID": {
+    "data": {
+      "image": "images/flags/id.svg",
+      "name": "Indonesia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "ID"
+    },
+    "date": 1586354212253
+  },
+  "shallowMap:IE": {
+    "data": {
+      "image": "images/flags/ie.svg",
+      "name": "Ireland",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "IE"
+    },
+    "date": 1586354212254
+  },
+  "shallowMap:IL": {
+    "data": {
+      "image": "images/flags/il.svg",
+      "name": "Israel",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "IL"
+    },
+    "date": 1586354212255
+  },
+  "shallowMap:IT": {
+    "data": {
+      "image": "images/flags/it.svg",
+      "name": "Italy",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 12
+      },
+      "id": "IT"
+    },
+    "date": 1586354212255
+  },
+  "shallowMap:JP": {
+    "data": {
+      "image": "images/flags/jp.svg",
+      "name": "Japan",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "JP"
+    },
+    "date": 1586354212256
+  },
+  "shallowMap:JO": {
+    "data": {
+      "image": "images/flags/jo.svg",
+      "name": "Jordan",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "JO"
+    },
+    "date": 1586354212256
+  },
+  "shallowMap:KE": {
+    "data": {
+      "image": "images/flags/ke.svg",
+      "name": "Kenya",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 1
+      },
+      "id": "KE"
+    },
+    "date": 1586354212257
+  },
+  "shallowMap:KR": {
+    "data": {
+      "image": "images/flags/kr.svg",
+      "name": "South Korea",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "KR"
+    },
+    "date": 1586354212258
+  },
+  "shallowMap:KG": {
+    "data": {
+      "image": "images/flags/kg.svg",
+      "name": "Kyrgyzstan",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "KG"
+    },
+    "date": 1586354212258
+  },
+  "shallowMap:LA": {
+    "data": {
+      "image": "images/flags/la.svg",
+      "name": "Laos",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LA"
+    },
+    "date": 1586354212259
+  },
+  "shallowMap:LV": {
+    "data": {
+      "image": "images/flags/lv.svg",
+      "name": "Latvia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LV"
+    },
+    "date": 1586354212266
+  },
+  "shallowMap:LB": {
+    "data": {
+      "image": "images/flags/lb.svg",
+      "name": "Lebanon",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LB"
+    },
+    "date": 1586354212267
+  },
+  "shallowMap:LS": {
+    "data": {
+      "image": "images/flags/ls.svg",
+      "name": "Lesotho",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LS"
+    },
+    "date": 1586354212268
+  },
+  "shallowMap:LT": {
+    "data": {
+      "image": "images/flags/lt.svg",
+      "name": "Lithuania",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LT"
+    },
+    "date": 1586354212273
+  },
+  "shallowMap:LU": {
+    "data": {
+      "image": "images/flags/lu.svg",
+      "name": "Luxembourg",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LU"
+    },
+    "date": 1586354212274
+  },
+  "shallowMap:MG": {
+    "data": {
+      "image": "images/flags/mg.svg",
+      "name": "Madagascar",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MG"
+    },
+    "date": 1586354212274
+  },
+  "shallowMap:MY": {
+    "data": {
+      "image": "images/flags/my.svg",
+      "name": "Malaysia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MY"
+    },
+    "date": 1586354212283
+  },
+  "shallowMap:MT": {
+    "data": {
+      "image": "images/flags/mt.svg",
+      "name": "Malta",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MT"
+    },
+    "date": 1586354212284
+  },
+  "shallowMap:MX": {
+    "data": {
+      "image": "images/flags/mx.svg",
+      "name": "Mexico",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MX"
+    },
+    "date": 1586354212284
+  },
+  "shallowMap:MC": {
+    "data": {
+      "image": "images/flags/mc.svg",
+      "name": "Monaco",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 0,
+        "plays": 2
+      },
+      "id": "MC"
+    },
+    "date": 1586354212289
+  },
+  "shallowMap:MN": {
+    "data": {
+      "image": "images/flags/mn.svg",
+      "name": "Mongolia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MN"
+    },
+    "date": 1586354212290
+  },
+  "shallowMap:ME": {
+    "data": {
+      "image": "images/flags/me.svg",
+      "name": "Montenegro",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "ME"
+    },
+    "date": 1586354212291
+  },
+  "shallowMap:MA": {
+    "data": {
+      "image": "images/flags/ma.svg",
+      "name": "Morocco",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MA"
+    },
+    "date": 1586354212298
+  },
+  "shallowMap:MM": {
+    "data": {
+      "image": "images/flags/mm.svg",
+      "name": "Myanmar",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MM"
+    },
+    "date": 1586354212299
+  },
+  "shallowMap:NA": {
+    "data": {
+      "image": "images/flags/na.svg",
+      "name": "Namibia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "NA"
+    },
+    "date": 1586354212300
+  },
+  "shallowMap:NL": {
+    "data": {
+      "image": "images/flags/nl.svg",
+      "name": "Netherlands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "NL"
+    },
+    "date": 1586354212303
+  },
+  "shallowMap:NZ": {
+    "data": {
+      "image": "images/flags/nz.svg",
+      "name": "New Zealand",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "NZ"
+    },
+    "date": 1586354212303
+  },
+  "shallowMap:NG": {
+    "data": {
+      "image": "images/flags/ng.svg",
+      "name": "Nigeria",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "NG"
+    },
+    "date": 1586354212305
+  },
+  "shallowMap:MK": {
+    "data": {
+      "image": "images/flags/mk.svg",
+      "name": "North Macedonia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MK"
+    },
+    "date": 1586354212306
+  },
+  "shallowMap:MP": {
+    "data": {
+      "image": "images/flags/mp.svg",
+      "name": "Northern Mariana Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "MP"
+    },
+    "date": 1586354212307
+  },
+  "shallowMap:NO": {
+    "data": {
+      "image": "images/flags/no.svg",
+      "name": "Norway",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "NO"
+    },
+    "date": 1586354212308
+  },
+  "shallowMap:PA": {
+    "data": {
+      "image": "images/flags/pa.svg",
+      "name": "Panama",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PA"
+    },
+    "date": 1586354212308
+  },
+  "shallowMap:PE": {
+    "data": {
+      "image": "images/flags/pe.svg",
+      "name": "Peru",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PE"
+    },
+    "date": 1586354212309
+  },
+  "shallowMap:PH": {
+    "data": {
+      "image": "images/flags/ph.svg",
+      "name": "Philippines",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PH"
+    },
+    "date": 1586354212310
+  },
+  "shallowMap:PN": {
+    "data": {
+      "image": "images/flags/pn.svg",
+      "name": "Pitcairn Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PN"
+    },
+    "date": 1586354212310
+  },
+  "shallowMap:PL": {
+    "data": {
+      "image": "images/flags/pl.svg",
+      "name": "Poland",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PL"
+    },
+    "date": 1586354212312
+  },
+  "shallowMap:PT": {
+    "data": {
+      "image": "images/flags/pt.svg",
+      "name": "Portugal",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PT"
+    },
+    "date": 1586354212314
+  },
+  "shallowMap:PR": {
+    "data": {
+      "image": "images/flags/pr.svg",
+      "name": "Puerto Rico",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PR"
+    },
+    "date": 1586354212316
+  },
+  "shallowMap:QA": {
+    "data": {
+      "image": "images/flags/qa.svg",
+      "name": "Qatar",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "QA"
+    },
+    "date": 1586354212317
+  },
+  "shallowMap:RE": {
+    "data": {
+      "image": "images/flags/re.svg",
+      "name": "Réunion",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "RE"
+    },
+    "date": 1586354212318
+  },
+  "shallowMap:RO": {
+    "data": {
+      "image": "images/flags/ro.svg",
+      "name": "Romania",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "RO"
+    },
+    "date": 1586354212319
+  },
+  "shallowMap:RU": {
+    "data": {
+      "image": "images/flags/ru.svg",
+      "name": "Russia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "RU"
+    },
+    "date": 1586354212320
+  },
+  "shallowMap:PM": {
+    "data": {
+      "image": "images/flags/pm.svg",
+      "name": "Saint Pierre and Miquelon",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "PM"
+    },
+    "date": 1586354212321
+  },
+  "shallowMap:SM": {
+    "data": {
+      "image": "images/flags/sm.svg",
+      "name": "San Marino",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "SM"
+    },
+    "date": 1586354212321
+  },
+  "shallowMap:SN": {
+    "data": {
+      "image": "images/flags/sn.svg",
+      "name": "Senegal",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "SN"
+    },
+    "date": 1586354212322
+  },
+  "shallowMap:RS": {
+    "data": {
+      "image": "images/flags/rs.svg",
+      "name": "Serbia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "RS"
+    },
+    "date": 1586354212323
+  },
+  "shallowMap:SG": {
+    "data": {
+      "image": "images/flags/sg.svg",
+      "name": "Singapore",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "SG"
+    },
+    "date": 1586354212323
+  },
+  "shallowMap:SK": {
+    "data": {
+      "image": "images/flags/sk.svg",
+      "name": "Slovakia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "SK"
+    },
+    "date": 1586354212324
+  },
+  "shallowMap:SI": {
+    "data": {
+      "image": "images/flags/si.svg",
+      "name": "Slovenia",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 19
+      },
+      "id": "SI"
+    },
+    "date": 1586354212325
+  },
+  "shallowMap:ZA": {
+    "data": {
+      "image": "images/flags/za.svg",
+      "name": "South Africa",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "ZA"
+    },
+    "date": 1586354212325
+  },
+  "shallowMap:GS": {
+    "data": {
+      "image": "images/flags/gs.svg",
+      "name": "South Georgia and the South Sandwich Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GS"
+    },
+    "date": 1586354212326
+  },
+  "shallowMap:ES": {
+    "data": {
+      "image": "images/flags/es.svg",
+      "name": "Spain",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "ES"
+    },
+    "date": 1586354212327
+  },
+  "shallowMap:LK": {
+    "data": {
+      "image": "images/flags/lk.svg",
+      "name": "Sri Lanka",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "LK"
+    },
+    "date": 1586354212331
+  },
+  "shallowMap:SE": {
+    "data": {
+      "image": "images/flags/se.svg",
+      "name": "Sweden",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "SE"
+    },
+    "date": 1586354212332
+  },
+  "shallowMap:CH": {
+    "data": {
+      "image": "images/flags/ch.svg",
+      "name": "Switzerland",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "CH"
+    },
+    "date": 1586354212353
+  },
+  "shallowMap:TZ": {
+    "data": {
+      "image": "images/flags/tz.svg",
+      "name": "Tanzania",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "TZ"
+    },
+    "date": 1586354212357
+  },
+  "shallowMap:TH": {
+    "data": {
+      "image": "images/flags/th.svg",
+      "name": "Thailand",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "TH"
+    },
+    "date": 1586354212358
+  },
+  "shallowMap:TO": {
+    "data": {
+      "image": "images/flags/to.svg",
+      "name": "Tonga",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "TO"
+    },
+    "date": 1586354212359
+  },
+  "shallowMap:TN": {
+    "data": {
+      "image": "images/flags/tn.svg",
+      "name": "Tunisia",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "TN"
+    },
+    "date": 1586354212359
+  },
+  "shallowMap:TR": {
+    "data": {
+      "image": "images/flags/tr.svg",
+      "name": "Turkey",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "TR"
+    },
+    "date": 1586354212360
+  },
+  "shallowMap:UG": {
+    "data": {
+      "image": "images/flags/ug.svg",
+      "name": "Uganda",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "UG"
+    },
+    "date": 1586354212363
+  },
+  "shallowMap:UA": {
+    "data": {
+      "image": "images/flags/ua.svg",
+      "name": "Ukraine",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "UA"
+    },
+    "date": 1586354212365
+  },
+  "shallowMap:AE": {
+    "data": {
+      "image": "images/flags/ae.svg",
+      "name": "United Arab Emirates",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "AE"
+    },
+    "date": 1586354212366
+  },
+  "shallowMap:GB": {
+    "data": {
+      "image": "images/flags/gb.svg",
+      "name": "United Kingdom",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "GB"
+    },
+    "date": 1586354212367
+  },
+  "shallowMap:US": {
+    "data": {
+      "image": "images/flags/us.svg",
+      "name": "United States",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "US"
+    },
+    "date": 1586354212368
+  },
+  "shallowMap:VI": {
+    "data": {
+      "image": "images/flags/vi.svg",
+      "name": "United States Virgin Islands",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "VI"
+    },
+    "date": 1586354212369
+  },
+  "shallowMap:UY": {
+    "data": {
+      "image": "images/flags/uy.svg",
+      "name": "Uruguay",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "UY"
+    },
+    "date": 1586354212369
+  },
+  "shallowMap:VN": {
+    "data": {
+      "image": "images/flags/vn.svg",
+      "name": "Vietnam",
+      "type": "kml",
+      "counts": {
+        "likes": 0,
+        "dislikes": 0,
+        "plays": 0
+      },
+      "id": "VN"
+    },
+    "date": 1586354212370
+  },
+  "shallowMap:ZW": {
+    "data": {
+      "image": "images/flags/zw.svg",
+      "name": "Zimbabwe",
+      "type": "kml",
+      "counts": {
+        "dislikes": 0,
+        "likes": 1,
+        "plays": 1
+      },
+      "id": "ZW"
+    },
+    "date": 1586354212371
+  },
+  "homeMaps": {
+    "data": [
+      {
+        "icon": "brightness_high",
+        "maps": [
+          {
+            "image": "images/world.jpg",
+            "name": "World",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 8,
+              "plays": 70
+            },
+            "id": "world"
+          },
+          {
+            "image": "images/my_area.jpg",
+            "name": "My Area",
+            "type": "area",
+            "counts": {
+              "dislikes": 1,
+              "likes": 7,
+              "plays": 21
+            },
+            "id": "my_area"
+          }
+        ],
+        "name": "Official Maps",
+        "order": 1,
+        "searchEnabled": false
+      },
+      {
+        "icon": "collections_bookmark",
+        "maps": [
+          {
+            "image": "images/european_union.jpg",
+            "name": "European Union",
+            "type": "collection",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 6
+            },
+            "id": "european_union"
+          },
+          {
+            "image": "images/benelux.jpg",
+            "name": "Benelux",
+            "type": "collection",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 8
+            },
+            "id": "benelux"
+          },
+          {
+            "image": "images/africa.jpg",
+            "name": "Africa",
+            "type": "collection",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 2
+            },
+            "id": "africa"
+          },
+          {
+            "image": "images/north_america.jpg",
+            "name": "North America",
+            "type": "collection",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "north_america"
+          },
+          {
+            "image": "images/south_america.jpg",
+            "name": "South America",
+            "type": "collection",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "south_america"
+          },
+          {
+            "image": "images/europe.jpg",
+            "name": "Europe",
+            "type": "collection",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "europe"
+          },
+          {
+            "image": "images/south_east_asia.jpg",
+            "name": "South East Asia",
+            "type": "collection",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 1
+            },
+            "id": "south_east_asia"
+          },
+          {
+            "image": "images/asia.jpg",
+            "name": "Asia",
+            "type": "collection",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "asia"
+          },
+          {
+            "image": "images/oceania.jpg",
+            "name": "Oceania",
+            "type": "collection",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 1
+            },
+            "id": "oceania"
+          }
+        ],
+        "name": "Country Collection Maps",
+        "order": 2,
+        "searchEnabled": false
+      },
+      {
+        "icon": "flag",
+        "maps": [
+          {
+            "image": "images/flags/al.svg",
+            "name": "Albania",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 4,
+              "plays": 4
+            },
+            "id": "AL"
+          },
+          {
+            "image": "images/flags/as.svg",
+            "name": "American Samoa",
+            "type": "kml",
+            "counts": {
+              "dislikes": 1,
+              "likes": 0,
+              "plays": 1
+            },
+            "id": "AS"
+          },
+          {
+            "image": "images/flags/ad.svg",
+            "name": "Andorra",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 7
+            },
+            "id": "AD"
+          },
+          {
+            "image": "images/flags/aq.svg",
+            "name": "Antarctica",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 1
+            },
+            "id": "AQ"
+          },
+          {
+            "image": "images/flags/ar.svg",
+            "name": "Argentina",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "AR"
+          },
+          {
+            "image": "images/flags/am.svg",
+            "name": "Armenia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "AM"
+          },
+          {
+            "image": "images/flags/au.svg",
+            "name": "Australia",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 1
+            },
+            "id": "AU"
+          },
+          {
+            "image": "images/flags/at.svg",
+            "name": "Austria",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "AT"
+          },
+          {
+            "image": "images/flags/az.svg",
+            "name": "Azerbaijan",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "AZ"
+          },
+          {
+            "image": "images/flags/bd.svg",
+            "name": "Bangladesh",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BD"
+          },
+          {
+            "image": "images/flags/bb.svg",
+            "name": "Barbados",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 1
+            },
+            "id": "BB"
+          },
+          {
+            "image": "images/flags/by.svg",
+            "name": "Belarus",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BY"
+          },
+          {
+            "image": "images/flags/be.svg",
+            "name": "Belgium",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BE"
+          },
+          {
+            "image": "images/flags/bm.svg",
+            "name": "Bermuda",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 1
+            },
+            "id": "BM"
+          },
+          {
+            "image": "images/flags/bt.svg",
+            "name": "Bhutan",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BT"
+          },
+          {
+            "image": "images/flags/bo.svg",
+            "name": "Bolivia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BO"
+          },
+          {
+            "image": "images/flags/bw.svg",
+            "name": "Botswana",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 1
+            },
+            "id": "BW"
+          },
+          {
+            "image": "images/flags/br.svg",
+            "name": "Brazil",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BR"
+          },
+          {
+            "image": "images/flags/io.svg",
+            "name": "British Indian Ocean Territory",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "IO"
+          },
+          {
+            "image": "images/flags/bg.svg",
+            "name": "Bulgaria",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "BG"
+          },
+          {
+            "image": "images/flags/kh.svg",
+            "name": "Cambodia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "KH"
+          },
+          {
+            "image": "images/flags/ca.svg",
+            "name": "Canada",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CA"
+          },
+          {
+            "image": "images/flags/cv.svg",
+            "name": "Cape Verde",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CV"
+          },
+          {
+            "image": "images/flags/cl.svg",
+            "name": "Chile",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CL"
+          },
+          {
+            "image": "images/flags/cn.svg",
+            "name": "China",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CN"
+          },
+          {
+            "image": "images/flags/cx.svg",
+            "name": "Christmas Island",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 1
+            },
+            "id": "CX"
+          },
+          {
+            "image": "images/flags/cc.svg",
+            "name": "Cocos (Keeling) Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CC"
+          },
+          {
+            "image": "images/flags/co.svg",
+            "name": "Colombia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CO"
+          },
+          {
+            "image": "images/flags/cr.svg",
+            "name": "Costa Rica",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CR"
+          },
+          {
+            "image": "images/flags/hr.svg",
+            "name": "Croatia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "HR"
+          },
+          {
+            "image": "images/flags/cy.svg",
+            "name": "Cyprus",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 2,
+              "plays": 5
+            },
+            "id": "CY"
+          },
+          {
+            "image": "images/flags/cz.svg",
+            "name": "Czech Republic",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CZ"
+          },
+          {
+            "image": "images/flags/dk.svg",
+            "name": "Denmark",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "DK"
+          },
+          {
+            "image": "images/flags/do.svg",
+            "name": "Dominican Republic",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "DO"
+          },
+          {
+            "image": "images/flags/ec.svg",
+            "name": "Ecuador",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "EC"
+          },
+          {
+            "image": "images/flags/ee.svg",
+            "name": "Estonia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "EE"
+          },
+          {
+            "image": "images/flags/sz.svg",
+            "name": "Eswatini (Swaziland)",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "SZ"
+          },
+          {
+            "image": "images/flags/fk.svg",
+            "name": "Falkland Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "FK"
+          },
+          {
+            "image": "images/flags/fo.svg",
+            "name": "Faroe Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "FO"
+          },
+          {
+            "image": "images/flags/fi.svg",
+            "name": "Finland",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "FI"
+          },
+          {
+            "image": "images/flags/fr.svg",
+            "name": "France",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "FR"
+          },
+          {
+            "image": "images/flags/pf.svg",
+            "name": "French Polynesia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PF"
+          },
+          {
+            "image": "images/flags/de.svg",
+            "name": "Germany",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "DE"
+          },
+          {
+            "image": "images/flags/gh.svg",
+            "name": "Ghana",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GH"
+          },
+          {
+            "image": "images/flags/gi.svg",
+            "name": "Gibraltar",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GI"
+          },
+          {
+            "image": "images/flags/gr.svg",
+            "name": "Greece",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GR"
+          },
+          {
+            "image": "images/flags/gl.svg",
+            "name": "Greenland",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GL"
+          },
+          {
+            "image": "images/flags/gu.svg",
+            "name": "Guam",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GU"
+          },
+          {
+            "image": "images/flags/gt.svg",
+            "name": "Guatemala",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GT"
+          },
+          {
+            "image": "images/flags/hu.svg",
+            "name": "Hungary",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "HU"
+          },
+          {
+            "image": "images/flags/is.svg",
+            "name": "Iceland",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "IS"
+          },
+          {
+            "image": "images/flags/in.svg",
+            "name": "India",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "IN"
+          },
+          {
+            "image": "images/flags/id.svg",
+            "name": "Indonesia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "ID"
+          },
+          {
+            "image": "images/flags/ie.svg",
+            "name": "Ireland",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "IE"
+          },
+          {
+            "image": "images/flags/il.svg",
+            "name": "Israel",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "IL"
+          },
+          {
+            "image": "images/flags/it.svg",
+            "name": "Italy",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 12
+            },
+            "id": "IT"
+          },
+          {
+            "image": "images/flags/jp.svg",
+            "name": "Japan",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "JP"
+          },
+          {
+            "image": "images/flags/jo.svg",
+            "name": "Jordan",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "JO"
+          },
+          {
+            "image": "images/flags/ke.svg",
+            "name": "Kenya",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 1
+            },
+            "id": "KE"
+          },
+          {
+            "image": "images/flags/kr.svg",
+            "name": "South Korea",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "KR"
+          },
+          {
+            "image": "images/flags/kg.svg",
+            "name": "Kyrgyzstan",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "KG"
+          },
+          {
+            "image": "images/flags/la.svg",
+            "name": "Laos",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LA"
+          },
+          {
+            "image": "images/flags/lv.svg",
+            "name": "Latvia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LV"
+          },
+          {
+            "image": "images/flags/lb.svg",
+            "name": "Lebanon",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LB"
+          },
+          {
+            "image": "images/flags/ls.svg",
+            "name": "Lesotho",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LS"
+          },
+          {
+            "image": "images/flags/lt.svg",
+            "name": "Lithuania",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LT"
+          },
+          {
+            "image": "images/flags/lu.svg",
+            "name": "Luxembourg",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LU"
+          },
+          {
+            "image": "images/flags/mg.svg",
+            "name": "Madagascar",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MG"
+          },
+          {
+            "image": "images/flags/my.svg",
+            "name": "Malaysia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MY"
+          },
+          {
+            "image": "images/flags/mt.svg",
+            "name": "Malta",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MT"
+          },
+          {
+            "image": "images/flags/mx.svg",
+            "name": "Mexico",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MX"
+          },
+          {
+            "image": "images/flags/mc.svg",
+            "name": "Monaco",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 0,
+              "plays": 2
+            },
+            "id": "MC"
+          },
+          {
+            "image": "images/flags/mn.svg",
+            "name": "Mongolia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MN"
+          },
+          {
+            "image": "images/flags/me.svg",
+            "name": "Montenegro",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "ME"
+          },
+          {
+            "image": "images/flags/ma.svg",
+            "name": "Morocco",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MA"
+          },
+          {
+            "image": "images/flags/mm.svg",
+            "name": "Myanmar",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MM"
+          },
+          {
+            "image": "images/flags/na.svg",
+            "name": "Namibia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "NA"
+          },
+          {
+            "image": "images/flags/nl.svg",
+            "name": "Netherlands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "NL"
+          },
+          {
+            "image": "images/flags/nz.svg",
+            "name": "New Zealand",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "NZ"
+          },
+          {
+            "image": "images/flags/ng.svg",
+            "name": "Nigeria",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "NG"
+          },
+          {
+            "image": "images/flags/mk.svg",
+            "name": "North Macedonia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MK"
+          },
+          {
+            "image": "images/flags/mp.svg",
+            "name": "Northern Mariana Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "MP"
+          },
+          {
+            "image": "images/flags/no.svg",
+            "name": "Norway",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "NO"
+          },
+          {
+            "image": "images/flags/pa.svg",
+            "name": "Panama",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PA"
+          },
+          {
+            "image": "images/flags/pe.svg",
+            "name": "Peru",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PE"
+          },
+          {
+            "image": "images/flags/ph.svg",
+            "name": "Philippines",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PH"
+          },
+          {
+            "image": "images/flags/pn.svg",
+            "name": "Pitcairn Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PN"
+          },
+          {
+            "image": "images/flags/pl.svg",
+            "name": "Poland",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PL"
+          },
+          {
+            "image": "images/flags/pt.svg",
+            "name": "Portugal",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PT"
+          },
+          {
+            "image": "images/flags/pr.svg",
+            "name": "Puerto Rico",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PR"
+          },
+          {
+            "image": "images/flags/qa.svg",
+            "name": "Qatar",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "QA"
+          },
+          {
+            "image": "images/flags/re.svg",
+            "name": "Réunion",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "RE"
+          },
+          {
+            "image": "images/flags/ro.svg",
+            "name": "Romania",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "RO"
+          },
+          {
+            "image": "images/flags/ru.svg",
+            "name": "Russia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "RU"
+          },
+          {
+            "image": "images/flags/pm.svg",
+            "name": "Saint Pierre and Miquelon",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "PM"
+          },
+          {
+            "image": "images/flags/sm.svg",
+            "name": "San Marino",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "SM"
+          },
+          {
+            "image": "images/flags/sn.svg",
+            "name": "Senegal",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "SN"
+          },
+          {
+            "image": "images/flags/rs.svg",
+            "name": "Serbia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "RS"
+          },
+          {
+            "image": "images/flags/sg.svg",
+            "name": "Singapore",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "SG"
+          },
+          {
+            "image": "images/flags/sk.svg",
+            "name": "Slovakia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "SK"
+          },
+          {
+            "image": "images/flags/si.svg",
+            "name": "Slovenia",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 19
+            },
+            "id": "SI"
+          },
+          {
+            "image": "images/flags/za.svg",
+            "name": "South Africa",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "ZA"
+          },
+          {
+            "image": "images/flags/gs.svg",
+            "name": "South Georgia and the South Sandwich Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GS"
+          },
+          {
+            "image": "images/flags/es.svg",
+            "name": "Spain",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "ES"
+          },
+          {
+            "image": "images/flags/lk.svg",
+            "name": "Sri Lanka",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "LK"
+          },
+          {
+            "image": "images/flags/se.svg",
+            "name": "Sweden",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "SE"
+          },
+          {
+            "image": "images/flags/ch.svg",
+            "name": "Switzerland",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "CH"
+          },
+          {
+            "image": "images/flags/tz.svg",
+            "name": "Tanzania",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "TZ"
+          },
+          {
+            "image": "images/flags/th.svg",
+            "name": "Thailand",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "TH"
+          },
+          {
+            "image": "images/flags/to.svg",
+            "name": "Tonga",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "TO"
+          },
+          {
+            "image": "images/flags/tn.svg",
+            "name": "Tunisia",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "TN"
+          },
+          {
+            "image": "images/flags/tr.svg",
+            "name": "Turkey",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "TR"
+          },
+          {
+            "image": "images/flags/ug.svg",
+            "name": "Uganda",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "UG"
+          },
+          {
+            "image": "images/flags/ua.svg",
+            "name": "Ukraine",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "UA"
+          },
+          {
+            "image": "images/flags/ae.svg",
+            "name": "United Arab Emirates",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "AE"
+          },
+          {
+            "image": "images/flags/gb.svg",
+            "name": "United Kingdom",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "GB"
+          },
+          {
+            "image": "images/flags/us.svg",
+            "name": "United States",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "US"
+          },
+          {
+            "image": "images/flags/vi.svg",
+            "name": "United States Virgin Islands",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "VI"
+          },
+          {
+            "image": "images/flags/uy.svg",
+            "name": "Uruguay",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "UY"
+          },
+          {
+            "image": "images/flags/vn.svg",
+            "name": "Vietnam",
+            "type": "kml",
+            "counts": {
+              "likes": 0,
+              "dislikes": 0,
+              "plays": 0
+            },
+            "id": "VN"
+          },
+          {
+            "image": "images/flags/zw.svg",
+            "name": "Zimbabwe",
+            "type": "kml",
+            "counts": {
+              "dislikes": 0,
+              "likes": 1,
+              "plays": 1
+            },
+            "id": "ZW"
+          }
+        ],
+        "name": "Country Maps",
+        "order": 3,
+        "searchEnabled": true
+      }
+    ],
+    "date": 1586354212371
+  },
+  "map:world": {
+    "data": {
+      "image": "images/world.jpg",
+      "kml": "<Polygon> \t<outerBoundaryIs> \t\t<LinearRing> \t\t\t<coordinates> \t\t\t\t-137.109375,82.11838360691272,0 -168.046875,74.01954331150228,0 -172.265625,64.16810689799152,0 -172.265625,51.6180165487737,0 -152.578125,8.407168163601074,0 -165.234375,-80.17871349622824,0 -161.015625,-84.40594104126976,0 -23.203125,-85.40203623421635,0 80.859375,-85.28791612123702,0 120.234375,-77.46602847687328,0 161.015625,-54.97761367069626,0 -179.47265625,-47.75409797968002,0 -174.22121092336414,-27.80429833436806,0 -166.46484375,-4.915832801313165,0 -162.24609375,24.5271348225978,0 -171.38671875,41.50857729743936,0 -176.66015625,55.7765730186677,0 -171.85507775262153,65.28961534880355,0 -171.03515625,70.8446726342528,0 178.06640625,76.10079606754579,0 152.75390625,80.76061470752452,0 112.32421875,82.76537263027352,0 -4.74609375,84.5747022855327,0 -98.26171875,83.55971676457148,0 -137.109375,82.11838360691272,0 \t\t\t</coordinates> \t\t</LinearRing> \t</outerBoundaryIs> </Polygon>",
+      "name": "World",
+      "type": "kml",
+      "id": "world"
+    },
+    "date": 1586354469996
+  },
+  "storage:image:images/world.jpg": {
+    "data": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fworld.jpg?alt=media&token=e8de7c5a-34ce-4d9d-9007-8cd8f3dd6e46",
+    "date": 1586354470798
+  },
+  "shallowMap:XYEJwFRaXR4yyBNNHDtC": {
+    "data": {
+      "date": {
+        "seconds": 1585958469,
+        "nanoseconds": 816000000
+      },
+      "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FXYEJwFRaXR4yyBNNHDtC?alt=media&token=747ebc0f-3fc8-43d7-aaf7-0a47e37300c7",
+      "name": "Mountains",
+      "points": [
+        {
+          "position": [
+            46.84678563685665,
+            8.375102645943299
+          ],
+          "pov": {
+            "heading": 252.54468122620509,
+            "pitch": 13.171419881382775,
+            "zoom": 0.6637166121355679
+          }
+        },
+        {
+          "position": [
+            42.61975092721244,
+            0.53738934240986
+          ],
+          "pov": {
+            "heading": 350.38648566625767,
+            "pitch": 25.2004402250964,
+            "zoom": 1.2842023072311881
+          }
+        },
+        {
+          "position": [
+            37.96137813780306,
+            22.41452909486225
+          ],
+          "pov": {
+            "heading": 224.29968409157237,
+            "pitch": 12.535428917131654,
+            "zoom": 1.2842023072311881
+          }
+        }
+      ],
+      "realUser": true,
+      "type": "points",
+      "user": "4Ml8K4NQXHaLodxv4ErkgTnd73j2",
+      "userInfo": {
+        "likes": [
+          "world",
+          "phEVuGxh17SsUDiu0iHq",
+          "CY",
+          "ZW",
+          "oceania",
+          "my_area",
+          "BB",
+          "south_east_asia",
+          "tfeqPhLb31xoP9eUn1db",
+          "8CBccxxpRSbn75Bdw3Hy",
+          "QcyrfPigGscKMaTRwZyM",
+          "XYEJwFRaXR4yyBNNHDtC",
+          "SI",
+          "european_union"
+        ],
+        "maps": [
+          "0hyEzV6H2Dbjv5aIkDhQ",
+          "sifnYtSho7KyErAbT1GB",
+          "phEVuGxh17SsUDiu0iHq",
+          "9xRMWGgBtd1pHw2GPuFY",
+          "9rq3bbG6IgIjHKKiS9Dl",
+          "6lQRhriyxs7DVf3r6t00",
+          "tfeqPhLb31xoP9eUn1db",
+          "8CBccxxpRSbn75Bdw3Hy",
+          "XYEJwFRaXR4yyBNNHDtC",
+          "TxZj2VvHrwSaAkeeN726"
+        ],
+        "name": "RuteNL"
+      },
+      "counts": {
+        "dislikes": 0,
+        "likes": 2,
+        "plays": 4
+      },
+      "id": "XYEJwFRaXR4yyBNNHDtC"
+    },
+    "date": 1586354770477
+  },
+  "shallowMap:tfeqPhLb31xoP9eUn1db": {
+    "data": {
+      "date": {
+        "seconds": 1585871486,
+        "nanoseconds": 366000000
+      },
+      "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FtfeqPhLb31xoP9eUn1db?alt=media&token=8e7dfcc2-d0f6-4c85-9f71-a0201053a8e8",
+      "name": "Paris Places",
+      "points": [
+        {
+          "position": [
+            48.8614981878381,
+            2.334565627040098
+          ],
+          "pov": {
+            "heading": 120.12036844499342,
+            "pitch": 2.714857550530624,
+            "zoom": 1.35613701834367
+          }
+        },
+        {
+          "position": [
+            48.85362822070281,
+            2.369397842533289
+          ],
+          "pov": {
+            "heading": 197.82981401309434,
+            "pitch": 15.449487843742034,
+            "zoom": 1.35613701834367
+          }
+        },
+        {
+          "position": [
+            48.86614947315866,
+            2.311963508624075
+          ],
+          "pov": {
+            "heading": 95.98397693398796,
+            "pitch": 4.953363874695924,
+            "zoom": 1.35613701834367
+          }
+        },
+        {
+          "position": [
+            48.87342333975051,
+            2.294063944438806
+          ],
+          "pov": {
+            "heading": 60.58056637921427,
+            "pitch": 14.38114746328202,
+            "zoom": 1.35613701834367
+          }
+        },
+        {
+          "position": [
+            48.8568182278652,
+            2.29670935558781
+          ],
+          "pov": {
+            "heading": 317.67896162814156,
+            "pitch": 31.192641519120656,
+            "zoom": 1.35613701834367
+          }
+        }
+      ],
+      "realUser": true,
+      "type": "points",
+      "user": "4Ml8K4NQXHaLodxv4ErkgTnd73j2",
+      "counts": {
+        "dislikes": 0,
+        "likes": 3,
+        "plays": 11
+      },
+      "userInfo": {
+        "likes": [
+          "world",
+          "phEVuGxh17SsUDiu0iHq",
+          "CY",
+          "ZW",
+          "oceania",
+          "my_area",
+          "BB",
+          "south_east_asia",
+          "tfeqPhLb31xoP9eUn1db",
+          "8CBccxxpRSbn75Bdw3Hy",
+          "QcyrfPigGscKMaTRwZyM",
+          "XYEJwFRaXR4yyBNNHDtC",
+          "SI",
+          "european_union"
+        ],
+        "maps": [
+          "0hyEzV6H2Dbjv5aIkDhQ",
+          "sifnYtSho7KyErAbT1GB",
+          "phEVuGxh17SsUDiu0iHq",
+          "9xRMWGgBtd1pHw2GPuFY",
+          "9rq3bbG6IgIjHKKiS9Dl",
+          "6lQRhriyxs7DVf3r6t00",
+          "tfeqPhLb31xoP9eUn1db",
+          "8CBccxxpRSbn75Bdw3Hy",
+          "XYEJwFRaXR4yyBNNHDtC",
+          "TxZj2VvHrwSaAkeeN726"
+        ],
+        "name": "RuteNL"
+      },
+      "id": "tfeqPhLb31xoP9eUn1db"
+    },
+    "date": 1586354770524
+  },
+  "shallowMap:QcyrfPigGscKMaTRwZyM": {
+    "data": {
+      "date": {
+        "seconds": 1585922819,
+        "nanoseconds": 607000000
+      },
+      "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FQcyrfPigGscKMaTRwZyM?alt=media&token=215e2982-8f61-49dc-b5ea-fe985f4f2032",
+      "name": "Gibraltar Places",
+      "points": [
+        {
+          "position": [
+            36.1093543,
+            -5.3455916
+          ],
+          "pov": {
+            "heading": 95.38084531927191,
+            "pitch": 7.863288396638993,
+            "zoom": 2.6225813899868036
+          }
+        },
+        {
+          "position": [
+            36.12602689326788,
+            -5.345490928556785
+          ],
+          "pov": {
+            "heading": 2.614544187290848,
+            "pitch": 6.14810453712937,
+            "zoom": 1.1857090623052777
+          }
+        },
+        {
+          "position": [
+            36.1267106,
+            -5.3458784
+          ],
+          "pov": {
+            "heading": 282.96622897577447,
+            "pitch": -2.1684400692001873,
+            "zoom": 1.1857090623052777
+          }
+        },
+        {
+          "position": [
+            36.1498451,
+            -5.34904
+          ],
+          "pov": {
+            "heading": 260.55761691016335,
+            "pitch": -10.072537349849185,
+            "zoom": 1.1857090623052777
+          }
+        }
+      ],
+      "realUser": true,
+      "type": "points",
+      "user": "8Gn2nwirGYfhDqSOUbjWRsoGj6s2",
+      "counts": {
+        "dislikes": 0,
+        "likes": 3,
+        "plays": 3
+      },
+      "userInfo": {
+        "name": "[Deleted]",
+        "maps": [],
+        "likes": []
+      },
+      "id": "QcyrfPigGscKMaTRwZyM"
+    },
+    "date": 1586354770495
+  },
+  "explore": {
+    "data": {
+      "popular": [
+        {
+          "image": "images/world.jpg",
+          "name": "World",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 8,
+            "plays": 70
+          },
+          "id": "world"
+        },
+        {
+          "image": "images/my_area.jpg",
+          "name": "My Area",
+          "type": "area",
+          "counts": {
+            "dislikes": 1,
+            "likes": 7,
+            "plays": 21
+          },
+          "id": "my_area"
+        },
+        {
+          "image": "images/flags/si.svg",
+          "name": "Slovenia",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 1,
+            "plays": 19
+          },
+          "id": "SI"
+        },
+        {
+          "image": "images/flags/it.svg",
+          "name": "Italy",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 0,
+            "plays": 12
+          },
+          "id": "IT"
+        },
+        {
+          "date": {
+            "seconds": 1585871486,
+            "nanoseconds": 366000000
+          },
+          "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FtfeqPhLb31xoP9eUn1db?alt=media&token=8e7dfcc2-d0f6-4c85-9f71-a0201053a8e8",
+          "name": "Paris Places",
+          "points": [
+            {
+              "position": [
+                48.8614981878381,
+                2.334565627040098
+              ],
+              "pov": {
+                "heading": 120.12036844499342,
+                "pitch": 2.714857550530624,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.85362822070281,
+                2.369397842533289
+              ],
+              "pov": {
+                "heading": 197.82981401309434,
+                "pitch": 15.449487843742034,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.86614947315866,
+                2.311963508624075
+              ],
+              "pov": {
+                "heading": 95.98397693398796,
+                "pitch": 4.953363874695924,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.87342333975051,
+                2.294063944438806
+              ],
+              "pov": {
+                "heading": 60.58056637921427,
+                "pitch": 14.38114746328202,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.8568182278652,
+                2.29670935558781
+              ],
+              "pov": {
+                "heading": 317.67896162814156,
+                "pitch": 31.192641519120656,
+                "zoom": 1.35613701834367
+              }
+            }
+          ],
+          "realUser": true,
+          "type": "points",
+          "user": "4Ml8K4NQXHaLodxv4ErkgTnd73j2",
+          "counts": {
+            "dislikes": 0,
+            "likes": 3,
+            "plays": 11
+          },
+          "userInfo": {
+            "likes": [
+              "world",
+              "phEVuGxh17SsUDiu0iHq",
+              "CY",
+              "ZW",
+              "oceania",
+              "my_area",
+              "BB",
+              "south_east_asia",
+              "tfeqPhLb31xoP9eUn1db",
+              "8CBccxxpRSbn75Bdw3Hy",
+              "QcyrfPigGscKMaTRwZyM",
+              "XYEJwFRaXR4yyBNNHDtC",
+              "SI",
+              "european_union"
+            ],
+            "maps": [
+              "0hyEzV6H2Dbjv5aIkDhQ",
+              "sifnYtSho7KyErAbT1GB",
+              "phEVuGxh17SsUDiu0iHq",
+              "9xRMWGgBtd1pHw2GPuFY",
+              "9rq3bbG6IgIjHKKiS9Dl",
+              "6lQRhriyxs7DVf3r6t00",
+              "tfeqPhLb31xoP9eUn1db",
+              "8CBccxxpRSbn75Bdw3Hy",
+              "XYEJwFRaXR4yyBNNHDtC",
+              "TxZj2VvHrwSaAkeeN726"
+            ],
+            "name": "RuteNL"
+          },
+          "id": "tfeqPhLb31xoP9eUn1db"
+        },
+        {
+          "image": "images/benelux.jpg",
+          "name": "Benelux",
+          "type": "collection",
+          "counts": {
+            "dislikes": 0,
+            "likes": 0,
+            "plays": 8
+          },
+          "id": "benelux"
+        },
+        {
+          "image": "images/flags/ad.svg",
+          "name": "Andorra",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 0,
+            "plays": 7
+          },
+          "id": "AD"
+        },
+        {
+          "image": "images/european_union.jpg",
+          "name": "European Union",
+          "type": "collection",
+          "counts": {
+            "dislikes": 0,
+            "likes": 1,
+            "plays": 6
+          },
+          "id": "european_union"
+        }
+      ],
+      "liked": [
+        {
+          "image": "images/world.jpg",
+          "name": "World",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 8,
+            "plays": 70
+          },
+          "id": "world"
+        },
+        {
+          "image": "images/my_area.jpg",
+          "name": "My Area",
+          "type": "area",
+          "counts": {
+            "dislikes": 1,
+            "likes": 7,
+            "plays": 21
+          },
+          "id": "my_area"
+        },
+        {
+          "image": "images/flags/al.svg",
+          "name": "Albania",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 4,
+            "plays": 4
+          },
+          "id": "AL"
+        },
+        {
+          "date": {
+            "seconds": 1585871486,
+            "nanoseconds": 366000000
+          },
+          "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FtfeqPhLb31xoP9eUn1db?alt=media&token=8e7dfcc2-d0f6-4c85-9f71-a0201053a8e8",
+          "name": "Paris Places",
+          "points": [
+            {
+              "position": [
+                48.8614981878381,
+                2.334565627040098
+              ],
+              "pov": {
+                "heading": 120.12036844499342,
+                "pitch": 2.714857550530624,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.85362822070281,
+                2.369397842533289
+              ],
+              "pov": {
+                "heading": 197.82981401309434,
+                "pitch": 15.449487843742034,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.86614947315866,
+                2.311963508624075
+              ],
+              "pov": {
+                "heading": 95.98397693398796,
+                "pitch": 4.953363874695924,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.87342333975051,
+                2.294063944438806
+              ],
+              "pov": {
+                "heading": 60.58056637921427,
+                "pitch": 14.38114746328202,
+                "zoom": 1.35613701834367
+              }
+            },
+            {
+              "position": [
+                48.8568182278652,
+                2.29670935558781
+              ],
+              "pov": {
+                "heading": 317.67896162814156,
+                "pitch": 31.192641519120656,
+                "zoom": 1.35613701834367
+              }
+            }
+          ],
+          "realUser": true,
+          "type": "points",
+          "user": "4Ml8K4NQXHaLodxv4ErkgTnd73j2",
+          "counts": {
+            "dislikes": 0,
+            "likes": 3,
+            "plays": 11
+          },
+          "userInfo": {
+            "likes": [
+              "world",
+              "phEVuGxh17SsUDiu0iHq",
+              "CY",
+              "ZW",
+              "oceania",
+              "my_area",
+              "BB",
+              "south_east_asia",
+              "tfeqPhLb31xoP9eUn1db",
+              "8CBccxxpRSbn75Bdw3Hy",
+              "QcyrfPigGscKMaTRwZyM",
+              "XYEJwFRaXR4yyBNNHDtC",
+              "SI",
+              "european_union"
+            ],
+            "maps": [
+              "0hyEzV6H2Dbjv5aIkDhQ",
+              "sifnYtSho7KyErAbT1GB",
+              "phEVuGxh17SsUDiu0iHq",
+              "9xRMWGgBtd1pHw2GPuFY",
+              "9rq3bbG6IgIjHKKiS9Dl",
+              "6lQRhriyxs7DVf3r6t00",
+              "tfeqPhLb31xoP9eUn1db",
+              "8CBccxxpRSbn75Bdw3Hy",
+              "XYEJwFRaXR4yyBNNHDtC",
+              "TxZj2VvHrwSaAkeeN726"
+            ],
+            "name": "RuteNL"
+          },
+          "id": "tfeqPhLb31xoP9eUn1db"
+        },
+        {
+          "date": {
+            "seconds": 1585922819,
+            "nanoseconds": 607000000
+          },
+          "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FQcyrfPigGscKMaTRwZyM?alt=media&token=215e2982-8f61-49dc-b5ea-fe985f4f2032",
+          "name": "Gibraltar Places",
+          "points": [
+            {
+              "position": [
+                36.1093543,
+                -5.3455916
+              ],
+              "pov": {
+                "heading": 95.38084531927191,
+                "pitch": 7.863288396638993,
+                "zoom": 2.6225813899868036
+              }
+            },
+            {
+              "position": [
+                36.12602689326788,
+                -5.345490928556785
+              ],
+              "pov": {
+                "heading": 2.614544187290848,
+                "pitch": 6.14810453712937,
+                "zoom": 1.1857090623052777
+              }
+            },
+            {
+              "position": [
+                36.1267106,
+                -5.3458784
+              ],
+              "pov": {
+                "heading": 282.96622897577447,
+                "pitch": -2.1684400692001873,
+                "zoom": 1.1857090623052777
+              }
+            },
+            {
+              "position": [
+                36.1498451,
+                -5.34904
+              ],
+              "pov": {
+                "heading": 260.55761691016335,
+                "pitch": -10.072537349849185,
+                "zoom": 1.1857090623052777
+              }
+            }
+          ],
+          "realUser": true,
+          "type": "points",
+          "user": "8Gn2nwirGYfhDqSOUbjWRsoGj6s2",
+          "counts": {
+            "dislikes": 0,
+            "likes": 3,
+            "plays": 3
+          },
+          "userInfo": {
+            "name": "[Deleted]",
+            "maps": [],
+            "likes": []
+          },
+          "id": "QcyrfPigGscKMaTRwZyM"
+        },
+        {
+          "date": {
+            "seconds": 1585958469,
+            "nanoseconds": 816000000
+          },
+          "image": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fuser%2FXYEJwFRaXR4yyBNNHDtC?alt=media&token=747ebc0f-3fc8-43d7-aaf7-0a47e37300c7",
+          "name": "Mountains",
+          "points": [
+            {
+              "position": [
+                46.84678563685665,
+                8.375102645943299
+              ],
+              "pov": {
+                "heading": 252.54468122620509,
+                "pitch": 13.171419881382775,
+                "zoom": 0.6637166121355679
+              }
+            },
+            {
+              "position": [
+                42.61975092721244,
+                0.53738934240986
+              ],
+              "pov": {
+                "heading": 350.38648566625767,
+                "pitch": 25.2004402250964,
+                "zoom": 1.2842023072311881
+              }
+            },
+            {
+              "position": [
+                37.96137813780306,
+                22.41452909486225
+              ],
+              "pov": {
+                "heading": 224.29968409157237,
+                "pitch": 12.535428917131654,
+                "zoom": 1.2842023072311881
+              }
+            }
+          ],
+          "realUser": true,
+          "type": "points",
+          "user": "4Ml8K4NQXHaLodxv4ErkgTnd73j2",
+          "userInfo": {
+            "likes": [
+              "world",
+              "phEVuGxh17SsUDiu0iHq",
+              "CY",
+              "ZW",
+              "oceania",
+              "my_area",
+              "BB",
+              "south_east_asia",
+              "tfeqPhLb31xoP9eUn1db",
+              "8CBccxxpRSbn75Bdw3Hy",
+              "QcyrfPigGscKMaTRwZyM",
+              "XYEJwFRaXR4yyBNNHDtC",
+              "SI",
+              "european_union"
+            ],
+            "maps": [
+              "0hyEzV6H2Dbjv5aIkDhQ",
+              "sifnYtSho7KyErAbT1GB",
+              "phEVuGxh17SsUDiu0iHq",
+              "9xRMWGgBtd1pHw2GPuFY",
+              "9rq3bbG6IgIjHKKiS9Dl",
+              "6lQRhriyxs7DVf3r6t00",
+              "tfeqPhLb31xoP9eUn1db",
+              "8CBccxxpRSbn75Bdw3Hy",
+              "XYEJwFRaXR4yyBNNHDtC",
+              "TxZj2VvHrwSaAkeeN726"
+            ],
+            "name": "RuteNL"
+          },
+          "counts": {
+            "dislikes": 0,
+            "likes": 2,
+            "plays": 4
+          },
+          "id": "XYEJwFRaXR4yyBNNHDtC"
+        },
+        {
+          "image": "images/flags/cy.svg",
+          "name": "Cyprus",
+          "type": "kml",
+          "counts": {
+            "dislikes": 0,
+            "likes": 2,
+            "plays": 5
+          },
+          "id": "CY"
+        },
+        {
+          "image": "images/south_east_asia.jpg",
+          "name": "South East Asia",
+          "type": "collection",
+          "counts": {
+            "dislikes": 0,
+            "likes": 1,
+            "plays": 1
+          },
+          "id": "south_east_asia"
+        }
+      ]
+    },
+    "date": 1586354770526
+  },
+  "scores:2:world:50": {
+    "data": [
+      {
+        "date": 1585347218247,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 6679060.469822749,
+            "score": 190
+          },
+          {
+            "distance": 534870.3193888548,
+            "score": 4244
+          },
+          {
+            "distance": 10385916.271780677,
+            "score": 0
+          },
+          {
+            "distance": 1004630.9522876384,
+            "score": 3647
+          },
+          {
+            "distance": 11548704.839469839,
+            "score": 0
+          }
+        ],
+        "timeTaken": 107984.64999999851,
+        "totalDistance": 30153182.852749754,
+        "totalScore": 8081,
+        "user": "RuteNL"
+      },
+      {
+        "date": 1585421931977,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 181769.4029495632,
+            "score": 4734
+          },
+          {
+            "distance": 13967664.28195847,
+            "score": 0
+          },
+          {
+            "distance": 6588887.056069651,
+            "score": 205
+          },
+          {
+            "distance": 13244440.43384695,
+            "score": 0
+          },
+          {
+            "distance": 13244179.715532681,
+            "score": 0
+          }
+        ],
+        "timeTaken": 19097.52000006847,
+        "totalDistance": 47226940.890357316,
+        "totalScore": 4939,
+        "user": "RuteNL"
+      },
+      {
+        "date": 1585248701999,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 7915781.515312448,
+            "score": 48
+          },
+          {
+            "distance": 14214543.489116618,
+            "score": 0
+          },
+          {
+            "distance": 17422448.033494912,
+            "score": 0
+          },
+          {
+            "distance": 9897579.216142563,
+            "score": 0
+          },
+          {
+            "distance": 1179905.529419101,
+            "score": 3439
+          }
+        ],
+        "timeTaken": 42466.04500000831,
+        "totalDistance": 50630257.78348564,
+        "totalScore": 3487,
+        "user": "RuteNL"
+      },
+      {
+        "date": 1585498390872,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 7890935.6760517815,
+            "score": 50
+          },
+          {
+            "distance": 12026125.555043695,
+            "score": 0
+          },
+          {
+            "distance": 3509697.6728008655,
+            "score": 1380
+          },
+          {
+            "distance": 3933547.7548439247,
+            "score": 1129
+          },
+          {
+            "distance": 4792385.381382606,
+            "score": 718
+          }
+        ],
+        "timeTaken": 49134.63500002399,
+        "totalDistance": 32152692.040122874,
+        "totalScore": 3277,
+        "user": "RuteNL"
+      },
+      {
+        "date": 1585347360220,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 7342477.324999341,
+            "score": 99
+          },
+          {
+            "distance": 9244331.960264629,
+            "score": 3
+          },
+          {
+            "distance": 1914872.540710717,
+            "score": 2654
+          },
+          {
+            "distance": 16338120.961367838,
+            "score": 0
+          },
+          {
+            "distance": 6945842.520035253,
+            "score": 148
+          }
+        ],
+        "timeTaken": 25032,
+        "totalDistance": 41785645.30737778,
+        "totalScore": 2904,
+        "user": "Ruurd Bijlsma"
+      },
+      {
+        "date": 1585926776292,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 7864250.3950065,
+            "score": 52
+          },
+          {
+            "distance": 5421728.387028399,
+            "score": 490
+          },
+          {
+            "distance": 14919371.536678422,
+            "score": 0
+          },
+          {
+            "distance": 3366789.127624302,
+            "score": 1473
+          },
+          {
+            "distance": 8800838.877726236,
+            "score": 10
+          }
+        ],
+        "timeTaken": 20203.454999951646,
+        "totalDistance": 40372978.32406386,
+        "totalScore": 2025,
+        "user": "RuteNL"
+      },
+      {
+        "date": 1586222802001,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 8105214.285931915,
+            "score": 37
+          },
+          {
+            "distance": 5571919.98806736,
+            "score": 444
+          },
+          {
+            "distance": 9527656.220105179,
+            "score": 1
+          },
+          {
+            "distance": 6934592.346687921,
+            "score": 150
+          },
+          {
+            "distance": 5580621.421671022,
+            "score": 441
+          }
+        ],
+        "timeTaken": 14147.299999996903,
+        "totalDistance": 35720004.26246339,
+        "totalScore": 1073,
+        "user": "RuteNL"
+      },
+      {
+        "date": 1585579171271,
+        "map": "world",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 4910877.803964964,
+            "score": 671
+          },
+          {
+            "distance": 10546185.799246294,
+            "score": 0
+          },
+          {
+            "distance": 16386275.463245176,
+            "score": 0
+          },
+          {
+            "distance": 5771621.684150172,
+            "score": 387
+          },
+          {
+            "distance": 8984317.334479371,
+            "score": 6
+          }
+        ],
+        "timeTaken": 53064.85500000417,
+        "totalDistance": 46599278.08508597,
+        "totalScore": 1064,
+        "user": "RuteNL"
+      }
+    ],
+    "date": 1586354784835
+  },
+  "map:european_union": {
+    "data": {
+      "image": "images/european_union.jpg",
+      "maps": [
+        {
+          "image": "images/flags/at.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>10.4712361532,46.8713542065,0 10.3907631769,47.0025641839,0 10.1094450479,46.8502732171,0 9.59863627664,47.0638360639,0 9.5335732618,47.2745450404,0 9.67034513489,47.3906910614,0 9.56672704172,47.5404542139,0 9.95500009958,47.5397181151,0 10.2317361774,47.3737450324,0 10.1733361051,47.2747182105,0 10.4818002011,47.5865181364,0 11.104027097,47.3965270453,0 12.7369452217,47.6827091928,0 13.0125001218,47.4697910819,0 13.1001361048,47.642918119,0 12.9139542535,47.7250000853,0 13.0088912095,47.8541642078,0 12.7597181822,48.1217271308,0 13.3950002276,48.3661001774,0 13.4432271841,48.5602361196,0 13.7260000762,48.5155910857,0 13.8336092964,48.7736090326,0 14.7002821615,48.5813821527,0 15.0286091888,49.0187451677,0 16.1033361464,48.7500000611,0 16.5405541546,48.8123542125,0 16.9461822783,48.619064172,0 16.8447181666,48.3619730959,0 17.1663822514,48.0125002033,0 17.0538912431,47.709445117,0 16.4505541395,47.6980541106,0 16.7138912422,47.543882077,0 16.4520092379,47.4128451021,0 16.5048631726,47.0067640203,0 16.1118001923,46.8697182266,0 14.8675002922,46.6133270395,0 14.5450000287,46.4074911339,0 13.7186541762,46.5266092102,0 12.4405540838,46.6908271223,0 12.1602732991,46.9280542613,0 12.1861091746,47.0945820583,0 11.1771541733,46.9673539879,0 11.0168001508,46.773327178,0 10.4712361532,46.8713542065,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Austria",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/it.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>15.2197180905,37.7644452147,0 15.092709123,37.3483271391,0 15.3166631829,37.0088912403,0 15.0813912067,36.6491642625,0 13.1559731588,37.4912451266,0 12.6561091415,37.559782105,0 12.4308000631,37.8032540971,0 12.7336092243,38.1397181083,0 12.9236092002,38.0248642416,0 13.3186090706,38.2174911059,0 13.7911091915,37.9722180105,0 15.5458272662,38.2969359579,0 15.6479361139,38.2645730944,0 15.2197180905,37.7644452147,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>8.17833619064,40.6363821376,0 8.22805412002,40.9384002148,0 8.57971820983,40.840000024,0 9.23305420421,41.2547179865,0 9.56250004793,41.1177731109,0 9.63389123205,40.9891640381,0 9.5104542964,40.920373088,0 9.82416328451,40.5272180744,0 9.62333623663,40.2518730572,0 9.71360916644,40.040545161,0 9.56507312458,39.1456180737,0 9.01353618274,39.2631910298,0 8.90208218354,38.9026360876,0 8.646391053,38.8902731157,0 8.50538212784,39.0610270684,0 8.40832706488,38.9585360059,0 8.37152732471,39.3729181893,0 8.55721816416,39.8449910008,0 8.39597314539,39.9013180608,0 8.45721820332,40.3213910536,0 8.17833619064,40.6363821376,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>7.53193622116,43.782045197,0 7.66221815424,44.1708270363,0 6.97639122085,44.2841641139,0 6.85278228855,44.5408360948,0 7.03166316693,44.8313820287,0 6.62396320438,45.1157270306,0 7.12778213895,45.2593001476,0 7.14694518132,45.4305451121,0 6.79934514109,45.7886641056,0 7.03805420048,45.9319361446,0 7.85574506735,45.9190541652,0 8.44145419034,46.4620821342,0 8.44500007067,46.2472182483,0 9.03666319477,45.8377731735,0 9.29378226635,46.5008271465,0 9.54486301486,46.3062451194,0 9.94694525824,46.3795820785,0 10.1363911903,46.2306911469,0 10.0513911482,46.5415271538,0 10.4575272152,46.5425001251,0 10.4712361532,46.8713542065,0 11.0168001508,46.773327178,0 11.1771541733,46.9673539879,0 12.1861091746,47.0945820583,0 12.1602732991,46.9280542613,0 12.4405540838,46.6908271223,0 13.7186541762,46.5266092102,0 13.3834730991,46.2951362478,0 13.6660361084,46.1753090626,0 13.4797181349,46.0122180134,0 13.9183362561,45.636391076,0 13.7169452738,45.596109158,0 13.6300002948,45.7700001217,0 13.1933361629,45.7780541249,0 13.0877821853,45.6365270305,0 12.2870822744,45.4733271842,0 12.1611091425,45.2638820311,0 12.5380540582,44.9606182355,0 12.2476361998,44.7238821085,0 12.3683270563,44.2466641496,0 13.5994452402,43.5700001451,0 14.0166631891,42.6700001623,0 14.7365271874,42.0879091716,0 15.1623632415,41.9244451278,0 16.1455542841,41.9111730547,0 16.1927730652,41.7899910186,0 15.8976361953,41.6133271536,0 15.9850002694,41.4397181571,0 18.0126361298,40.6430541326,0 18.5125003148,40.1347180227,0 18.3494451402,39.7919360681,0 18.0407632824,39.9377090994,0 17.8572182101,40.2844360806,0 17.3927730982,40.3305541502,0 17.203818178,40.4124911096,0 17.3170092428,40.4882910072,0 16.9193001736,40.4505451178,0 16.4905540903,39.7491640543,0 17.1455542278,39.3963821539,0 17.1691631992,38.9633361542,0 16.5950003155,38.8008269768,0 16.5691630989,38.4283362045,0 16.057291167,37.9242361409,0 15.6351361095,38.0045822151,0 15.6295820928,38.2293002017,0 15.906109126,38.4727731996,0 15.8290271325,38.6279822422,0 16.2211090948,38.8686090811,0 15.6637450539,40.0330540865,0 15.3548632038,40.0009001,0 14.9419451713,40.2341641074,0 14.830763081,40.6315181192,0 14.4019452486,40.6000001515,0 14.4527731096,40.7479181118,0 14.0738911361,40.8219360168,0 13.712218048,41.2511090742,0 13.0295822728,41.2601360487,0 11.6277091305,42.2982640965,0 11.0974271864,42.3965269918,0 11.1580541628,42.5549910627,0 10.588891252,42.9575001126,0 10.1118001951,44.0037450278,0 8.74721830768,44.4280540668,0 7.77278216295,43.8152730729,0 7.53193622116,43.782045197,0</coordinates></LinearRing></outerBoundaryIs><innerBoundaryIs><LinearRing><coordinates>12.503300173,43.9853180842,0 12.4070001519,43.9547452599,0 12.4696731508,43.8981912179,0 12.503300173,43.9853180842,0</coordinates></LinearRing></innerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Italy",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/be.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>2.54166319863,51.0911090428,0 3.37086325679,51.373854107,0 3.43986325156,51.2447821855,0 3.89541801404,51.2056910007,0 4.23890019286,51.3504270229,0 4.32770008701,51.290127276,0 4.25236303814,51.3751450878,0 5.03847307305,51.4869450919,0 5.23897322671,51.2622820907,0 5.84713612726,51.1531911176,0 5.63881817249,50.8488820987,0 6.01180012435,50.7572730935,0 6.27041821549,50.6198541375,0 6.39820016212,50.3231729857,0 6.13440926324,50.1278451369,0 5.9730542739,50.170000075,0 5.74777319107,49.9074911044,0 5.89916310333,49.6627732262,0 5.80788233348,49.5450452048,0 5.47278222549,49.508882154,0 4.86847332403,49.8022182559,0 4.82472716541,50.1675641263,0 4.51055415514,49.9474912228,0 4.1492361245,49.9783731717,0 4.16500013748,50.2830541795,0 3.29708205679,50.5243001057,0 3.15857311809,50.7843642428,0 2.65055417947,50.8161090248,0 2.54166319863,51.0911090428,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Belgium",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/lv.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>21.051682051,56.0773091309,0 21.0622911935,56.8419361803,0 21.3956911162,57.0266542161,0 21.4172820607,57.2819361421,0 21.7290182841,57.5747182001,0 22.6069001007,57.749054243,0 22.6433271815,57.5852730279,0 23.1356910718,57.3644361978,0 23.2561091812,57.1009631407,0 23.7858270232,56.9702631183,0 24.4041632073,57.2512453006,0 24.3149821042,57.8718271642,0 25.2978450791,58.0832543022,0 26.5113911059,57.5261001441,0 26.9022181296,57.633463104,0 27.3720541464,57.5356362354,0 27.8553452971,57.3059630353,0 27.701663102,56.9147090374,0 27.9388183242,56.822427133,0 28.2359631628,56.2763821818,0 28.1680092296,56.1501540723,0 27.6002452584,55.7925270966,0 26.9858271111,55.8323542126,0 26.6132092691,55.6748361232,0 25.5827732939,56.1513820212,0 25.1015271599,56.1991541755,0 24.8941632333,56.449854218,0 24.169300268,56.2622181065,0 22.0672181875,56.4194361237,0 21.051682051,56.0773091309,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Latvia",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/bg.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>28.5832451936,43.7477640511,0 28.5416632424,43.4377731076,0 28.1272181947,43.3949821506,0 27.9450001454,43.1672180128,0 27.8940911476,42.7030540299,0 27.4495822248,42.4729820189,0 27.6791632239,42.418318096,0 28.0130543262,41.9822182338,0 27.5695822448,41.9092639924,0 27.0702731095,42.0899910688,0 26.6213821277,41.9730541314,0 26.3611000611,41.71105411,0 26.0776361649,41.7143000858,0 26.1400000392,41.3547182826,0 25.2823541486,41.2430451804,0 24.2581911896,41.5695821685,0 22.9356001227,41.3421269876,0 23.0092361481,41.7663089569,0 22.3652731332,42.3238822102,0 22.5584733197,42.4833271314,0 22.4429091705,42.8204090566,0 22.7415910825,42.8921450722,0 23.0050002695,43.1927730946,0 22.5416632452,43.4756180711,0 22.3672182376,43.8269450407,0 22.6814361749,44.2247000428,0 23.0429821933,44.0725641411,0 22.8944451456,43.8361091431,0 24.1892361219,43.6849271021,0 25.5319362128,43.6436001284,0 26.1363822422,43.9827731708,0 27.036427152,44.1473360821,0 28.5832451936,43.7477640511,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Bulgaria",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/lt.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>23.5040363225,53.9470452478,0 23.3561091421,54.235409037,0 22.7858822325,54.3638360549,0 22.7201362602,54.693182154,0 22.8650001902,54.8386001279,0 22.6029091413,55.0448541228,0 21.2639361475,55.2489821318,0 21.051682051,56.0773091309,0 22.0672181875,56.4194361237,0 24.169300268,56.2622181065,0 24.8941632333,56.449854218,0 25.1015271599,56.1991541755,0 25.5827732939,56.1513820212,0 26.6132092691,55.6748361232,0 26.4648542764,55.3387451067,0 26.8068000524,55.2697181222,0 25.7920821572,54.8730452238,0 25.5516631896,54.326900025,0 25.7127001695,54.3315182861,0 25.7661091538,54.1538732355,0 25.539927184,54.1454821122,0 25.4669362299,54.3043641048,0 24.3916632751,53.890335973,0 23.5040363225,53.9470452478,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>20.9848092156,55.2765450147,0 20.9428361648,55.28720009,0 21.0665362922,55.49908203,0 21.0920092313,55.7140181679,0 21.1261091604,55.4916360501,0 20.9848092156,55.2765450147,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Lithuania",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/hr.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>17.5785273048,42.9438272168,0 16.8816630813,43.4036089731,0 15.9883360993,43.5044362277,0 15.9408361891,43.6836091316,0 15.1516632391,44.1963911706,0 15.5222912173,44.2632541153,0 14.9905543425,44.5794361001,0 14.8315271753,45.1154180736,0 14.4827732823,45.3111001417,0 14.3230542728,45.350964138,0 13.9044452632,44.7725640346,0 13.6030541524,45.157773004,0 13.5917360685,45.481700035,0 14.3925001848,45.4861090837,0 14.6097913022,45.6684360978,0 14.8260911758,45.4654451777,0 15.1744541369,45.425818054,0 15.3158360567,45.7566641785,0 15.6961092585,45.8430541078,0 15.6591631703,46.2209000781,0 16.2925091638,46.530818099,0 16.6078730748,46.4762359836,0 17.6609730458,45.838745139,0 18.4075000458,45.7483272023,0 18.8170180431,45.9129642096,0 18.956663065,45.7825002216,0 18.9022361824,45.5731362053,0 19.0979271353,45.5188642203,0 18.9812631127,45.3822180758,0 19.4250000622,45.2179181886,0 19.1673542718,45.2143002239,0 19.0397181703,44.8613820337,0 18.6341631368,45.083327119,0 17.8603451629,45.0493732027,0 16.9139270384,45.2659449851,0 16.5310911535,45.2255271126,0 16.2917631744,44.9991181609,0 16.0224273112,45.2143731464,0 15.7857632686,45.1689541276,0 15.740591013,44.8122451378,0 16.1298631937,44.4923541608,0 16.1454821997,44.1986732275,0 17.2547181234,43.4640270724,0 17.6544452196,43.0472181604,0 17.5785273048,42.9438272168,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>18.5032002579,42.4494360793,0 17.0123632714,43.0062450706,0 17.6498452311,42.8890731047,0 18.455554335,42.5658270195,0 18.5032002579,42.4494360793,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>14.7336091116,44.9399910423,0 14.4363911827,45.0700002282,0 14.5391632066,45.2394362104,0 14.7336091116,44.9399910423,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>16.6872181822,43.2616641246,0 16.4055540482,43.3260361353,0 16.7761091038,43.359445228,0 16.8872182715,43.2977731959,0 16.6872181822,43.2616641246,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>16.8661091188,42.8977731849,0 16.6861092564,42.9908272302,0 17.1836090741,42.9186090876,0 16.8661091188,42.8977731849,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Croatia",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/lu.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>6.36217306579,49.459391039,0 5.80788233348,49.5450452048,0 5.89916310333,49.6627732262,0 5.74777319107,49.9074911044,0 5.9730542739,50.170000075,0 6.13440926324,50.1278451369,0 6.2341631314,49.8975000434,0 6.52402711365,49.8077001882,0 6.36217306579,49.459391039,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Luxembourg",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/cy.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>32.9321002823,35.2636271142,0 34.586036197,35.68860922,0 33.9213911711,35.2727731117,0 34.0852731367,34.9616641899,0 33.6813820786,34.9668001173,0 33.3690182183,34.7265271624,0 32.713882294,34.6402731875,0 32.4058270673,34.749853999,0 32.2786092227,35.0954090225,0 32.9321002823,35.2636271142,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Cyprus",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/mt.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>14.364900254,35.9918091455,0 14.5697092088,35.8692090591,0 14.5200911917,35.8011002283,0 14.3371630275,35.8828271372,0 14.364900254,35.9918091455,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Malta",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/cz.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>18.8512452096,49.5173542465,0 18.5659002466,49.4936731907,0 17.7122181579,48.8561090883,0 17.1879091581,48.8694451992,0 16.9461822783,48.619064172,0 16.5405541546,48.8123542125,0 16.1033361464,48.7500000611,0 15.0286091888,49.0187451677,0 14.7002821615,48.5813821527,0 13.8336092964,48.7736090326,0 12.6744452253,49.4250002578,0 12.4555543378,49.6955451266,0 12.5459731127,49.9095822216,0 12.0937002006,50.3225361287,0 12.3230542179,50.206664196,0 12.5154180581,50.3924911575,0 12.985554147,50.4183272007,0 14.3113911898,50.8822181011,0 14.3062452041,51.0524911002,0 14.8283361848,50.8658271218,0 15.1769450708,51.0147180534,0 15.379718229,50.7794450715,0 16.3320092179,50.6640272702,0 16.447363149,50.5788180158,0 16.2190271977,50.4102731975,0 16.6400002392,50.1088911392,0 17.002218151,50.2169451031,0 16.8909731965,50.4386730972,0 17.7244451754,50.3190271287,0 17.6577731704,50.1080541223,0 18.578745178,49.9122181625,0 18.8512452096,49.5173542465,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Czech Republic",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/nl.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>4.23890019286,51.3504270229,0 3.89541801404,51.2056910007,0 3.43986325156,51.2447821855,0 3.37086325679,51.373854107,0 4.23890019286,51.3504270229,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>5.61194512028,52.369718252,0 5.42221822681,52.2641641069,0 5.13666321335,52.3815270125,0 5.64360910072,52.6011090717,0 5.80350010685,52.5494001051,0 5.86070022593,52.5309091237,0 5.85042719774,52.5242450077,0 5.61194512028,52.369718252,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>7.20836307409,53.2428091404,0 7.05347321433,52.6495821208,0 6.68958227468,52.5505541255,0 7.06298214823,52.3909641973,0 7.05309116718,52.2377641293,0 6.73639118073,52.0766641174,0 6.82895421414,51.9757540495,0 5.9636092101,51.8066642399,0 6.22208212668,51.4673542372,0 6.09750005541,51.1311001088,0 5.86500014228,51.0453451925,0 6.0808361613,50.9147180926,0 6.01180012435,50.7572730935,0 5.63881817249,50.8488820987,0 5.84713612726,51.1531911176,0 5.23897322671,51.2622820907,0 5.03847307305,51.4869450919,0 4.25236303814,51.3751450878,0 3.4442362581,51.5293731125,0 3.83500008231,51.6066641506,0 4.28360926452,51.4480540669,0 3.9978452064,51.590136211,0 4.20943612674,51.6740911974,0 3.86798203321,51.8121451664,0 4.5743731279,52.4544730397,0 5.42250019403,52.2490181754,0 5.87805411832,52.5094360288,0 5.85357309364,52.6059452622,0 5.60055411384,52.6581911736,0 5.71835421958,52.8380182012,0 5.37080011219,52.8802001291,0 5.36986301541,53.0704091496,0 5.10027318061,52.94805415,0 5.30319117807,52.7048542346,0 5.04959116473,52.6415732123,0 5.02971817516,52.6240910768,0 5.07805409634,52.4161090687,0 4.58200904172,52.4770822177,0 4.73881802204,52.9566642086,0 5.09444507568,52.9591641951,0 5.98166315904,53.3988912421,0 6.74194519743,53.4658272771,0 7.20836307409,53.2428091404,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Netherlands",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/dk.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>8.66454508186,54.9130911075,0 8.67610925843,55.1141640804,0 8.45763629265,55.1272182241,0 8.68902728,55.1400641613,0 8.61819131315,55.4311091537,0 8.0929182268,55.5562090589,0 8.12770916004,55.9838182209,0 8.19139117251,55.8106911837,0 8.39569117817,55.8947180869,0 8.26291814346,56.0788822465,0 8.10832735,56.0177731431,0 8.16069111094,56.6455451709,0 8.74020919259,56.4901272512,0 8.68082709646,56.6178451601,0 9.0727823244,56.8076181541,0 9.06291816544,56.5657539787,0 9.31826312338,56.5254091964,0 9.17820017983,56.9160271755,0 9.7221362442,57.0224181698,0 9.97427311252,57.07172723,0 10.2586362193,56.9955632225,0 10.3118911442,56.9813000731,0 10.3052731287,56.7480541706,0 9.86639114519,56.6502730672,0 10.3430542221,56.6926362118,0 10.1877730951,56.4686092293,0 10.3086631057,56.5781632187,0 10.9619452882,56.4422181366,0 10.7450001758,56.1638911735,0 10.5197180871,56.0997181491,0 10.3556912823,56.1974912059,0 10.4486092055,56.2919363119,0 10.2393632064,56.1726090234,0 10.1845822722,55.8281910889,0 9.86958213574,55.843745219,0 10.0444452326,55.8156911566,0 9.99277314635,55.7049910258,0 9.5545821669,55.7029820513,0 9.81916331161,55.6047179826,0 9.6737002431,55.500973155,0 9.58971826692,55.4181911321,0 9.67715409013,55.1911731513,0 9.46152711577,55.122145161,0 9.76610921713,54.8963821187,0 9.44535423355,54.8254001391,0 8.66454508186,54.9130911075,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>12.5588730294,55.8672360056,0 12.5979821515,55.7025641296,0 12.1923632479,55.4824271884,0 12.4622181185,55.2895822269,0 12.0255541542,55.1694360265,0 12.1787451698,55.1184732168,0 12.0719453061,54.9686091462,0 11.7305540769,55.0605542657,0 11.7308362118,55.2036092134,0 11.2454182369,55.2020729782,0 11.0863910697,55.6663821357,0 10.8797183149,55.7343001944,0 11.343336133,55.7475001832,0 11.5161092862,55.8951361763,0 11.2733361772,55.9916641852,0 11.7683361761,55.9634731625,0 11.6705542345,55.8141641415,0 11.7944362492,55.6616540717,0 11.9141631869,55.9297182325,0 12.0529093334,55.7511090954,0 12.040973168,55.9216640617,0 11.847082145,55.955554108,0 12.2905542264,56.1288821431,0 12.6172912066,56.0401362284,0 12.5588730294,55.8672360056,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>10.0066633011,57.0914731499,0 9.11554528578,57.0527730646,0 8.67660010268,56.9481182977,0 8.41580020213,56.6781271374,0 8.57906308028,56.6876732869,0 8.54590008027,56.585173172,0 8.24416313214,56.704300133,0 8.26013618979,56.8277731108,0 8.61847311274,57.1215271344,0 9.01721818518,57.1536092041,0 9.46624528908,57.1788912035,0 9.95770929833,57.5862451611,0 10.6459542432,57.7362631234,0 10.4318003045,57.5856911173,0 10.5302732502,57.2225632661,0 10.3366182616,56.991663123,0 10.0066633011,57.0914731499,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>9.68820009745,55.4982451808,0 10.0003000954,55.5412641255,0 10.3184731175,55.6144361288,0 10.4737451921,55.4376361417,0 10.660273216,55.5876361668,0 10.7833272663,55.1240911036,0 10.1527731172,55.0844452044,0 9.68311831717,55.4941180993,0 9.67971828196,55.4970822756,0 9.68820009745,55.4982451808,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>10.9898910564,54.7908450726,0 11.2397182075,54.9572181398,0 11.6569452088,54.903882078,0 11.8572182129,54.6863820836,0 11.4549272601,54.6198542474,0 10.9898910564,54.7908450726,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>11.850591145,54.9547820234,0 12.1681913478,54.8377000791,0 11.9668001979,54.5619363021,0 11.7109732805,54.9391640232,0 11.850591145,54.9547820234,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>15.0425001817,54.9947182718,0 14.6787451966,55.1008271313,0 14.7452732004,55.2940271502,0 15.1376361241,55.1413911842,0 15.0425001817,54.9947182718,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>10.0000001909,54.9837181973,0 10.0693002578,54.873882073,0 9.93166320469,54.8613821408,0 9.63145427751,55.0490271372,0 10.0000001909,54.9837181973,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>8.655282073,56.6741631677,0 8.54610929257,56.7933270091,0 8.91082719079,56.9483271747,0 8.655282073,56.6741631677,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>10.7147182035,54.7250001938,0 10.6819451297,54.9086091362,0 10.9520821351,55.1593002938,0 10.7147182035,54.7250001938,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>12.1836091882,54.8802731066,0 12.3119451786,55.0352731046,0 12.5564541798,54.9637451278,0 12.1836091882,54.8802731066,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Denmark",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/pl.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>22.5580542245,49.0794361818,0 21.6126362287,49.4365272187,0 20.9136091389,49.2961090501,0 20.3605540667,49.3930541425,0 20.073363241,49.1778730854,0 19.7834731073,49.2001999609,0 19.7780181647,49.4074911325,0 19.4755543379,49.6000001473,0 19.1595822359,49.4002731404,0 18.8512452096,49.5173542465,0 18.578745178,49.9122181625,0 17.6577731704,50.1080541223,0 17.7244451754,50.3190271287,0 16.8909731965,50.4386730972,0 17.002218151,50.2169451031,0 16.6400002392,50.1088911392,0 16.2190271977,50.4102731975,0 16.447363149,50.5788180158,0 16.3320092179,50.6640272702,0 15.379718229,50.7794450715,0 15.1769450708,51.0147180534,0 14.8283361848,50.8658271218,0 15.0338182064,51.2866539829,0 14.6009732048,51.8200640533,0 14.7607632928,52.0698642146,0 14.5344452009,52.3962451316,0 14.6395822626,52.5729822544,0 14.1491631414,52.8627820313,0 14.3916911635,53.1441641981,0 14.2756271176,53.6990641271,0 14.5250001371,53.6605541434,0 14.6141631353,53.8163822734,0 14.2188911883,53.869018111,0 14.2255541308,53.9286001993,0 16.1747182781,54.2591641889,0 16.5436091906,54.5447181965,0 17.918891248,54.8266641301,0 18.740000255,54.6852731578,0 18.4061093204,54.7381911302,0 18.5952092475,54.4277730449,0 18.8437452502,54.3517999772,0 19.6272540453,54.4632730872,0 19.6511092771,54.4558271073,0 19.2533271177,54.2781911092,0 19.7970092104,54.4375451706,0 22.7858822325,54.3638360549,0 23.3561091421,54.235409037,0 23.5040363225,53.9470452478,0 23.9352733398,52.7174911271,0 23.1654002248,52.2822732087,0 23.6386091194,52.0794361804,0 23.60463626,51.5276910321,0 24.1434731097,50.8595732162,0 23.954382235,50.7917000845,0 24.1113821551,50.5669361651,0 22.6784632815,49.5694360402,0 22.7038091509,49.1698911666,0 22.8860733007,49.0029181228,0 22.5580542245,49.0794361818,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Poland",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/ee.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>28.0158272274,59.4786001213,0 28.1643002374,59.3037180813,0 27.916491281,59.2736632586,0 27.4283270594,58.8158909798,0 27.4757542146,58.2131181459,0 27.8202001447,57.867427168,0 27.5486090467,57.8186091197,0 27.3720541464,57.5356362354,0 26.9022181296,57.633463104,0 26.5113911059,57.5261001441,0 25.2978450791,58.0832543022,0 24.3149821042,57.8718271642,0 24.5545092374,58.3247181579,0 24.330827254,58.3866631047,0 24.103609281,58.2355452691,0 23.7286091345,58.370827175,0 23.4955452869,58.6941540618,0 23.8642362072,58.7730452052,0 23.4830542395,58.8099911258,0 23.4383272305,58.9399910916,0 23.6366633444,58.9742911806,0 23.4104091226,59.0156821921,0 23.5052731561,59.226791153,0 24.795973093,59.5649910564,0 25.3992092785,59.48822724,0 25.4774273552,59.6580452694,0 26.9727731351,59.4444359867,0 28.0158272274,59.4786001213,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>22.0377732321,57.9083271676,0 22.1940912005,58.1452361294,0 21.8445091755,58.2891631303,0 22.006945095,58.3566542149,0 21.8373542153,58.5066632924,0 22.9112451618,58.6167999917,0 23.3281912018,58.4469361972,0 22.3729092146,58.2213821996,0 22.0377732321,57.9083271676,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>22.5652732225,58.6866541024,0 22.0443002201,58.9426272002,0 22.5758272121,59.0686001645,0 22.9297182059,58.9824910289,0 23.0452733027,58.8363822186,0 22.5652732225,58.6866541024,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>23.2474630804,58.6710540395,0 23.3761092013,58.5330542176,0 23.0590271677,58.6045821943,0 23.2474630804,58.6710540395,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Estonia",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/pt.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-7.43185478822,37.2531910291,0 -7.89778182063,37.0088912403,0 -8.98923687773,37.0263180552,0 -8.79586385636,37.4425090533,0 -8.80249980912,38.3744452608,0 -8.67333686012,38.4138910002,0 -8.76889089187,38.5172182413,0 -9.18389082155,38.4197182669,0 -9.27423684156,38.6687451139,0 -8.91974587107,38.7658910367,0 -8.99430893499,38.9406180114,0 -9.11847274929,38.7172179953,0 -9.47604574558,38.7052731127,0 -9.35958188284,39.3566640026,0 -9.08555483613,39.6150001266,0 -8.66013670369,40.6911090924,0 -8.88083674114,41.7516640957,0 -8.745008838,41.9525000284,0 -8.19783685607,42.1506730304,0 -8.13610866524,41.8091641193,0 -6.60229078783,41.9491641985,0 -6.54562677528,41.6870091119,0 -6.19045485898,41.5796360937,0 -6.92440883651,41.0309640864,0 -6.79610872063,40.5244362884,0 -7.02721790839,40.1877732907,0 -6.87069072765,40.0159731089,0 -7.01721796259,39.6750001366,0 -7.53250887279,39.6694181243,0 -6.95587282474,39.0231911573,0 -7.31708189064,38.4447181314,0 -6.9415266945,38.1704181699,0 -7.44694590202,37.6994361793,0 -7.43185478822,37.2531910291,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-25.4561088226,37.7055541305,0 -25.8541638967,37.8838910233,0 -25.1652819273,37.8588911588,0 -25.1552819815,37.7488821998,0 -25.4561088226,37.7055541305,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-16.9436088664,32.6375002314,0 -17.2545177959,32.8128449524,0 -16.7155547147,32.7588911444,0 -16.9436088664,32.6375002314,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-28.2466728882,38.3719360543,0 -28.5494460072,38.5272181871,0 -28.0701367634,38.4441640876,0 -28.2466728882,38.3719360543,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-27.1386179747,38.6294361671,0 -27.3849998283,38.7633271801,0 -27.0658369034,38.7641640293,0 -27.1386179747,38.6294361671,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Portugal",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/fi.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>24.1670091586,65.8140272883,0 23.6625002258,66.3122092253,0 24.0007631611,66.8022821739,0 23.5733273369,67.1570091788,0 23.7651361275,67.4168733237,0 23.4308271036,67.4797821894,0 23.488818139,67.8709630971,0 23.6597911947,67.9458911091,0 22.826663209,68.3859631553,0 22.0486091889,68.4815181929,0 20.58092721,69.0603001758,0 21.0634732095,69.036800169,0 21.0302731615,69.2105452877,0 21.320827142,69.3261091017,0 21.6819451804,69.2847180902,0 22.3983271684,68.7111090827,0 23.1963911384,68.6298540749,0 23.9763911012,68.8324911109,0 24.934918226,68.5808092123,0 25.7611091809,68.989163131,0 25.7133361883,69.2552630765,0 25.983327181,69.7043000711,0 26.4768001648,69.9363822302,0 27.9106911716,70.0886091593,0 28.3797183347,69.8275001341,0 29.1275002732,69.6858181422,0 29.2984731612,69.4853360934,0 28.825418326,69.2361632337,0 28.9573362389,69.0516180328,0 28.4355542152,68.9026360737,0 28.8173542645,68.8470001854,0 28.4598541908,68.5348542546,0 28.6950002708,68.1954091356,0 29.3569453179,68.0824911532,0 30.0286091818,67.6947181597,0 29.075136177,66.9036001052,0 29.9037451434,66.1338822231,0 30.134927086,65.7088820124,0 29.8188820615,65.6533180408,0 29.6020452432,65.2444360623,0 29.869445222,65.1199911189,0 29.6211821341,65.0523540216,0 29.6408271359,64.9209631628,0 30.1427730503,64.7720732369,0 30.2068731521,64.663327263,0 29.9764542979,64.5789451348,0 30.0615272626,64.4053451907,0 30.5773541117,64.2237361705,0 30.5952732797,64.0469361834,0 29.998954176,63.7353360821,0 31.2197180272,63.2230541075,0 31.581963264,62.907900247,0 31.2581911305,62.5082541199,0 27.8078272821,60.5464001064,0 26.5636091893,60.4280540035,0 26.5690091466,60.5563541194,0 26.41652724,60.3916631326,0 26.0550631966,60.4227730692,0 26.0787452583,60.2940270361,0 25.8381911744,60.398463203,0 25.9216631956,60.2437451723,0 25.6575003078,60.3612452059,0 24.4725001935,59.9904180737,0 23.4315911979,59.9538181581,0 23.5375002328,60.0675632667,0 23.2493000583,59.8379182298,0 22.9002730829,59.8068000789,0 23.3356911612,60.0239540684,0 23.1092272241,59.9256542928,0 23.2548631275,60.0370821405,0 22.874445254,60.1455541938,0 23.0846541662,60.3452000639,0 22.5984632122,60.2204091156,0 22.5654732147,60.2119361849,0 22.5398730383,60.2186360078,0 22.449300204,60.2423541116,0 22.626591203,60.3804451286,0 21.3586092412,60.6536091746,0 21.554445201,61.3094361029,0 21.4688911151,61.5565272332,0 21.6638910638,61.5402730465,0 21.2845821162,61.9463822914,0 21.3716632172,62.2599911996,0 21.0659731959,62.5979820584,0 21.4355542744,63.0347182747,0 21.6766002084,63.0201361101,0 21.4968732607,63.2035361754,0 22.3400001863,63.2765269619,0 22.1878451739,63.4451361532,0 22.2881911397,63.5256912721,0 23.3188820925,63.8966632435,0 24.3393001847,64.5216632083,0 24.5395822412,64.7991541604,0 25.3194452437,64.8177629913,0 25.1893002709,64.9640181496,0 25.444236192,64.9533912375,0 25.2675002426,65.170000068,0 25.3037451008,65.515136164,0 24.6691632796,65.6547091015,0 24.5535360984,65.7620001446,0 24.6891631711,65.8961000346,0 24.1670091586,65.8140272883,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>19.943882115,60.0427731175,0 19.6484731685,60.2595821078,0 19.8129182303,60.1866630704,0 19.9373542888,60.291800132,0 19.8250000732,60.3922181822,0 20.2775001349,60.274163099,0 20.1669451786,60.1630540989,0 20.0252732449,60.3105541375,0 19.943882115,60.0427731175,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>22.6011092114,59.9833271512,0 22.4466632573,60.215827232,0 22.5828091698,60.2015181498,0 22.8244451898,60.2272180708,0 22.6011092114,59.9833271512,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Finland",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/ro.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>22.6814361749,44.2247000428,0 22.4615272215,44.4833270187,0 22.7625091278,44.5526000959,0 22.466109105,44.7137450348,0 22.1375001105,44.4802731561,0 21.3986631715,44.7831002546,0 21.5539541891,44.892427262,0 21.3734361574,45.0136091304,0 21.4827730555,45.1836090471,0 20.8083270703,45.4788822068,0 20.80160009,45.758673153,0 20.2610271805,46.1148540828,0 21.1773631574,46.2973641577,0 22.0138822934,47.5106181589,0 22.894800203,47.9545361575,0 23.1741631693,48.1083271498,0 24.5563911423,47.9530451846,0 24.9289181244,47.7131450567,0 25.3338820661,47.9166640367,0 26.1586092054,47.9852541564,0 26.6349911534,48.257164102,0 27.0005542827,48.1555452603,0 27.299436187,47.6586001569,0 28.0793731178,46.982273105,0 28.2468002931,46.6078001802,0 28.0691631215,45.5833182061,0 28.2148360729,45.4486449939,0 28.7008090973,45.2200911131,0 29.4113820912,45.4358179998,0 29.6643271426,45.2118002374,0 29.5494362278,44.8202641046,0 28.869191139,44.9405090439,0 28.9473542304,44.8266541324,0 28.7808272715,44.6609641903,0 28.9908633488,44.6856450396,0 28.763054284,44.6255819976,0 28.7575000996,44.5197182249,0 28.9277732663,44.6174911141,0 28.6295821985,44.296518201,0 28.5832451936,43.7477640511,0 27.036427152,44.1473360821,0 26.1363822422,43.9827731708,0 25.5319362128,43.6436001284,0 24.1892361219,43.6849271021,0 22.8944451456,43.8361091431,0 23.0429821933,44.0725641411,0 22.6814361749,44.2247000428,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Romania",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/fr.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-2.14007280533,47.2536732633,0 -2.53965472699,47.2980540996,0 -2.36708190132,47.501526979,0 -2.83187285057,47.497282048,0 -2.70028183186,47.6370821351,0 -3.1250728303,47.5954091564,0 -3.13263682738,47.4766640749,0 -3.21694569779,47.6505542004,0 -3.98221781844,47.8897182295,0 -4.3673639235,47.8087451889,0 -4.72223677349,48.0391730956,0 -4.28291775751,48.1165271657,0 -4.54659969165,48.1744362261,0 -4.56535487061,48.3227541709,0 -4.76062672833,48.3349912466,0 -4.77666382372,48.5111091144,0 -4.3541639347,48.6741641214,0 -3.58242685212,48.6777732013,0 -3.53666383995,48.825827116,0 -3.22610879437,48.8695819918,0 -2.68528191317,48.5016640506,0 -2.30721784576,48.6761090582,0 -1.9761088648,48.5130451664,0 -1.98805492088,48.6869451826,0 -1.36889077238,48.6436090667,0 -1.5625727507,48.7489539996,0 -1.60971777107,49.2150002227,0 -1.94208185822,49.7215912203,0 -1.26416392105,49.6841641785,0 -1.10958184477,49.3694361186,0 -0.228336873277,49.2836091178,0 0.424718159704,49.4516642653,0 0.075836191201,49.5225641023,0 0.185973225768,49.7040271097,0 1.46110914193,50.1241641403,0 1.62500032753,50.8777731779,0 2.54166319863,51.0911090428,0 2.65055417947,50.8161090248,0 3.15857311809,50.7843642428,0 3.29708205679,50.5243001057,0 4.16500013748,50.2830541795,0 4.1492361245,49.9783731717,0 4.51055415514,49.9474912228,0 4.82472716541,50.1675641263,0 4.86847332403,49.8022182559,0 5.47278222549,49.508882154,0 5.80788233348,49.5450452048,0 6.36217306579,49.459391039,0 6.72923622052,49.1676360994,0 7.42555411159,49.1764540292,0 8.22608219347,48.9644181974,0 7.80221806588,48.5758269625,0 7.57838219081,48.1172002325,0 7.58827317186,47.5844821721,0 7.38541820631,47.4333271207,0 6.99055429033,47.4972181779,0 6.9716631569,47.2919361484,0 6.12868207642,46.5880540927,0 6.11555417199,46.2615269953,0 5.96700924531,46.2072912201,0 6.13326328943,46.149782144,0 6.29555420208,46.3941640755,0 6.73778224139,46.4474910848,0 6.78347316919,46.1547182468,0 7.03805420048,45.9319361446,0 6.79934514109,45.7886641056,0 7.14694518132,45.4305451121,0 7.12778213895,45.2593001476,0 6.62396320438,45.1157270306,0 7.03166316693,44.8313820287,0 6.85278228855,44.5408360948,0 6.97639122085,44.2841641139,0 7.66221815424,44.1708270363,0 7.53193622116,43.782045197,0 7.43929121274,43.7575269566,0 7.40280026189,43.758818105,0 7.39160924765,43.7275452242,0 6.63639121989,43.3111000867,0 6.64166310173,43.1850000528,0 6.16528215965,43.0505539902,0 5.03958216648,43.347909047,0 5.23152724682,43.4658270023,0 5.02416332027,43.5526361944,0 4.81505411384,43.3992180292,0 4.7075002142,43.5720820422,0 4.65278214429,43.3597181428,0 3.96471824858,43.5408361511,0 3.08139121233,43.0694451237,0 2.96131810207,42.8422180982,0 3.17765418545,42.4368092451,0 2.02055424179,42.3526361615,0 1.72360906008,42.5094360893,0 1.73860914641,42.6163911858,0 1.44583614083,42.6019451433,0 0.71610915708,42.8588821599,0 0.675509229642,42.6884820912,0 -0.555836774358,42.7800000689,0 -0.754099798053,42.9643731056,0 -1.4395178622,43.0493731477,0 -1.38513691244,43.2525640599,0 -1.78087288163,43.3599270198,0 -1.44389086874,43.6405450923,0 -1.20860900193,44.6258272521,0 -1.04062694464,44.6749270999,0 -1.24583688971,44.6753450216,0 -1.08944583108,45.5586091936,0 -0.53992674862,44.8956180849,0 -0.781526894062,45.4665180614,0 -1.23885493198,45.7062180293,0 -1.07097278698,45.9039451142,0 -1.11463680295,46.3165821853,0 -1.78639085614,46.4883270466,0 -2.12541788578,46.8309730467,0 -1.9858727762,47.0369271372,0 -2.170836737,47.1266641281,0 -2.14007280533,47.2536732633,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>8.65944519668,42.0083271917,0 8.66528201879,42.5111091172,0 9.28889125819,42.6750001352,0 9.34680015101,43.0004090867,0 9.45958217895,42.9880451089,0 9.55257319234,42.1183270984,0 9.2196542232,41.3672911374,0 8.79041830149,41.5578449894,0 8.91711814442,41.6856911414,0 8.72582702017,41.7294361266,0 8.8023631841,41.900418067,0 8.62721811998,41.9066640937,0 8.65944519668,42.0083271917,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "France",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/sk.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>16.9461822783,48.619064172,0 17.1879091581,48.8694451992,0 17.7122181579,48.8561090883,0 18.5659002466,49.4936731907,0 18.8512452096,49.5173542465,0 19.1595822359,49.4002731404,0 19.4755543379,49.6000001473,0 19.7780181647,49.4074911325,0 19.7834731073,49.2001999609,0 20.073363241,49.1778730854,0 20.3605540667,49.3930541425,0 20.9136091389,49.2961090501,0 21.6126362287,49.4365272187,0 22.5580542245,49.0794361818,0 22.1514450829,48.4119181749,0 21.7809731758,48.3406911084,0 21.4381912211,48.5753450031,0 20.6529182031,48.5616642283,0 19.9398631601,48.13624509,0 19.6305541682,48.2338910772,0 19.4724270498,48.089436184,0 18.8453363031,48.0491271086,0 18.8497181944,47.8177730016,0 18.663054216,47.759718096,0 17.787282292,47.7464270798,0 17.1663822514,48.0125002033,0 16.8447181666,48.3619730959,0 16.9461822783,48.619064172,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Slovakia",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/de.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>9.44535423355,54.8254001391,0 9.97200916046,54.7607542078,0 10.0325001824,54.555273192,0 9.86603608777,54.4572912581,0 10.9794451934,54.3805540962,0 11.0939542286,54.2054821222,0 10.7622181137,54.0565271528,0 10.8185361213,53.8900541734,0 11.0947181553,54.0136091263,0 11.4127731602,53.9197180641,0 12.5269451866,54.4741541386,0 12.9215271354,54.427464088,0 12.4638911464,54.3951360931,0 12.3743730907,54.2624272638,0 13.0238911282,54.3997181443,0 13.4545821483,54.0970821533,0 13.7108273227,54.1708269758,0 13.8085361741,53.8547821189,0 14.2756271176,53.6990641271,0 14.3916911635,53.1441641981,0 14.1491631414,52.8627820313,0 14.6395822626,52.5729822544,0 14.5344452009,52.3962451316,0 14.7607632928,52.0698642146,0 14.6009732048,51.8200640533,0 15.0338182064,51.2866539829,0 14.8283361848,50.8658271218,0 14.3062452041,51.0524911002,0 14.3113911898,50.8822181011,0 12.985554147,50.4183272007,0 12.5154180581,50.3924911575,0 12.3230542179,50.206664196,0 12.0937002006,50.3225361287,0 12.5459731127,49.9095822216,0 12.4555543378,49.6955451266,0 12.6744452253,49.4250002578,0 13.8336092964,48.7736090326,0 13.7260000762,48.5155910857,0 13.4432271841,48.5602361196,0 13.3950002276,48.3661001774,0 12.7597181822,48.1217271308,0 13.0088912095,47.8541642078,0 12.9139542535,47.7250000853,0 13.1001361048,47.642918119,0 13.0125001218,47.4697910819,0 12.7369452217,47.6827091928,0 11.104027097,47.3965270453,0 10.4818002011,47.5865181364,0 10.1733361051,47.2747182105,0 10.2317361774,47.3737450324,0 9.95500009958,47.5397181151,0 9.56672704172,47.5404542139,0 8.56291802597,47.80666413,0 8.40694522432,47.7018001508,0 8.5764180869,47.5913731023,0 7.58827317186,47.5844821721,0 7.57838219081,48.1172002325,0 7.80221806588,48.5758269625,0 8.22608219347,48.9644181974,0 7.42555411159,49.1764540292,0 6.72923622052,49.1676360994,0 6.36217306579,49.459391039,0 6.52402711365,49.8077001882,0 6.2341631314,49.8975000434,0 6.13440926324,50.1278451369,0 6.39820016212,50.3231729857,0 6.27041821549,50.6198541375,0 6.01180012435,50.7572730935,0 6.0808361613,50.9147180926,0 5.86500014228,51.0453451925,0 6.09750005541,51.1311001088,0 6.22208212668,51.4673542372,0 5.9636092101,51.8066642399,0 6.82895421414,51.9757540495,0 6.73639118073,52.0766641174,0 7.05309116718,52.2377641293,0 7.06298214823,52.3909641973,0 6.68958227468,52.5505541255,0 7.05347321433,52.6495821208,0 7.20836307409,53.2428091404,0 7.3370821175,53.3230539613,0 7.01500011101,53.409854101,0 7.2958362806,53.6852730465,0 8.0143092182,53.708327136,0 8.09777319277,53.4444452096,0 8.28603627067,53.4208910558,0 8.33221821036,53.6152732583,0 8.49206311602,53.5558822774,0 8.48410014035,53.6863181022,0 8.65902710735,53.8926361349,0 9.0960452909,53.8666731897,0 9.28340010577,53.8555452074,0 9.82906317748,53.5417000972,0 9.27600927881,53.8818912055,0 8.88305408982,53.9611090756,0 9.01721818518,54.0850003104,0 8.82736304858,54.1516642687,0 8.88360913945,54.2941641668,0 8.60048219571,54.3263821911,0 9.01124524096,54.5034639777,0 8.54560922823,54.8706091075,0 8.28055433834,54.7749912056,0 8.40805415011,55.0565270965,0 8.42041812788,54.9196450852,0 8.66454508186,54.9130911075,0 9.44535423355,54.8254001391,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>13.268054292,54.2550000594,0 13.1188181936,54.336727136,0 13.2638911683,54.3800000523,0 13.1469632834,54.5456091928,0 13.5166092378,54.5133732313,0 13.2447182353,54.6566642134,0 13.6745092067,54.5665911082,0 13.577282147,54.4569360331,0 13.7291632388,54.2751360731,0 13.268054292,54.2550000594,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>14.2188911883,53.869018111,0 13.8291911952,53.859509177,0 14.056000299,53.9848642274,0 13.7580541504,54.1473541265,0 14.2255541308,53.9286001993,0 14.2188911883,53.869018111,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>8.70547324463,47.7114361543,0 8.69233628774,47.6940911467,0 8.67310904,47.703000104,0 8.70547324463,47.7114361543,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Germany",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/si.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>13.5917360685,45.481700035,0 13.7169452738,45.596109158,0 13.9183362561,45.636391076,0 13.4797181349,46.0122180134,0 13.6660361084,46.1753090626,0 13.3834730991,46.2951362478,0 13.7186541762,46.5266092102,0 14.5450000287,46.4074911339,0 14.8675002922,46.6133270395,0 16.1118001923,46.8697182266,0 16.3490271636,46.8423541625,0 16.6078730748,46.4762359836,0 16.2925091638,46.530818099,0 15.6591631703,46.2209000781,0 15.6961092585,45.8430541078,0 15.3158360567,45.7566641785,0 15.1744541369,45.425818054,0 14.8260911758,45.4654451777,0 14.6097913022,45.6684360978,0 14.3925001848,45.4861090837,0 13.5917360685,45.481700035,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Slovenia",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/gr.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>23.6488092251,38.3556822028,0 24.0740271977,38.1950001127,0 24.0339541567,37.6528450351,0 23.5116631838,38.0393000582,0 22.9918001131,37.8823541175,0 23.5170822519,37.4327090997,0 23.1797180242,37.2904091939,0 23.128891169,37.4480540176,0 22.7255543224,37.5634002373,0 23.2014541432,36.440200063,0 22.6325001095,36.8036092108,0 22.4888912856,36.3861089594,0 22.120827164,37.0266640602,0 21.9297180946,36.9740181644,0 21.8751361468,36.7235360514,0 21.7036092151,36.8166640251,0 21.5653451956,37.1550640883,0 21.6497181037,37.4419360664,0 21.1109731196,37.8856909532,0 21.3844451167,38.211391092,0 21.6416632624,38.1588821565,0 21.8335912436,38.322518197,0 21.8536090725,38.3395820755,0 21.8933000664,38.3238452199,0 22.8627732862,37.9395820646,0 23.2246453606,38.1534002242,0 22.4086092491,38.4460361018,0 22.3743002753,38.3345732178,0 21.9470731605,38.4085000953,0 21.5400001643,38.3159640516,0 21.3580541916,38.4329180881,0 21.1641631686,38.3000642518,0 20.9879091787,38.6711091458,0 20.7327732654,38.8044362243,0 20.7811091866,38.9316641272,0 21.0851362383,38.8640271975,0 21.0830451211,39.0566641201,0 20.8208271702,39.1136090941,0 20.7333273092,38.9534000785,0 20.0100272335,39.6912001762,0 20.2200001113,39.6473542729,0 20.4133271998,39.8201361432,0 20.3154181886,39.9918000353,0 20.6670821107,40.0962450871,0 20.7919272061,40.4315450196,0 21.0420822572,40.5640270347,0 20.9834910775,40.8558911066,0 21.6000001743,40.8727730979,0 21.977082218,41.1318002259,0 22.73774513,41.1561090863,0 22.9356001227,41.3421269876,0 24.2581911896,41.5695821685,0 25.2823541486,41.2430451804,0 26.1400000392,41.3547182826,0 26.0776361649,41.7143000858,0 26.3611000611,41.71105411,0 26.5702731376,41.6113822168,0 26.6357631266,41.3647182284,0 26.3250002099,41.2347090424,0 26.3604092246,40.9538820929,0 26.0447182517,40.7358270488,0 25.1418001931,41.010336055,0 23.7220090563,40.7446451463,0 23.8829821661,40.4002731446,0 24.3940911772,40.1480180915,0 23.7297182279,40.3512450459,0 23.9909732658,40.1125001119,0 23.932218136,39.9430540714,0 23.4010361432,40.279854197,0 23.3680541923,40.1438821252,0 23.7184732342,39.9138910833,0 23.3794451988,39.9927731743,0 23.2945822846,40.2358272447,0 22.8994362337,40.3966640647,0 22.9449273369,40.6265181463,0 22.585209244,40.4650002128,0 22.5950003127,40.0122180162,0 23.3436823,39.1818000676,0 23.0548632058,39.0979091188,0 23.2215272926,39.1822912471,0 22.9408270775,39.3593639813,0 22.8236091788,39.2122179943,0 23.0727731537,39.0369451899,0 22.5238542155,38.8660730524,0 23.3175002519,38.644027049,0 23.6488092251,38.3556822028,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>23.6819452354,35.2244452371,0 23.5205542038,35.2950002426,0 23.741873161,35.6863181106,0 23.8485360644,35.5229821422,0 24.1763911905,35.5888820063,0 24.107063128,35.4922182106,0 24.3270822197,35.3513821203,0 25.7657272743,35.3299640107,0 25.7840271483,35.113891119,0 26.3011091035,35.2830540189,0 26.1358271925,34.9972909666,0 25.0169452071,34.9308270004,0 24.3925001243,35.1888819953,0 23.6819452354,35.2244452371,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>23.5458003286,38.5085179934,0 23.198054108,38.8318001208,0 22.8328451979,38.8291271319,0 23.3044451024,39.0372821424,0 23.5919452203,38.7647180731,0 24.1538911448,38.6466641633,0 24.258263274,38.2172820612,0 24.56124527,38.1443001595,0 24.5758363195,38.0041641258,0 24.3872181842,37.9936091304,0 24.0500001369,38.3658271556,0 23.712145065,38.4097821912,0 23.6422181993,38.4188820882,0 23.5458003286,38.5085179934,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>26.4199911453,39.3258271484,0 26.6186092265,39.0240181159,0 26.5218002562,38.9733181628,0 26.0884731275,39.0743730699,0 26.2570821512,39.2034641022,0 26.0654091474,39.0845731756,0 25.8348543387,39.1800640078,0 26.1783271298,39.3749819815,0 26.4199911453,39.3258271484,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>28.207218264,36.4424911724,0 28.0636091048,36.1119271828,0 27.7312451853,35.9130541242,0 27.8044451841,36.2694362197,0 28.207218264,36.4424911724,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>20.5711091515,38.4680451356,0 20.7934731643,38.0632541964,0 20.3425631497,38.1779092444,0 20.5711091515,38.4680451356,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>26.0147180791,38.1494360869,0 25.863327161,38.2398449712,0 25.991663319,38.3438819919,0 25.8658271474,38.5850001779,0 26.1595821768,38.5420730988,0 26.0147180791,38.1494360869,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>25.4416631153,40.0047180569,0 25.3558272298,39.7863822191,0 25.2630541459,39.9123451251,0 25.054436119,39.8605451309,0 25.0476362162,39.9866540497,0 25.4416631153,40.0047180569,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>26.8180542661,37.636654048,0 26.5811092621,37.6872091618,0 26.6676363194,37.7912361243,0 27.0669362738,37.7272181651,0 26.8180542661,37.636654048,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>19.8550002458,39.8183269933,0 19.9250183066,39.4966731344,0 19.6745821264,39.6759642231,0 19.8550002458,39.8183269933,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>24.6436092036,40.5708271051,0 24.5094452759,40.6580540513,0 24.6431911143,40.7972181195,0 24.7733272023,40.631664132,0 24.6436092036,40.5708271051,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>20.8361090561,37.6463822525,0 20.6433272942,37.8983271752,0 20.9925002823,37.7252730606,0 20.8361090561,37.6463822525,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>24.9602822004,37.6855540712,0 24.6945822392,37.962636154,0 24.962773302,37.8725001845,0 24.9602822004,37.6855540712,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>27.1422183374,35.3997182091,0 27.0669451586,35.6066640463,0 27.2297181984,35.8254092563,0 27.1422183374,35.3997182091,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>25.4527731604,36.9183182383,0 25.3419362369,37.0734640814,0 25.5418732943,37.1976270575,0 25.4527731604,36.9183182383,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>20.7013821997,38.8347181966,0 20.7220823155,38.6271450577,0 20.5431912112,38.5661090445,0 20.7013821997,38.8347181966,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>22.9569453097,36.3774910218,0 23.0440911191,36.1362450956,0 22.9116630835,36.2011091241,0 22.9569453097,36.3774910218,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Greece",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/es.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.35579985822,36.1633090876,0 -5.61360892807,36.0061001228,0 -6.0441639937,36.1861092054,0 -6.43249991584,36.6923540304,0 -6.35555471503,36.8608270995,0 -6.95992681604,37.2218361732,0 -7.43185478822,37.2531910291,0 -7.44694590202,37.6994361793,0 -6.9415266945,38.1704181699,0 -7.31708189064,38.4447181314,0 -6.95587282474,39.0231911573,0 -7.53250887279,39.6694181243,0 -7.01721796259,39.6750001366,0 -6.87069072765,40.0159731089,0 -7.02721790839,40.1877732907,0 -6.79610872063,40.5244362884,0 -6.92440883651,41.0309640864,0 -6.19045485898,41.5796360937,0 -6.54562677528,41.6870091119,0 -6.60229078783,41.9491641985,0 -8.13610866524,41.8091641193,0 -8.19783685607,42.1506730304,0 -8.745008838,41.9525000284,0 -8.87513671169,41.8795090742,0 -8.89749979707,42.1105540566,0 -8.57986388731,42.3490181968,0 -8.86486385113,42.2496452023,0 -8.65610886393,42.4277730505,0 -8.90610884984,42.475136168,0 -8.72049998541,42.6984910895,0 -9.02937278301,42.5241640991,0 -8.91583671906,42.7890270434,0 -9.10583686258,42.7524911655,0 -9.25916383267,43.0472181604,0 -8.95028181498,43.2936090664,0 -8.3297269411,43.4038820555,0 -7.89805490304,43.7641642505,0 -7.04481789345,43.4904002279,0 -5.85416385018,43.6480450516,0 -4.5145546699,43.3963450481,0 -3.58555481075,43.5102730499,0 -3.15059086404,43.3535641495,0 -1.78087288163,43.3599270198,0 -1.38513691244,43.2525640599,0 -1.4395178622,43.0493731477,0 -0.754099798053,42.9643731056,0 -0.555836774358,42.7800000689,0 0.675509229642,42.6884820912,0 0.71610915708,42.8588821599,0 1.44583614083,42.6019451433,0 1.45152728546,42.4462450888,0 1.72360906008,42.5094360893,0 2.02055424179,42.3526361615,0 3.17765418545,42.4368092451,0 3.3179910496,42.320482175,0 3.11805415984,42.225126962,0 3.17528227448,41.8674911014,0 2.11736304444,41.2893000427,0 0.964445335209,41.0327732364,0 0.703609057202,40.7968731204,0 0.885282115171,40.7027731812,0 0.589163221477,40.6127822186,0 0.0475001616089,40.0337360381,0 -0.33763689099,39.4380541267,0 -0.143336831128,38.9783360729,0 0.207218165254,38.7322090292,0 -0.511663809224,38.3250002462,0 -0.858336810958,37.7155451914,0 -0.723472826678,37.6022181721,0 -1.32749992855,37.5580542595,0 -1.64360882319,37.3727731274,0 -2.12291789933,36.7334640804,0 -2.3470818421,36.8405450731,0 -2.76889089466,36.6783272506,0 -4.39986391496,36.7214541543,0 -4.63971777469,36.5083271663,0 -5.17263683314,36.4118732535,0 -5.33450881827,36.1625642717,0 -5.35579985822,36.1633090876,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>2.38916318711,39.5249910591,0 2.98778228504,39.9111091296,0 3.48000016266,39.7163820956,0 3.06028205968,39.2633360367,0 2.69444500974,39.5519361956,0 2.38916318711,39.5249910591,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-16.671390802,27.9841639595,0 -16.9093729827,28.3460360339,0 -16.1569459611,28.5722181713,0 -16.671390802,27.9841639595,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-14.3327818067,28.0444362137,0 -14.444172774,28.0691640016,0 -13.8677819805,28.7495820929,0 -13.9230549324,28.2491640317,0 -14.3327818067,28.0444362137,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-15.5791728241,27.7311092727,0 -15.8226369371,27.9156911864,0 -15.7024997891,28.1561091482,0 -15.3652817419,28.0072180489,0 -15.5791728241,27.7311092727,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-13.7730547397,28.8377731256,0 -13.7916639059,29.0525000512,0 -13.4424999701,29.2316642379,0 -13.4834727246,28.9952821624,0 -13.7730547397,28.8377731256,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>4.27639110476,39.8063911631,0 3.79694506832,40.0172179891,0 4.17444520128,40.0502820827,0 4.27639110476,39.8063911631,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>1.37194530554,38.8308271495,0 1.21194516704,38.8983271189,0 1.29416325551,39.0313910056,0 1.60291820356,39.0938821173,0 1.37194530554,38.8308271495,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-17.7833369302,28.5291641903,0 -18.0029178159,28.749718215,0 -17.9068089022,28.8481911607,0 -17.7165267915,28.7433271814,0 -17.7833369302,28.5291641903,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-17.2308367401,28.0100001702,0 -17.2549997553,28.2061090448,0 -17.089172853,28.1119452355,0 -17.2308367401,28.0100001702,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.39555488982,35.9163361422,0 -5.31991776882,35.8898642479,0 -5.3458367928,35.8416641135,0 -5.39555488982,35.9163361422,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-2.91471773777,35.2736091227,0 -2.96299079468,35.2811731198,0 -2.9469458203,35.3291642095,0 -2.91471773777,35.2736091227,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Spain",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/hu.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>20.2610271805,46.1148540828,0 19.5652730563,46.1727730339,0 18.8170180431,45.9129642096,0 18.4075000458,45.7483272023,0 17.6609730458,45.838745139,0 16.6078730748,46.4762359836,0 16.3490271636,46.8423541625,0 16.1118001923,46.8697182266,0 16.5048631726,47.0067640203,0 16.4520092379,47.4128451021,0 16.7138912422,47.543882077,0 16.4505541395,47.6980541106,0 17.0538912431,47.709445117,0 17.1663822514,48.0125002033,0 17.787282292,47.7464270798,0 18.663054216,47.759718096,0 18.8497181944,47.8177730016,0 18.8453363031,48.0491271086,0 19.4724270498,48.089436184,0 19.6305541682,48.2338910772,0 19.9398631601,48.13624509,0 20.6529182031,48.5616642283,0 21.4381912211,48.5753450031,0 21.7809731758,48.3406911084,0 22.1514450829,48.4119181749,0 22.894800203,47.9545361575,0 22.0138822934,47.5106181589,0 21.1773631574,46.2973641577,0 20.2610271805,46.1148540828,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Hungary",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/se.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>11.4291911293,58.9876360087,0 11.6240272957,58.9069360506,0 11.7518000222,59.0951362642,0 11.6670091924,59.5935731787,0 11.8991002363,59.6997182481,0 11.8159631559,59.8461001408,0 12.4945092329,60.1130451499,0 12.5909730364,60.5218000587,0 12.2162181444,60.9987451029,0 12.6378272048,61.0575361072,0 12.8561092308,61.3625000881,0 12.1244451892,61.7286092146,0 12.2937450493,62.2670821221,0 12.047500156,62.5900001396,0 12.0288911575,62.8924911238,0 12.1686091019,63.0158273089,0 11.936391156,63.2722181608,0 12.1466632676,63.5895731091,0 12.9380540692,64.0533272169,0 13.9850002145,64.0155451177,0 14.1506911624,64.1798450049,0 14.1163910734,64.4705540507,0 13.66826318,64.580200241,0 14.4930540218,65.3136001747,0 14.633191229,65.8218001624,0 14.5070821427,66.1236001425,0 15.468054101,66.2838731958,0 15.3627820907,66.4800001752,0 16.3538821295,67.0177730262,0 16.3613820889,67.2377822272,0 16.0880540929,67.4054001746,0 16.7269450506,67.8991541198,0 17.2736090892,68.0905449887,0 17.8841631791,67.9455451042,0 18.1552822083,68.1661091871,0 18.0995361818,68.508927184,0 19.9523632599,68.3427631615,0 20.2042360983,68.4708911131,0 19.9563912673,68.5438820672,0 20.3502731595,68.7866540027,0 20.0969452228,69.0422182313,0 20.58092721,69.0603001758,0 22.0486091889,68.4815181929,0 22.826663209,68.3859631553,0 23.6597911947,67.9458911091,0 23.488818139,67.8709630971,0 23.4308271036,67.4797821894,0 23.7651361275,67.4168733237,0 23.5733273369,67.1570091788,0 24.0007631611,66.8022821739,0 23.6625002258,66.3122092253,0 24.1670091586,65.8140272883,0 23.077354199,65.7008271711,0 22.6758271729,65.9022181534,0 22.6793001307,65.7604731295,0 22.368191209,65.8591542817,0 22.2490541897,65.6324911907,0 22.4000001963,65.536800031,0 21.7658272443,65.7121450873,0 22.1943733354,65.5422822986,0 21.4712452564,65.3837453051,0 21.6593001278,65.2458271229,0 21.264863186,65.3382542019,0 21.6193732672,65.1513731322,0 21.0393732261,64.8238180782,0 21.303400327,64.761654196,0 21.1191632449,64.6843629902,0 21.5850002557,64.4397091498,0 20.9637453252,64.1427002656,0 20.7740273166,63.8670821661,0 19.7050002208,63.4319361644,0 19.4258271884,63.54631813,0 19.0625001832,63.1769362056,0 18.8966632226,63.2731911321,0 18.2891631629,62.9972181427,0 18.5752001358,62.9618000755,0 18.2040271663,62.7773541163,0 17.7005542367,62.9927090141,0 18.0463912274,62.5952731949,0 17.3308271455,62.4877732747,0 17.6488821504,62.2317272544,0 17.3508272047,61.9434731005,0 17.4951731332,61.634582198,0 17.1487822663,61.7172820782,0 17.2645452343,61.6853731786,0 17.0986091996,61.6027732106,0 17.2196542754,61.434654193,0 17.1052731479,61.3999271299,0 17.1525001433,60.9427732679,0 17.2752732322,60.6761090526,0 17.6879181824,60.4973542381,0 17.960973096,60.5920821494,0 18.5996181286,60.2356182466,0 18.3170822767,60.3081911114,0 18.4216631152,60.1872182876,0 18.8163910768,60.0963820939,0 19.0705540187,59.8897182239,0 18.8647181131,59.798045181,0 19.079654251,59.7674270945,0 18.2420632372,59.400454129,0 18.0913911511,59.3344449649,0 17.9570542209,59.3582631487,0 17.7827731634,59.3891630348,0 17.8177091036,59.586454093,0 17.6523730455,59.6360912209,0 17.7313912586,59.4448540761,0 17.3828452368,59.6523541247,0 17.4044452337,59.4691631041,0 16.5586091093,59.6098541875,0 16.0324631316,59.4901631244,0 16.8777732077,59.3819361579,0 16.6954181981,59.4704820804,0 16.8367360802,59.4896451227,0 17.2869452001,59.2590450518,0 18.0937092503,59.3156182045,0 18.477218202,59.4352732254,0 18.6431540691,59.321873116,0 18.2772181127,59.3108271086,0 18.311391132,59.1325001064,0 17.8947180068,58.8588911491,0 17.6662450953,59.1673540716,0 17.6291001883,58.9102001313,0 17.3500002462,58.7522180198,0 16.1936092439,58.6274911093,0 16.9336092558,58.4883272086,0 16.4228450763,58.4777730514,0 16.7700002051,58.3672182628,0 16.8258360856,58.1766630696,0 16.6202092247,57.9870092663,0 16.7636091715,57.8812360182,0 16.5062091386,57.9919731971,0 16.6951731112,57.7417001287,0 16.419236164,57.8890912026,0 16.7113912557,57.7026361012,0 16.6658272299,57.4085362404,0 16.465973321,57.2705540205,0 16.5844451525,57.0466631601,0 16.0034731459,56.2130542209,0 15.8655541255,56.0922180222,0 14.6926361894,56.1581911441,0 14.7383361697,56.0108272275,0 14.5551360966,56.0562452406,0 14.2172181604,55.8302731536,0 14.3659360896,55.5428451201,0 14.1935451512,55.3861451045,0 13.3755542122,55.3400002128,0 12.9822181495,55.400554099,0 12.9211821363,55.5724272034,0 13.0611091253,55.6807641405,0 12.4600730218,56.2966642082,0 12.7992363412,56.2259001581,0 12.6243001541,56.4183271979,0 12.9011091545,56.4572182229,0 12.8802090465,56.6429821525,0 12.3488912668,56.916809207,0 12.0950000662,57.4269361943,0 11.9027731862,57.4243091382,0 11.8877821524,57.6938822092,0 11.7018730482,57.6999270701,0 11.8787001926,58.2021631661,0 11.7980542139,58.3183271243,0 11.7277362487,58.3284001603,0 11.5286092184,58.2307541732,0 11.2013912845,58.3994361194,0 11.1133362063,59.003609234,0 11.2199452978,59.0534730085,0 11.320000244,59.1002730297,0 11.4291911293,58.9876360087,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>19.0038910662,57.8988911562,0 18.7131912406,57.2443002233,0 18.1445822059,56.91479118,0 18.2544453199,57.0791629839,0 18.115273205,57.5252731855,0 18.6859731892,57.9148541556,0 19.0038910662,57.8988911562,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>16.4297182369,56.2088822124,0 16.4202730055,56.5863910625,0 17.1020821574,57.3494451639,0 16.4297182369,56.2088822124,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>11.7802181945,58.203654139,0 11.4650001285,58.0661091192,0 11.6624911789,58.2742730146,0 11.6731911813,58.2855451657,0 11.6828001951,58.2808730928,0 11.7845181108,58.2313001704,0 11.8124271662,58.217709082,0 11.7802181945,58.203654139,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Sweden",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/ie.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>-6.26697275036,54.0998270589,0 -6.10625495331,53.9933639802,0 -6.38013682545,53.9133271982,0 -6.0811087408,53.563609051,0 -6.22458177785,53.3527731725,0 -6.01305489526,52.9450001198,0 -6.14778191924,52.7383270297,0 -6.49819090287,52.3540271616,0 -6.35944576213,52.179027272,0 -6.99729987838,52.2782731969,0 -7.00180883939,52.1384732774,0 -7.57889080469,52.1002732565,0 -8.08667287072,51.8108270283,0 -8.42193692874,51.8815451456,0 -8.3106998532,51.7418002115,0 -8.69666386437,51.5730540599,0 -9.81749983911,51.4455451957,0 -9.451663795,51.7247180604,0 -10.1299998215,51.6122181673,0 -9.58097292439,51.8723542211,0 -10.3385908587,51.7829179729,0 -10.2636086996,51.9880539896,0 -9.76041773722,52.149582149,0 -10.46333688,52.1802091204,0 -9.74486377473,52.2472182455,0 -9.83972697001,52.3797181978,0 -9.65360898877,52.5608271537,0 -8.8183369123,52.6655451202,0 -9.93236376416,52.5552002144,0 -9.48583681434,52.8005541114,0 -9.28083675213,53.1397181013,0 -8.93791783721,53.1417270759,0 -8.94110899539,53.2641642181,0 -9.60805468599,53.2322181028,0 -9.55916388282,53.381244989,0 -10.1765267603,53.4097181465,0 -10.1861089521,53.5502821602,0 -9.6989547498,53.59790914,0 -9.90639092836,53.7586089998,0 -9.56139078686,53.8597180541,0 -9.94069990217,53.8679091852,0 -9.78958189885,53.945409268,0 -10.0133998367,54.2181910991,0 -10.1240268773,54.0965911414,0 -10.1122177815,54.2300001949,0 -8.47486378594,54.273464051,0 -8.66166388645,54.3552731026,0 -8.18833680699,54.6336091181,0 -8.79833685308,54.6957540572,0 -8.35389096219,54.8394361389,0 -8.45721786805,54.9968001689,0 -7.98145483987,55.2164541448,0 -7.69971778332,55.0951361543,0 -7.79172677293,55.212018274,0 -7.63249994881,55.2655541603,0 -7.61666385146,55.0538911556,0 -7.68229096838,54.9509001964,0 -7.4465269745,55.0556910855,0 -7.54749990666,55.2169451567,0 -7.37666397897,55.3799911112,0 -6.93513700205,55.2384641844,0 -7.25250888186,55.0705910919,0 -7.55333689641,54.7627732406,0 -7.92639076499,54.7005451531,0 -7.75222688646,54.5944451784,0 -8.15805483475,54.4402731448,0 -7.5594457951,54.1269361455,0 -7.28389089507,54.1234641936,0 -7.02944581826,54.4172182171,0 -6.61999990528,54.0372180977,0 -6.26697275036,54.0998270589,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Ireland",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/gb.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>-2.03735476092,49.2439640568,0 -2.02158186312,49.1772271759,0 -2.20639981117,49.181282173,0 -2.23430886662,49.2589272628,0 -2.03735476092,49.2439640568,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-2.53664595902,49.5079452249,0 -2.52848181766,49.4265361577,0 -2.66852682395,49.4326641671,0 -2.53664595902,49.5079452249,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-1.11597287832,50.7363820379,0 -1.28249983721,50.578891106,0 -1.56958186579,50.6590269621,0 -1.11597287832,50.7363820379,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-4.04652679727,53.3015272222,0 -4.35139086585,53.1244452679,0 -4.5599998403,53.3966641704,0 -4.04652679727,53.3015272222,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-4.39444585273,54.1863821118,0 -4.77778180197,54.0555449614,0 -4.3534729306,54.410000225,0 -4.39444585273,54.1863821118,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.69041783914,54.8091640573,0 -5.9024268488,54.6022911427,0 -5.57430886618,54.6772183165,0 -5.43583680785,54.458464054,0 -5.51771777618,54.3691091102,0 -5.69812684315,54.5726270843,0 -5.56221780318,54.2830541218,0 -6.0438909113,54.0313911663,0 -6.26697275036,54.0998270589,0 -6.61999990528,54.0372180977,0 -7.02944581826,54.4172182171,0 -7.28389089507,54.1234641936,0 -7.5594457951,54.1269361455,0 -8.15805483475,54.4402731448,0 -7.75222688646,54.5944451784,0 -7.92639076499,54.7005451531,0 -7.55333689641,54.7627732406,0 -7.25250888186,55.0705910919,0 -6.06375484841,55.1915270352,0 -5.69041783914,54.8091640573,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.15472671766,55.6733270454,0 -5.17194582904,55.4294451783,0 -5.37958183217,55.6701362225,0 -5.15472671766,55.6733270454,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-6.12569979526,55.9312452476,0 -6.0261088713,55.6792999896,0 -6.27444588762,55.5727732084,0 -6.26221786432,55.7772180533,0 -6.49528187954,55.7336091903,0 -6.12569979526,55.9312452476,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.69444584654,56.1472182269,0 -5.97194585102,55.7883270925,0 -6.07889088921,55.9055451589,0 -5.69444584654,56.1472182269,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-5.66083676164,56.3993002776,0 -6.3230548912,56.265409097,0 -6.01937283861,56.3759642209,0 -6.20166381049,56.382354081,0 -6.00339978096,56.4925630323,0 -6.33778189512,56.5466630207,0 -6.11666376834,56.6502730672,0 -5.66083676164,56.3993002776,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-7.22375493057,57.3395732936,0 -7.23028175096,57.0947181199,0 -7.38402681038,57.111663143,0 -7.42360867186,57.3837450853,0 -7.22375493057,57.3395732936,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-6.30416375777,57.686100115,0 -6.12722681039,57.306109048,0 -5.64763694049,57.2583271707,0 -6.01430882798,57.0234630579,0 -6.03055480039,57.1775001428,0 -6.31639094288,57.1584631643,0 -6.48013678629,57.3025001358,0 -6.31208180645,57.2997820522,0 -6.72444579521,57.4036091901,0 -6.63749981041,57.6055542162,0 -6.42999992939,57.5050002115,0 -6.30416375777,57.686100115,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-7.06860875221,57.6365910626,0 -7.23360886361,57.5036091509,0 -7.54083679653,57.5901362082,0 -7.1929179087,57.6870821388,0 -7.06860875221,57.6365910626,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-6.16833669281,58.2095821563,0 -6.61971793805,58.0801362342,0 -6.39333681425,58.1016631409,0 -6.47333671586,57.9422182197,0 -6.66430882488,57.9255541579,0 -6.68680887055,58.0562451279,0 -6.66139091674,57.8826361313,0 -6.96492695657,57.7263181629,0 -7.12423692917,57.8356181806,0 -6.83221779197,57.9022181012,0 -7.02194585891,57.9519450831,0 -7.03625494114,58.2356912818,0 -6.86097274908,58.1059731155,0 -6.7977817485,58.3022181122,0 -6.26333684839,58.5126362367,0 -6.16597282847,58.4229181888,0 -6.32702690749,58.2354002621,0 -6.16833669281,58.2095821563,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-3.02263675312,58.646527082,0 -3.10971785419,58.3816631318,0 -3.33749976166,58.2769361129,0 -4.00729982557,57.8724271409,0 -3.77402676568,57.8548539779,0 -4.43152688957,57.5727730957,0 -2.07555478184,57.6994360582,0 -1.77333671246,57.4580541776,0 -2.53125471888,56.5761091495,0 -3.27805480126,56.3575002293,0 -2.88444582382,56.4513820713,0 -2.58347280234,56.2685360498,0 -3.7237547925,56.0273539937,0 -3.05305484746,55.9436001729,0 -2.63110900224,56.0547182254,0 -1.63597290937,55.581936305,0 -1.2974997559,54.763609084,0 -0.0793088136962,54.1134000424,0 -0.212217802874,54.0083271861,0 0.142082060219,53.5805540742,0 -0.139626833134,53.6185541029,0 0.235554027208,53.3994360658,0 0.339163067925,53.0923541457,0 0.00210913830203,52.8798541241,0 0.378891109793,52.7813912367,0 0.547782268298,52.966182195,0 0.884718180724,52.9663821872,0 1.67528219136,52.7480542284,0 1.74944510322,52.45582722,0 1.5873630676,52.0838822772,0 1.33124529818,51.9287451513,0 1.16347312375,52.0236090171,0 1.26610919315,51.8391640637,0 0.701109070754,51.7184730396,0 0.935691216285,51.7365271562,0 0.952500117322,51.609227169,0 0.388936150224,51.4482180169,0 1.38555416358,51.3877732631,0 1.40763611992,51.1838911792,0 1.26250011327,51.1016642059,0 0.253891116836,50.7386092773,0 -1.09444580398,50.845836115,0 -2.42471771174,50.5600001402,0 -2.92749980487,50.7312451047,0 -3.43721775527,50.6050000639,0 -3.71666387004,50.206664196,0 -4.37999997784,50.3638822132,0 -5.04805492951,50.1711091684,0 -5.19305481406,49.9552729818,0 -5.47055481854,50.1249910988,0 -5.71680876427,50.0608271269,0 -4.77166385083,50.6019451954,0 -4.22805468067,51.1877731738,0 -3.0283369502,51.20610909,0 -2.3799999229,51.7617362329,0 -3.34610898207,51.3786091607,0 -3.83791782282,51.6199912091,0 -4.24278185223,51.5408362033,0 -4.07471781993,51.6772181502,0 -4.57444588282,51.73416413,0 -4.94139085272,51.5941642184,0 -5.05139075935,51.6202820611,0 -4.88444587877,51.7466640622,0 -5.2469459254,51.7302730829,0 -5.10257283958,51.7789541709,0 -5.23916366355,51.9163821793,0 -4.13083700878,52.3347181065,0 -4.13360873653,52.9144450651,0 -4.75849085176,52.787264101,0 -4.19639086787,53.2061091449,0 -2.70492691497,53.3506181852,0 -2.95389073001,53.3602731319,0 -3.10562681488,53.5599272162,0 -2.89979090928,53.7249911977,0 -3.05263675813,53.9076362212,0 -2.81360885114,54.2227729827,0 -3.21471778792,54.0955541323,0 -3.63263679921,54.5122182051,0 -3.38110879234,54.8844362303,0 -3.02708167638,54.9729092302,0 -3.57110893587,54.9908272247,0 -3.96499971289,54.7652732271,0 -4.39805476497,54.906391117,0 -4.38721780233,54.6755541734,0 -4.85221779624,54.8686090177,0 -4.96076377794,54.7968730021,0 -4.86416385232,54.6272180846,0 -5.17833686259,54.9888821202,0 -4.61360881678,55.490691242,0 -4.9163908206,55.7008272316,0 -4.87826372224,55.9365270201,0 -4.48541783327,55.9236091662,0 -4.85460881795,55.9864821573,0 -4.82860882478,56.113164063,0 -4.98666385883,55.8649272942,0 -5.30528196,55.8522181497,0 -5.03221782633,56.2325002363,0 -5.42916380707,56.0069361804,0 -5.52305486922,55.3522181779,0 -5.78889078485,55.3087451016,0 -5.5713907904,56.3283271828,0 -5.07013688585,56.5606911415,0 -5.39866390535,56.4786631546,0 -5.12083683901,56.814718129,0 -5.6769459414,56.493891061,0 -6.00971789196,56.6334732186,0 -5.55239991232,56.6888541294,0 -6.22778198849,56.6972180954,0 -5.66291782057,56.8692271542,0 -5.91958192244,56.8870821168,0 -5.52402683472,56.9973541,0 -5.72471792813,57.1130542037,0 -5.40305484916,57.1106180874,0 -5.647508865,57.1616090602,0 -5.40513674628,57.2309731648,0 -5.59884571433,57.3304821138,0 -5.45125481587,57.4180451743,0 -5.81805477884,57.3625001458,0 -5.83971780766,57.5727730957,0 -5.51013668001,57.5331912342,0 -5.81083678672,57.6395822286,0 -5.81708180752,57.8194360783,0 -5.1027817166,57.850827144,0 -5.45284586873,58.0741631223,0 -5.28145489142,58.0772181584,0 -5.38944582349,58.260273057,0 -5.07166390098,58.2647181479,0 -5.17471772443,58.3500001572,0 -5.00152698486,58.6241631584,0 -4.70166372737,58.5586092993,0 -4.76145469273,58.4460361484,0 -4.57833692992,58.5744361766,0 -3.02263675312,58.646527082,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-3.0749998435,59.1204182635,0 -2.82444581379,58.8788821558,0 -3.31333674639,58.9500000899,0 -3.35083687839,59.1081910784,0 -3.0749998435,59.1204182635,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-1.03854571808,60.4427729608,0 -1.18055493956,60.2250002192,0 -1.26860884432,59.8511091661,0 -1.37791791449,59.9043091057,0 -1.29139085721,60.2413911986,0 -1.45110886086,60.1518002204,0 -1.69215479486,60.2850632612,0 -1.3202817688,60.3563821933,0 -1.61034574326,60.4784000727,0 -1.29652678458,60.6334002383,0 -1.28666379908,60.471109158,0 -1.03854571808,60.4427729608,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>-0.993890793508,60.7223541918,0 -1.10471799398,60.4855451423,0 -1.17833675269,60.6345820867,0 -0.993890793508,60.7223541918,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "United Kingdom",
+          "type": "kml"
+        }
+      ],
+      "name": "European Union",
+      "type": "collection",
+      "id": "european_union"
+    },
+    "date": 1586354790049
+  },
+  "scores:2:european_union:50": {
+    "data": [
+      {
+        "date": 1586301606071,
+        "map": "european_union",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 910262.0077313887,
+            "score": 2387
+          },
+          {
+            "distance": 492145.72255790397,
+            "score": 3429
+          },
+          {
+            "distance": 213554.128910884,
+            "score": 4270
+          },
+          {
+            "distance": 1024159.8782514485,
+            "score": 2145
+          },
+          {
+            "distance": 757471.9256576258,
+            "score": 2739
+          }
+        ],
+        "timeTaken": 107754.94499999331,
+        "totalDistance": 3397593.663109251,
+        "totalScore": 14970,
+        "user": "RuteNL"
+      }
+    ],
+    "date": 1586354790234
+  },
+  "storage:image:images/european_union.jpg": {
+    "data": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Feuropean_union.jpg?alt=media&token=3af0ba7f-0510-4e25-bbee-763a9c5feb02",
+    "date": 1586354790746
+  },
+  "map:benelux": {
+    "data": {
+      "image": "images/benelux.jpg",
+      "maps": [
+        {
+          "image": "images/flags/nl.svg",
+          "kml": "<MultiGeometry><Polygon><outerBoundaryIs><LinearRing><coordinates>4.23890019286,51.3504270229,0 3.89541801404,51.2056910007,0 3.43986325156,51.2447821855,0 3.37086325679,51.373854107,0 4.23890019286,51.3504270229,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>5.61194512028,52.369718252,0 5.42221822681,52.2641641069,0 5.13666321335,52.3815270125,0 5.64360910072,52.6011090717,0 5.80350010685,52.5494001051,0 5.86070022593,52.5309091237,0 5.85042719774,52.5242450077,0 5.61194512028,52.369718252,0</coordinates></LinearRing></outerBoundaryIs></Polygon><Polygon><outerBoundaryIs><LinearRing><coordinates>7.20836307409,53.2428091404,0 7.05347321433,52.6495821208,0 6.68958227468,52.5505541255,0 7.06298214823,52.3909641973,0 7.05309116718,52.2377641293,0 6.73639118073,52.0766641174,0 6.82895421414,51.9757540495,0 5.9636092101,51.8066642399,0 6.22208212668,51.4673542372,0 6.09750005541,51.1311001088,0 5.86500014228,51.0453451925,0 6.0808361613,50.9147180926,0 6.01180012435,50.7572730935,0 5.63881817249,50.8488820987,0 5.84713612726,51.1531911176,0 5.23897322671,51.2622820907,0 5.03847307305,51.4869450919,0 4.25236303814,51.3751450878,0 3.4442362581,51.5293731125,0 3.83500008231,51.6066641506,0 4.28360926452,51.4480540669,0 3.9978452064,51.590136211,0 4.20943612674,51.6740911974,0 3.86798203321,51.8121451664,0 4.5743731279,52.4544730397,0 5.42250019403,52.2490181754,0 5.87805411832,52.5094360288,0 5.85357309364,52.6059452622,0 5.60055411384,52.6581911736,0 5.71835421958,52.8380182012,0 5.37080011219,52.8802001291,0 5.36986301541,53.0704091496,0 5.10027318061,52.94805415,0 5.30319117807,52.7048542346,0 5.04959116473,52.6415732123,0 5.02971817516,52.6240910768,0 5.07805409634,52.4161090687,0 4.58200904172,52.4770822177,0 4.73881802204,52.9566642086,0 5.09444507568,52.9591641951,0 5.98166315904,53.3988912421,0 6.74194519743,53.4658272771,0 7.20836307409,53.2428091404,0</coordinates></LinearRing></outerBoundaryIs></Polygon></MultiGeometry>",
+          "name": "Netherlands",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/be.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>2.54166319863,51.0911090428,0 3.37086325679,51.373854107,0 3.43986325156,51.2447821855,0 3.89541801404,51.2056910007,0 4.23890019286,51.3504270229,0 4.32770008701,51.290127276,0 4.25236303814,51.3751450878,0 5.03847307305,51.4869450919,0 5.23897322671,51.2622820907,0 5.84713612726,51.1531911176,0 5.63881817249,50.8488820987,0 6.01180012435,50.7572730935,0 6.27041821549,50.6198541375,0 6.39820016212,50.3231729857,0 6.13440926324,50.1278451369,0 5.9730542739,50.170000075,0 5.74777319107,49.9074911044,0 5.89916310333,49.6627732262,0 5.80788233348,49.5450452048,0 5.47278222549,49.508882154,0 4.86847332403,49.8022182559,0 4.82472716541,50.1675641263,0 4.51055415514,49.9474912228,0 4.1492361245,49.9783731717,0 4.16500013748,50.2830541795,0 3.29708205679,50.5243001057,0 3.15857311809,50.7843642428,0 2.65055417947,50.8161090248,0 2.54166319863,51.0911090428,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Belgium",
+          "type": "kml"
+        },
+        {
+          "image": "images/flags/lu.svg",
+          "kml": "<Polygon><outerBoundaryIs><LinearRing><coordinates>6.36217306579,49.459391039,0 5.80788233348,49.5450452048,0 5.89916310333,49.6627732262,0 5.74777319107,49.9074911044,0 5.9730542739,50.170000075,0 6.13440926324,50.1278451369,0 6.2341631314,49.8975000434,0 6.52402711365,49.8077001882,0 6.36217306579,49.459391039,0</coordinates></LinearRing></outerBoundaryIs></Polygon>",
+          "name": "Luxembourg",
+          "type": "kml"
+        }
+      ],
+      "name": "Benelux",
+      "type": "collection",
+      "id": "benelux"
+    },
+    "date": 1586354793323
+  },
+  "scores:2:benelux:50": {
+    "data": [
+      {
+        "date": 1585525667225,
+        "map": "benelux",
+        "rules": 2,
+        "scores": [
+          {
+            "distance": 120752.58724362742,
+            "score": 2267
+          },
+          {
+            "distance": 139887.05898389767,
+            "score": 1957
+          },
+          {
+            "distance": 151249.1089438876,
+            "score": 1787
+          },
+          {
+            "distance": 124413.49922691098,
+            "score": 2205
+          },
+          {
+            "distance": 190856.50942956837,
+            "score": 1272
+          }
+        ],
+        "timeTaken": 17189.825000008568,
+        "totalDistance": 727158.763827892,
+        "totalScore": 9488,
+        "user": "RuteNL"
+      }
+    ],
+    "date": 1586354793521
+  },
+  "storage:image:images/benelux.jpg": {
+    "data": "https://firebasestorage.googleapis.com/v0/b/locationestimatr.appspot.com/o/images%2Fbenelux.jpg?alt=media&token=88c8e983-9e8e-40f7-a7ab-5b0956e05943",
+    "date": 1586354793788
+  }
+}

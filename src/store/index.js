@@ -3,17 +3,25 @@ import Vuex from 'vuex'
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/storage";
+import initialCache from '../assets/initialCache.json';
 
 const minute = 1000 * 60;
 const day = minute * 60 * 24;
 const year = day * 365;
 
+
 Vue.use(Vuex);
 const db = firebase.firestore();
 const storage = firebase.storage().ref();
-if (localStorage.getItem("cache") === null)
-    localStorage.cache = JSON.stringify({});
-const cache = JSON.parse(localStorage.cache);
+let cache, tempCache;
+if (localStorage.getItem("cache") === null) {
+    console.log("Using initial cache", initialCache);
+    cache = initialCache;
+    tempCache = true;
+} else {
+    cache = JSON.parse(localStorage.cache);
+    tempCache = false;
+}
 if (localStorage.getItem("scores") === null)
     localStorage.scores = JSON.stringify({});
 const localScores = JSON.parse(localStorage.scores);
@@ -464,6 +472,11 @@ export default new Vuex.Store({
                     console.log(homeMaps);
                     return homeMaps;
                 };
+                if (tempCache) {
+                    console.log("Using temp cache");
+                    let homeMaps = await getCached('homeMaps', get, year);
+                    commit('setHomeMaps', homeMaps);
+                }
                 let homeMaps = await getCached('homeMaps', get, day);
                 commit('setHomeMaps', homeMaps);
             } else {
