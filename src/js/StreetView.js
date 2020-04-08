@@ -17,18 +17,11 @@ export default class StreetView extends EventEmitter {
         this.canvas.width = 256;
         this.canvas.height = 256;
 
-        // this.smallestContainingTile = {x: 547, y: 377, zoom: 10};
         // this.debug = true;
         this.typeColors = [
             {color: [84, 160, 185], id: 'sv'},
             {color: [165, 224, 250, 102], id: 'photo'},
         ];
-        //Has opacity:
-        // this.typeColors = [
-        //     {color: [84, 160, 185, 131], id: 'sv'},
-        //     {color: [84, 160, 185, 255], id: 'sv'},
-        //     {color: [165, 224, 250, 108], id: 'photo'},
-        // ];
 
         if (this.debug) {
             let div = document.createElement('div');
@@ -188,10 +181,9 @@ export default class StreetView extends EventEmitter {
                     this.debugImg[i].src = tile.img.src
                 }
             });
-            if (chosenTile.zoom >= 7) {
-                // return;
+            if (chosenTile.zoom >= 2) {
+                await this.waitSleep(2000000);
             }
-            // await this.waitSleep(2000000);
         }
 
         for (let tile of shuffledTiles) {
@@ -384,32 +376,40 @@ export default class StreetView extends EventEmitter {
         let coverage = [0, 0];
         let isFullyContained = this.isTileFullyContainedInMap(tileX, tileY, zoom);
 
-        let chunkSize;
+        let chunkSize = 16;
+        let pixelChunkSize;
         if (zoom <= 6)
-            chunkSize = 32;
+            pixelChunkSize = 16;
         else if (zoom <= 7)
-            chunkSize = 16;
+            pixelChunkSize = 16;
         else if (zoom <= 8)
-            chunkSize = 8;
+            pixelChunkSize = 8;
         else if (zoom <= 9)
-            chunkSize = 4;
+            pixelChunkSize = 4;
         else
-            chunkSize = 2;
+            pixelChunkSize = 2;
 
-        for (let y = chunkSize / 2; y < img.height; y += chunkSize) {
-            for (let x = chunkSize / 2; x < img.width; x += chunkSize) {
+        for (let y = 0; y < img.height; y += chunkSize) {
+            for (let x = 0; x < img.width; x += chunkSize) {
                 if (!isFullyContained) {
-                    let location = this.tilePixelToLatLon(tileX, tileY, zoom, x, y);
-                    if (!this.map.containsLocation(...location))
+                    let location = this.tilePixelToLatLon(tileX, tileY, zoom, x + chunkSize / 2, y + chunkSize / 2);
+                    if (!this.map.containsLocation(...location)) {
                         continue;
+                    }
+                    // console.log("Chunk is in polygon!");
                 }
-                let i = (y * img.width + x) * 4;
-                let color = data.slice(i, i + 4);
-                let colorType = this.getColorType(color);
-                if (colorType === 'sv')
-                    coverage[0]++;
-                if (colorType === 'photo')
-                    coverage[1]++;
+                for (let pY = y + pixelChunkSize / 2; pY < y + chunkSize; pY += pixelChunkSize) {
+                    for (let pX = x + pixelChunkSize / 2; pX < x + chunkSize; pX += pixelChunkSize) {
+                        // console.log(pX, pY);
+                        let i = (pY * img.width + pX) * 4;
+                        let color = data.slice(i, i + 4);
+                        let colorType = this.getColorType(color);
+                        if (colorType === 'sv')
+                            coverage[0]++;
+                        if (colorType === 'photo')
+                            coverage[1]++;
+                    }
+                }
             }
         }
         return coverage;

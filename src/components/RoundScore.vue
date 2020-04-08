@@ -358,11 +358,14 @@
                         lineData.end = new google.maps.Marker({
                             position: end.location,
                             map: this.googleMap,
-                            animation: google.maps.Animation.DROP,
+                            animation: Google.maps.Animation.DROP,
                             icon: `https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${number}|${color.substr(1)}|000000`,
                             title: end.name,
                         });
                         // lineData.end.setMap(this.googleMap);
+                        setTimeout(() => {
+                            resolve();
+                        }, 10);
                         resolve();
                     }, animationTime);
                 });

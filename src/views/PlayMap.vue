@@ -1,6 +1,9 @@
 <template>
     <div class="play-map">
-        <div class="rules-container" v-if="gameState < 2">
+        <div class="rules-container"
+             v-if="gameState < 2"
+        >
+            <!--             v-show="gameState < 1"-->
             <point-rules class="rules" v-if="map && map.type==='point'"
                          @startGame="startGame"
                          ref="pointRules"
