@@ -131,6 +131,7 @@ export default new Vuex.Store({
         customColor: false,
         windowWidth: window.innerWidth,
         immersive: false,
+        slowCpu: localStorage.getItem('slowCpu') === null ? false : JSON.parse(localStorage.slowCpu),
     },
     mutations: {
         'setImmersive': (state, immersive) => {
@@ -144,6 +145,10 @@ export default new Vuex.Store({
         },
         'setHomeMaps': (state, maps) => {
             state.homeMaps = maps;
+        },
+        'setSlowCpu': (state, slowCpu) => {
+            state.slowCpu = slowCpu;
+            localStorage.slowCpu = slowCpu;
         },
         'setCustomColor': (state, customColor) => {
             const defaultThemeColor = '#02c780';

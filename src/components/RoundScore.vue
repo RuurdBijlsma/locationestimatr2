@@ -43,7 +43,7 @@
             <div class="darken">
                 <div v-if="!hsDisabled" class="hs">
                     <p class="caption">Submit to scoreboard to see other high scores</p>
-                    <v-form class="highscore-submit" @submit="submitHighScore">
+                    <v-form class="highscore-submit" @submit="submitHighScore" ref="form">
                         <v-text-field v-model="user" label="Username" dense class="hs-input" outlined required
                                       :rules="userRules"></v-text-field>
                         <v-btn text type="submit" :loading="submitting" class="hs-button">Submit</v-btn>
@@ -177,8 +177,12 @@
             },
             submitHighScore(e) {
                 e.preventDefault();
-                localStorage.lastUser = this.user;
-                this.$emit('submitHighScore', this.user, this.points, this.dbGuesses);
+                let valid = this.$refs.form.validate();
+                console.log({valid});
+                if (valid) {
+                    localStorage.lastUser = this.user;
+                    this.$emit('submitHighScore', this.user, this.points, this.dbGuesses);
+                }
             },
             showGameOverview() {
                 if (!this.nextButtonEnabled) {

@@ -380,6 +380,10 @@
                 });
             },
             async startRound() {
+                if (this.$store.state.slowCpu) {
+                    this.streetView.slowCpu = false;
+                    console.log("Prioritizing location finder cpu usage");
+                }
                 this.dontAllowPlay = true;
                 this.attachMap(this.$refs.smallMap);
                 setTimeout(() => this.fitMapToGeoMap(), 30);
@@ -393,6 +397,10 @@
                     let event = 'svRound:' + round;
                     await this.waitFor(event);
                     console.log("SV round wait COMPLETE!");
+                }
+                if (this.$store.state.slowCpu) {
+                    this.streetView.slowCpu = true;
+                    console.log("Deprioritizing location finder cpu usage");
                 }
                 this.dontAllowPlay = false;
                 this.$emit('gameLoad');
@@ -567,6 +575,10 @@
                 let isLastRound = this.currentRound === this.rules.roundCount;
                 this.showOverview(this.guessedLocation, targetDestination, distance, points, isLastRound);
                 if (!isLastRound) {
+                    if (this.$store.state.slowCpu) {
+                        this.streetView.slowCpu = false;
+                        console.log("Prioritizing location finder cpu usage");
+                    }
                     this.preloadStreetView();
                 } else {
                     this.timeTaken = performance.now() - this.startTime;
@@ -587,7 +599,7 @@
                 this.$refs.roundScore.show(guess, target, distance, points, isLastRound, challengeGuess);
             },
             measureDistance(from, to) {
-                return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(...from), new google.maps.LatLng(...to));
+                return Google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(...from), new google.maps.LatLng(...to));
             },
             async nextRoundEvent() {
                 this.attachMap(this.$refs.smallMap);

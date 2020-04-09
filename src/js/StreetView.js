@@ -5,11 +5,12 @@ export default class StreetView extends EventEmitter {
     constructor(map) {
         super();
         this.map = map;
+        this.slowCpu = false;
         this.googleMap = null;
         this.coverageCache = this.importCoverageCache();
         this.bounds = this.map.getBounds();
         this.smallestContainingTile = this.boundsToSmallestContainingTile(this.bounds);
-        console.log("Smallest containing tile:", this.smallestContainingTile)
+        console.log("Smallest containing tile:", this.smallestContainingTile);
 
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
@@ -333,7 +334,7 @@ export default class StreetView extends EventEmitter {
                 return;
             }
             let img = await this.getTileImage(x, y, zoom);
-            let c = this.getTileCoverage(x, y, zoom, img);
+            let c = await this.getTileCoverage(x, y, zoom, img);
             this.setCoverageCache(x, y, zoom, c);
             let {coverage, types} = this.getCoverageCache(x, y, zoom);
             resolve({
@@ -368,7 +369,7 @@ export default class StreetView extends EventEmitter {
         return true;
     }
 
-    getTileCoverage(tileX, tileY, zoom, img) {
+    async getTileCoverage(tileX, tileY, zoom, img) {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.drawImage(img, 0, 0);
         let data = this.context.getImageData(0, 0, img.width, img.height).data;
@@ -391,6 +392,8 @@ export default class StreetView extends EventEmitter {
 
         for (let y = 0; y < img.height; y += chunkSize) {
             for (let x = 0; x < img.width; x += chunkSize) {
+                if (this.slowCpu)
+                    await this.waitSleep(10);
                 if (!isFullyContained) {
                     let location = this.tilePixelToLatLon(tileX, tileY, zoom, x + chunkSize / 2, y + chunkSize / 2);
                     if (!this.map.containsLocation(...location)) {
