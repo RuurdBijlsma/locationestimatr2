@@ -88,8 +88,9 @@
 
 <script>
     import Google from "../js/Google";
-    import StreetView from "../js/StreetView";
+    // import StreetView from "../js/StreetView";
     import StreetViewElement from "../js/StreetViewElement";
+    import randomStreetView from 'random-streetview'
     import RoundScore from "./RoundScore";
     import PolyMap from "../js/PolyMap";
 
@@ -204,19 +205,26 @@
 
                 this.svType = this.rules.svType === 2 ? 'both' : (this.rules.svType === 1 ? 'photo' : 'sv');
                 this.distribution = this.rules.distribution === 1 ? 'uniform' : 'weighted';
-                this.streetView = new StreetView(this.map);
-                if (this.visualize)
-                    this.initializeTilesVisualizer().then(() => {
-                        this.streetView.on('subTiles', tiles => {
-                            if (this.dontAllowPlay || this.currentRound === 0)
-                                this.visualizeTiles(tiles);
-                        });
-                    });
                 if (this.map.minimumDistanceForPoints < 500) this.zoom = 19;
                 else if (this.map.minimumDistanceForPoints < 3000) this.zoom = 18;
                 else if (this.map.minimumDistanceForPoints < 10000) this.zoom = 16;
                 else this.zoom = 14;
                 console.log("Using zoom level:", this.zoom, this.map.minimumDistanceForPoints);
+                await randomStreetView.setParameters({
+                    polygon: this.map.polygon,
+                    cacheKey: this.map.id,
+                    type: this.svType,
+                    distribution: this.distribution,
+                    endZoom: this.zoom,
+                    google: Google,
+                });
+                if (this.visualize)
+                    this.initializeTilesVisualizer().then(() => {
+                        randomStreetView.on('tiles', tiles => {
+                            if (this.dontAllowPlay || this.currentRound === 0)
+                                this.visualizeTiles(tiles);
+                        });
+                    });
                 this.currentRound = 0;
                 this.previousGuesses = [];
 
@@ -239,7 +247,6 @@
                     backgroundColor: "#aadaff",
                     fullscreenControl: false,
                 });
-                this.streetView.googleMap = this.googleMap;
                 console.log("googleMap", this.googleMap);
                 this.svCoverage = new Google.maps.StreetViewCoverageLayer();
                 Google.maps.event.addListener(this.googleMap, "click", e => {
@@ -381,7 +388,7 @@
             },
             async startRound() {
                 if (this.$store.state.slowCpu) {
-                    this.streetView.slowCpu = false;
+                    randomStreetView.setHighCpuUsage();
                     console.log("Prioritizing location finder cpu usage");
                 }
                 this.dontAllowPlay = true;
@@ -399,7 +406,7 @@
                     console.log("SV round wait COMPLETE!");
                 }
                 if (this.$store.state.slowCpu) {
-                    this.streetView.slowCpu = true;
+                    randomStreetView.setLowCpuUsage();
                     console.log("Deprioritizing location finder cpu usage");
                 }
                 this.dontAllowPlay = false;
@@ -472,17 +479,18 @@
                 } else if (this.map.type === 'point') {
                     console.log("Not shuffled", this.map.points);
                     //Copy points because of the unshift happening after
-                    let pointPositions = this.streetView.shuffle(JSON.parse(JSON.stringify(this.map.points)));
+                    let pointPositions = randomStreetView._streetView.shuffle(JSON.parse(JSON.stringify(this.map.points)));
                     console.log("Shuffled", pointPositions);
                     pointPositions.unshift(undefined);
                     this.locations = pointPositions;
                 } else {
-                    for (let round = 1; round <= this.rules.roundCount; round++) {
-                        let position = await this.streetView.randomValidLocation(this.zoom, this.svType, this.distribution);
+                    let i = 0;
+                    await randomStreetView.getRandomLocations(this.rules.roundCount, position => {
+                        let round = ++i;
                         this.locations[round] = {position, pov: defaultPov};
                         console.log("Finished loading location for round:", round, this.locations);
                         this.$emit('roundLocation:' + round);
-                    }
+                    });
                 }
             },
             async getRoundLocation(round) {
@@ -576,7 +584,7 @@
                 this.showOverview(this.guessedLocation, targetDestination, distance, points, isLastRound);
                 if (!isLastRound) {
                     if (this.$store.state.slowCpu) {
-                        this.streetView.slowCpu = false;
+                        randomStreetView.setHighCpuUsage();
                         console.log("Prioritizing location finder cpu usage");
                     }
                     this.preloadStreetView();

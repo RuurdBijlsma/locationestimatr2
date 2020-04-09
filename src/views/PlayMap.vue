@@ -29,7 +29,7 @@
     import RulesObject from '../js/Rules'
     import PointRulesObject from '../js/PointRules'
     import Game from "../components/Game";
-    import StreetView from "../js/StreetView";
+    // import StreetView from "../js/StreetView";
     import PointRules from "../components/PointRules";
 
     export default {
@@ -52,15 +52,11 @@
             if (this.$route.query.hasOwnProperty('challenge')) {
                 let {challenge, map} = await this.$store.dispatch('getChallenge', this.$route.query.challenge);
                 const RulesClass = map.type === 'points' ? PointRulesObject : RulesObject;
-                let r = challenge.rules;
                 if (typeof challenge.rules === 'number') {
                     challenge.rules = RulesClass.presets[RulesClass.presetNames[challenge.rules]];
-                    console.log("HERE1");
                 } else {
                     challenge.rules = new RulesClass(challenge.rules);
-                    console.log("HERE2");
                 }
-                console.log("Challenge rules", challenge.rules, 'RulesClass', RulesClass, RulesClass.presetNames[r]);
                 this.challenge = challenge;
                 if (map.type === 'points') {
                     this.challengePointRules = challenge.rules;
@@ -84,11 +80,9 @@
                     if (map.image === 'id')
                         map.image = '/images/user/' + challenge.map;
                 }
-                console.log(map.image);
                 this.$store.dispatch('getUrl', map.image).then(imageUrl => {
                     this.image = imageUrl;
                 });
-                console.log({challenge, map})
             } else if (this.$route.query.hasOwnProperty('area_coordinates') && this.$route.query.hasOwnProperty('area_radius')) {
                 let coordinates = this.$route.query['area_coordinates'].split(',').map(n => +n);
                 let radius = +this.$route.query['area_radius'] * 1000;
@@ -103,16 +97,7 @@
                 this.$store.dispatch('getUrl', mapInfo.image).then(imageUrl => {
                     this.image = imageUrl;
                 });
-                console.log(mapInfo);
                 this.map = await MapManager.mapToGeoMap(mapInfo, this.$route.query.map);
-                console.log(this.map);
-                //Debug:
-                // let streetView = new StreetView(this.map);
-                // console.log("calling randomValidLocations");
-                // streetView.randomValidLocations(3, 14, 'sv', 'weighted', location => {
-                //     console.log("Location received:", location);
-                // });
-                // this.startGame(this.$refs.rules.exportRules())
             } else {
                 alert("Malformed URL :(");
             }
@@ -135,7 +120,7 @@
         },
         watch: {
             map() {
-                document.title = `Play ${this.map.name} - LocationEstimatr`;
+                document.title = `${this.map.name} - LocationEstimatr`;
             },
         },
         computed: {}
