@@ -3,23 +3,20 @@
         <h1>Settings</h1>
         <h2>Game</h2>
         <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"></v-switch>
-        <br>
-        <p class="caption">Slow CPU mode reduces CPU usage of the location finding algorithm while you're playing the game.
+        <p class="caption">Slow CPU mode reduces CPU usage of the location finding algorithm while you're playing the
+            game.
             This will make StreetView panoramas smoother, but finding locations will take more time.</p>
         <v-switch v-model="slowCpu" label="Slow CPU mode"></v-switch>
-        <br>
         <h2>Theme color</h2>
         <v-color-picker mode="hexa" v-model="color" hide-mode-switch></v-color-picker>
         <br>
         <v-btn @click="resetColor()">Reset Theme Color</v-btn>
-        <br>
-        <p class="caption">To save data, network requests are saved to the cache and only refreshed periodically,
-            instead of for each request.</p>
-        <v-btn @click="clearCache()">Clear Cache</v-btn>
-        <br>
         <img src="../assets/favicon256.png" v-show="false" ref="favicon">
         <canvas ref="canvas" v-show="false"></canvas>
         <div v-if="$store.state.realAccount">
+            <h2>Account</h2>
+            <v-btn :loading="loadingLogout" @click="logout">Logout</v-btn>
+            <br>
             <v-dialog v-model="pwDialog" width="500">
                 <template v-slot:activator="{ on }">
                     <v-btn v-on="on">Change Password</v-btn>
@@ -64,6 +61,10 @@
                 </v-card>
             </v-dialog>
         </div>
+        <h2>Other</h2>
+        <p class="caption">To save data, network requests are saved to the cache and only refreshed periodically,
+            instead of for each request.</p>
+        <v-btn @click="clearCache()">Clear Cache</v-btn>
     </div>
 </template>
 
@@ -83,6 +84,7 @@
                 deleteError: '',
                 loadingChangePassword: false,
                 loadingDeleteAccount: false,
+                loadingLogout: false,
                 slowCpu: this.$store.state.slowCpu,
                 showVisual: localStorage.getItem('visualize') && localStorage.visualize === 'true',
                 timeout: null,
@@ -92,6 +94,11 @@
             this.color = this.$vuetify.theme.themes.dark.primary;
         },
         methods: {
+            async logout() {
+                this.loadingLogout = true;
+                await this.$store.dispatch('logout');
+                this.loadingLogout = false;
+            },
             async updatePassword(e) {
                 e.preventDefault();
                 this.loadingChangePassword = true;

@@ -255,6 +255,7 @@ export default new Vuex.Store({
         async logout({commit}) {
             await firebase.auth().signOut();
             commit('setRealAccount', false);
+            //Not needed, event handler in App does this now
             // await firebase.auth().signInAnonymously();
         },
         async login({commit}, {email, password}) {
