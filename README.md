@@ -1,4 +1,15 @@
-# locationestimatr2
+# LocationEstimatr 2
+
+### Game
+![Screenshot1](/data/screenshots/1.png)
+![Screenshot2](/data/screenshots/2.png)
+![Screenshot3](/data/screenshots/3.png)
+![Screenshot4](/data/screenshots/4.png)
+### High Scores
+![Screenshot5](/data/screenshots/5.png)
+### Map Maker
+![Screenshot6](/data/screenshots/6.png)
+
 
 ## Project setup
 ```
@@ -9,18 +20,3 @@ npm install
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Deploy to firebase hosting
-*Requires `firebase-tools` to be installed (`npm i -g firebase-tools`)*
-```
-npm run deploy
-```
-
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
