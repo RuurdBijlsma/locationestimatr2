@@ -330,7 +330,7 @@ export default new Vuex.Store({
         },
         async reportMap({commit, state}, {mapId, rules}) {
             await db.collection('reports').add({
-                mapId, rules, user: firebase.auth().getUid(),
+                mapId, rules, user: firebase.auth().getUid(), date: new Date(),
             });
         },
         async getScoresByDifficultyAndMap({commit}, {difficulty, map, refresh, limit = 50}) {
