@@ -3,7 +3,7 @@
         <v-text-field class="search" v-if="showSearch" outlined label="Filter Maps" v-model="mapFilter"></v-text-field>
         <div class="inner-grid">
             <map-card v-for="map in filteredMaps"
-                      :key="map.name" :map="map" :img-prefix="imgPrefix"></map-card>
+                      :key="map.id" :map="map" :img-prefix="imgPrefix"></map-card>
         </div>
         <h3 v-if="filteredMaps.length===0 && !loading">
             <v-icon>sentiment_dissatisfied</v-icon>

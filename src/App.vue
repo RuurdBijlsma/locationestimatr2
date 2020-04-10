@@ -62,6 +62,7 @@
                     });
                 } else {
                     this.loggedIn = true;
+                    this.$store.commit("setUser", user);
                     if (user.email !== null) {
                         this.$store.commit('setRealAccount', user);
                     } else {

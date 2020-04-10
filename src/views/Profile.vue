@@ -18,9 +18,12 @@
                     </h3>
                     <map-grid :maps="user.maps" img-prefix="../"></map-grid>
                 </div>
-                <div v-else>
+                <div v-else-if="$route.query.id === $store.getters.user.uid">
                     <h3 class="subtitle">You haven't created any maps</h3>
                     <v-btn to="/create" outlined>Create Map</v-btn>
+                </div>
+                <div v-else>
+                    <h3 class="subtitle">This use hasn't created any maps</h3>
                 </div>
                 <div v-if="user.likes.length > 0">
                     <h3 class="subtitle">
@@ -29,9 +32,12 @@
                     </h3>
                     <map-grid :maps="user.likes" img-prefix="../"></map-grid>
                 </div>
-                <div v-else>
+                <div v-else-if="$route.query.id === $store.getters.user.uid">
                     <h3 class="subtitle">You haven't liked any maps</h3>
                     <v-btn to="/" outlined>Play a Map</v-btn>
+                </div>
+                <div v-else>
+                    <h3 class="subtitle">This user hasn't liked any maps</h3>
                 </div>
             </div>
         </div>
@@ -53,13 +59,21 @@
         },
         async mounted() {
             if (this.$route.query.id) {
+                await this.loadUser();
+            }
+        },
+        methods: {
+            async loadUser() {
                 let user = await this.$store.dispatch('getUser', this.$route.query.id);
                 this.user = user;
                 console.log(this.user);
             }
         },
-        methods: {},
-        watch: {}
+        watch: {
+            '$route.query.id'() {
+                this.loadUser();
+            }
+        }
     }
 </script>
 

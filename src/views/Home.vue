@@ -27,12 +27,15 @@
                         class="py-0">
                     <v-list-item two-line v-if="$store.state.realAccount">
                         <v-list-item-content>
-                            <v-list-item-title class="account" @click="goProfile()">{{$store.state.realAccount.email}}
+                            <v-list-item-title class="account">
+                                <router-link :to="'/user?id='+$store.state.user.uid">
+                                    {{$store.state.realAccount.email}}
+                                </router-link>
                             </v-list-item-title>
                             <v-list-item-subtitle class="logout" @click="logout()">Logout</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
-                    <v-list-item v-else @click="goProfile()">
+                    <v-list-item v-else-if="$store.state.user !== null" :to="'user?id='+$store.state.user.uid">
                         <v-list-item-content>
                             <v-list-item-title>My Maps</v-list-item-title>
                         </v-list-item-content>
@@ -186,13 +189,6 @@
                 this.loadingFeedback = false;
                 this.dialog = false;
             },
-            async goProfile() {
-                try {
-                    await this.$router.push('/user?id=' + this.$store.getters.user.uid)
-                } catch (e) {
-                    console.log(e.message);
-                }
-            },
             async logout() {
                 await this.$store.dispatch('logout');
                 this.showSnack("Logged out successfully");
@@ -338,6 +334,10 @@
         user-select: none;
         /* Non-prefixed version, currently
                                          supported by Chrome, Opera and Firefox */
+    }
+
+    .account a {
+        color: white;
     }
 
     .account:hover {

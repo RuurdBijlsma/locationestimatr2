@@ -128,12 +128,17 @@ export default new Vuex.Store({
     state: {
         homeMaps: [],
         realAccount: false,
+        user: null,
         customColor: false,
         windowWidth: window.innerWidth,
         immersive: false,
         slowCpu: localStorage.getItem('slowCpu') === null ? false : JSON.parse(localStorage.slowCpu),
     },
     mutations: {
+        'setUser': (state, user) => {
+            console.log("Setting user");
+            state.user = user;
+        },
         'setImmersive': (state, immersive) => {
             state.immersive = immersive;
         },

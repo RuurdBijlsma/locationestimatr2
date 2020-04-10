@@ -115,7 +115,7 @@
             objectives: ["Guess starting location", "Guess camera location"],
         }),
         async mounted() {
-            this.customRoundIndex = this.defaultRoundCount - 1;
+            this.customRoundIndex = this.rounds.indexOf(this.defaultRoundCount);
             let difficulty;
             if (this.challengeRules) {
                 console.log(this.setChallengeRules);
@@ -163,7 +163,7 @@
                 }
             },
             customRoundIndex() {
-                this.rules.roundCount = this.customRoundIndex + 1;
+                this.rules.roundCount = this.rounds[this.customRoundIndex];
             },
             challengeRules() {
                 this.setChallengeRules(this.challengeRules);
