@@ -136,11 +136,11 @@
         },
         data: () => ({
             customRoundIndex: 4,
+            rounds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             valid: true,
             selectedDifficulty: 'Normal',
             difficulties: Rules.presetNames,
             difficultyRules: Rules.presets,
-            rounds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             objectives: ["Guess starting location", "Guess camera location"],
             distributionTypes: Rules.distributionTypes,
             svTypes: Rules.svTypes,
@@ -211,7 +211,7 @@
             },
             rules() {
                 return this.difficultyRules[this.selectedDifficulty];
-            }
+            },
         }
     }
 </script>

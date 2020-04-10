@@ -45,7 +45,7 @@
                     </div>
                     <div v-else>
                         <div class="chips">
-                            <v-chip>{{roundCount}} round{{roundCount === 1 ? '' : 's'}}</v-chip>
+                            <v-chip>{{rules.roundCount}} round{{rules.roundCount === 1 ? '' : 's'}}</v-chip>
                             <v-chip v-if="rules.zoomAllowed">Zooming Allowed</v-chip>
                             <v-chip v-else>Zooming Restricted</v-chip>
                             <v-chip v-if="rules.panAllowed">Panning Allowed</v-chip>
@@ -107,6 +107,7 @@
             }
         },
         data: () => ({
+            customRoundIndex: 4,
             valid: true,
             selectedDifficulty: 'Normal',
             difficulties: PointRules.presetNames,
@@ -114,6 +115,7 @@
             objectives: ["Guess starting location", "Guess camera location"],
         }),
         async mounted() {
+            this.customRoundIndex = this.defaultRoundCount - 1;
             let difficulty;
             if (this.challengeRules) {
                 console.log(this.setChallengeRules);
@@ -129,10 +131,10 @@
         },
         methods: {
             setChallengeRules(challengeRules) {
-                this.selectedDifficulty = this.challengeRules.presetName;
-                if (this.challengeRules.presetName === 'Custom') {
-                    this.difficultyRules['Custom'] = this.challengeRules;
-                    this.customRoundIndex = this.challengeRules.roundCount - 1;
+                this.selectedDifficulty = challengeRules.presetName;
+                if (challengeRules.presetName === 'Custom') {
+                    this.difficultyRules['Custom'] = challengeRules;
+                    this.customRoundIndex = challengeRules.roundCount - 1;
                 }
             },
             exportRules() {
@@ -143,19 +145,20 @@
             selectedDifficulty() {
                 if (this.challengeMap || this.challengeRules)
                     return;
+                localStorage.lastPlayedPointDifficulty = this.difficultyId;
+                console.log("Replacing route!", {
+                    selDiff: this.selectedDifficulty,
+                    map: this.map.id,
+                    difficulty: this.difficultyId
+                });
                 try {
-                    localStorage.lastPlayedPointDifficulty = this.difficultyId;
-                    console.log("Replacing route!", {
-                        selDiff: this.selectedDifficulty,
-                        map: this.map.id,
-                        difficulty: this.difficultyId
-                    });
-                    this.$router.replace({
-                        query: {
-                            map: this.map.id,
-                            difficulty: this.difficultyId,
-                        }
-                    });
+                    if (this.$route.query.map !== this.map.id || this.$route.query.difficulty !== this.difficultyId)
+                        this.$router.replace({
+                            query: {
+                                map: this.map.id,
+                                difficulty: this.difficultyId,
+                            }
+                        });
                 } catch (e) {
                 }
             },
@@ -171,13 +174,26 @@
                 return PointRules.presetNames.indexOf(this.selectedDifficulty);
             },
             rules() {
-                this.difficultyRules[this.selectedDifficulty].roundCount = this.roundCount;
+                if (this.difficultyRules[this.selectedDifficulty].roundCount === -1)
+                    this.difficultyRules[this.selectedDifficulty].roundCount = this.defaultRoundCount;
                 return this.difficultyRules[this.selectedDifficulty];
             },
-            roundCount() {
-                if (this.map !== null)
-                    return this.map.points.length;
-            }
+            rounds() {
+                let mapRoundCount = this.map.points.length;
+                const maxRoundsShown = 10;
+                let roundCount = Math.min(mapRoundCount, maxRoundsShown);
+                let rounds = [...new Array(roundCount)].map((_, i) => i + 1);
+                if (mapRoundCount > maxRoundsShown)
+                    rounds[rounds.length - 1] = mapRoundCount;
+                console.log(roundCount, rounds);
+                return rounds;
+            },
+            defaultRoundCount() {
+                let maxRound = this.rounds[this.rounds.length - 1];
+                let roundCount = Math.min(maxRound, 5);
+                console.log({roundCount});
+                return roundCount;
+            },
         }
     }
 </script>

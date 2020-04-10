@@ -479,7 +479,7 @@
                 } else if (this.map.type === 'point') {
                     console.log("Not shuffled", this.map.points);
                     //Copy points because of the unshift happening after
-                    let pointPositions = randomStreetView._streetView.shuffle(JSON.parse(JSON.stringify(this.map.points)));
+                    let pointPositions = randomStreetView._streetView.shuffle(JSON.parse(JSON.stringify(this.map.points))).slice(0, this.rules.roundCount);
                     console.log("Shuffled", pointPositions);
                     pointPositions.unshift(undefined);
                     this.locations = pointPositions;
