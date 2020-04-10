@@ -22,6 +22,12 @@
                               label="Difficulty"
                               required></v-select>
                     <div v-if="selectedDifficulty === 'Custom' && challengeRules === null" class="custom-difficulty">
+                        <h3>Round count</h3>
+                        <v-chip-group class="chips" active-class="primary--text" mandatory v-model="customRoundIndex">
+                            <v-chip v-for="round in rounds">
+                                {{round}}
+                            </v-chip>
+                        </v-chip-group>
                         <v-switch label="Unlimited Time" v-model="rules.unlimitedTime"></v-switch>
                         <v-text-field v-if="!rules.unlimitedTime" class="number-input" outlined type="number"
                                       label="Time Limit (seconds)" v-model="rules.timeLimit"></v-text-field>
@@ -109,7 +115,10 @@
         }),
         async mounted() {
             let difficulty;
-            if (this.$route.query.hasOwnProperty('difficulty')) {
+            if (this.challengeRules) {
+                console.log(this.setChallengeRules);
+                this.setChallengeRules(this.challengeRules);
+            } else if (this.$route.query.hasOwnProperty('difficulty')) {
                 difficulty = +this.$route.query['difficulty']
             } else if (localStorage.getItem('lastPlayedPointDifficulty') !== null) {
                 difficulty = +localStorage.lastPlayedPointDifficulty;
@@ -119,6 +128,13 @@
             }
         },
         methods: {
+            setChallengeRules(challengeRules) {
+                this.selectedDifficulty = this.challengeRules.presetName;
+                if (this.challengeRules.presetName === 'Custom') {
+                    this.difficultyRules['Custom'] = this.challengeRules;
+                    this.customRoundIndex = this.challengeRules.roundCount - 1;
+                }
+            },
             exportRules() {
                 return this.rules;
             }
@@ -147,11 +163,7 @@
                 this.rules.roundCount = this.customRoundIndex + 1;
             },
             challengeRules() {
-                this.selectedDifficulty = this.challengeRules.presetName;
-                if (this.challengeRules.presetName === 'Custom') {
-                    this.difficultyRules['Custom'] = this.challengeRules;
-                    this.customRoundIndex = this.challengeRules.roundCount - 1;
-                }
+                this.setChallengeRules(this.challengeRules);
             },
         },
         computed: {

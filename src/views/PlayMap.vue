@@ -57,6 +57,7 @@
                 } else {
                     challenge.rules = new RulesClass(challenge.rules);
                 }
+                console.log("Challenge rules", challenge.rules);
                 this.challenge = challenge;
                 if (map.type === 'points') {
                     this.challengePointRules = challenge.rules;

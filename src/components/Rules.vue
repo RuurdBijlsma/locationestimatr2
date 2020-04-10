@@ -147,7 +147,10 @@
         }),
         async mounted() {
             let difficulty;
-            if (this.$route.query.hasOwnProperty('difficulty')) {
+            if (this.challengeRules) {
+                console.log(this.setChallengeRules);
+                this.setChallengeRules(this.challengeRules);
+            } else if (this.$route.query.hasOwnProperty('difficulty')) {
                 difficulty = +this.$route.query['difficulty'];
             } else if (localStorage.getItem('lastPlayedDifficulty') !== null) {
                 difficulty = +localStorage.lastPlayedDifficulty;
@@ -156,6 +159,14 @@
                 this.selectedDifficulty = Rules.presetNames[Math.min(Math.max(difficulty, 0), Rules.presetNames.length)];
         },
         methods: {
+            setChallengeRules(challengeRules) {
+                this.selectedDifficulty = challengeRules.presetName;
+                console.log("Setting challenge rules", challengeRules);
+                if (challengeRules.presetName === 'Custom') {
+                    this.difficultyRules['Custom'] = challengeRules;
+                    this.customRoundIndex = challengeRules.roundCount - 1;
+                }
+            },
             exportRules() {
                 return this.rules;
             }
@@ -190,11 +201,7 @@
                 this.rules.roundCount = this.customRoundIndex + 1;
             },
             challengeRules() {
-                this.selectedDifficulty = this.challengeRules.presetName;
-                if (this.challengeRules.presetName === 'Custom') {
-                    this.difficultyRules['Custom'] = this.challengeRules;
-                    this.customRoundIndex = this.challengeRules.roundCount - 1;
-                }
+                this.setChallengeRules(this.challengeRules);
             },
         },
         computed: {
