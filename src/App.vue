@@ -35,7 +35,7 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    console.log(firebase);
+    // console.log(firebase);
 
 
     export default {

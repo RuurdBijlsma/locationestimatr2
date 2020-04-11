@@ -31,9 +31,6 @@ if (document.querySelectorAll(`head link[rel='manifest']`).length === 0) {
     manifestLink.setAttribute('rel', 'manifest');
     manifestLink.setAttribute('href', './manifest.json');
     document.querySelector('head').appendChild(manifestLink);
-    console.log("WHY IS THIS NEEDED");
-} else {
-    console.log("IT WASN'T NEEDED NOW");
 }
 
 async function getCached(key, action, cacheLifetime = 1000 * 60 * 60 * 24) {
@@ -488,7 +485,7 @@ export default new Vuex.Store({
                     let homeMaps = await getCached('homeMaps', get, year);
                     commit('setHomeMaps', homeMaps);
                 }
-                let homeMaps = await getCached('homeMaps', get, day);
+                let homeMaps = await getCached('homeMaps', get, day * 5);
                 commit('setHomeMaps', homeMaps);
             } else {
                 // console.log("Don't have to load home maps silly")
