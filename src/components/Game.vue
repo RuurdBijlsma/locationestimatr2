@@ -485,12 +485,11 @@
                     this.locations = pointPositions;
                 } else {
                     let i = 0;
-                    await randomStreetView.getRandomLocations(this.rules.roundCount, position => {
-                        let round = ++i;
-                        this.locations[round] = {position, pov: defaultPov};
+                    for (let round = 1; round <= this.rules.roundCount; round++) {
+                        this.locations[round] = {position: await randomStreetView.getRandomLocation(), pov: defaultPov};
                         console.log("Finished loading location for round:", round, this.locations);
                         this.$emit('roundLocation:' + round);
-                    });
+                    }
                 }
             },
             async getRoundLocation(round) {
