@@ -205,7 +205,8 @@
 
     @media screen and (max-width: 550px) {
         .rules-card {
-            height: 100%;
+            margin-bottom:60px;
+            min-height: 100%;
         }
     }
 
