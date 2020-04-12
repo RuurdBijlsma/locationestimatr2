@@ -197,6 +197,8 @@
                 console.log("Starting game", map, rules, challenge);
                 if (this.challenge !== null)
                     this.challenge.guesses.forEach(challenge => {
+                        if (challenge.guess === undefined)
+                            return;
                         let guess = challenge.guess;
                         let target = challenge.target;
                         challenge.distance = this.measureDistance(guess, target);
@@ -484,7 +486,6 @@
                     pointPositions.unshift(undefined);
                     this.locations = pointPositions;
                 } else {
-                    let i = 0;
                     for (let round = 1; round <= this.rules.roundCount; round++) {
                         this.locations[round] = {position: await randomStreetView.getRandomLocation(), pov: defaultPov};
                         console.log("Finished loading location for round:", round, this.locations);
@@ -601,8 +602,11 @@
                 //TODO IMPORTANT SHOW LOADING NEXT ROUDN BUTTON WHEN NEXT LOCATION ISN'T  FOUND YET
                 this.attachMap(this.$refs.bigMap);
                 let challengeGuess = null;
-                if (this.challenge !== null)
+                if (this.challenge !== null) {
                     challengeGuess = this.challenge.guesses[this.currentRound - 1];
+                    if (challengeGuess.guess === undefined)
+                        challengeGuess = null;
+                }
                 this.$refs.roundScore.show(guess, target, distance, points, isLastRound, challengeGuess);
             },
             measureDistance(from, to) {

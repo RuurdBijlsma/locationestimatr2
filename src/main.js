@@ -2,11 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 
-const _log = console.log;
-window.console.log = (...params) => {
-    if (process.env.NODE_ENV === 'development')
-        _log(...params);
-};
+if (process.env.NODE_ENV === 'production')
+    window.console.log = () => ({});
 
 import router from './router'
 import store from './store'

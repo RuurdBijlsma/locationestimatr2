@@ -7,9 +7,14 @@
                 <h1 class="game-title" v-if="map !== null">{{map.name}}</h1>
             </v-img>
             <v-card-title v-if="challengeRules === null">Game Rules</v-card-title>
-            <v-card-title v-else>You've been challenged!</v-card-title>
-            <v-card-text v-if="challengeMap !== null && challengeRules !== null">
+            <v-card-title v-else-if="!mpChallenge">You've been challenged!</v-card-title>
+            <v-card-title v-else>Play with friend!</v-card-title>
+            <v-card-text v-if="challengeMap !== null && challengeRules !== null && !mpChallenge">
                 Play Location Estimatr in "{{challengeMap.name}}" using the following difficulty rules:
+            </v-card-text>
+            <v-card-text v-else-if="challengeMap !== null && challengeRules !== null">
+                Anyone using this link: <a :href="url">{{url}}</a>
+                will get the same rules, map and locations as you! Score comparison at the end of the round isn't implemented (yet).
             </v-card-text>
             <v-card-text>
                 <v-form ref="form"
@@ -43,32 +48,16 @@
                             </v-chip>
                         </v-chip-group>
                     </div>
-                    <div v-else>
-                        <div class="chips">
-                            <v-chip>{{rules.roundCount}} round{{rules.roundCount === 1 ? '' : 's'}}</v-chip>
-                            <v-chip v-if="rules.zoomAllowed">Zooming Allowed</v-chip>
-                            <v-chip v-else>Zooming Restricted</v-chip>
-                            <v-chip v-if="rules.panAllowed">Panning Allowed</v-chip>
-                            <v-chip v-else>Panning Restricted</v-chip>
-                            <v-chip v-if="rules.unlimitedMoves">Unlimited Moves</v-chip>
-                            <v-chip v-else>{{rules.moveLimit}} move{{rules.moveLimit === 1 ? '' : 's'}}</v-chip>
-                            <v-chip v-if="rules.unlimitedTime">Unlimited Time</v-chip>
-                            <v-chip v-else>{{rules.timeLimit}} second{{rules.timeLimit === 1 ? '' : 's'}} per round
-                            </v-chip>
-                            <v-chip v-if="rules.objective === 0">
-                                {{objectives[rules.objective]}}
-                            </v-chip>
-                            <v-chip title="With this objective you try to guess where the StreetView camera is at the time of guessing, instead of where you started."
-                                    v-if="rules.objective === 1" light color='primary'>
-                                {{objectives[rules.objective]}}
-                                <v-icon right>priority_high</v-icon>
-                            </v-chip>
-                        </div>
-                    </div>
+                    <rules-display v-else :rules="rules" :is-point="true"></rules-display>
                 </v-form>
             </v-card-text>
             <v-card-actions>
-                <v-btn color='primary' text @click="$emit('startGame', exportRules())" :loading="loading">Start game
+                <v-btn color='primary' text @click="$emit('startGame', exportRules())" :loading="loading">
+                    Start game
+                </v-btn>
+                <v-btn v-if="challengeRules === null" color='grey' text @click="$emit('hostGame', exportRules())"
+                       :loading="loadingHost">
+                    Play with friend
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -80,10 +69,11 @@
     import PointRules from "../js/PointRules";
     import GeoMap from "../js/GeoMap";
     import Rules from "../js/Rules";
+    import RulesDisplay from "./RulesDisplay";
 
     export default {
         name: 'PointRules',
-        components: {},
+        components: {RulesDisplay},
         props: {
             challengeRules: {
                 type: PointRules,
@@ -97,6 +87,10 @@
                 type: Boolean,
                 default: false,
             },
+            loadingHost: {
+                type: Boolean,
+                default: false,
+            },
             map: {
                 type: GeoMap,
                 default: null,
@@ -104,7 +98,11 @@
             image: {
                 type: String,
                 default: '',
-            }
+            },
+            mpChallenge: {
+                type: Boolean,
+                default: '',
+            },
         },
         data: () => ({
             customRoundIndex: 4,
@@ -113,6 +111,7 @@
             difficulties: PointRules.presetNames,
             difficultyRules: PointRules.presets,
             objectives: ["Guess starting location", "Guess camera location"],
+            url: location.href,
         }),
         async mounted() {
             this.customRoundIndex = this.rounds.indexOf(this.defaultRoundCount);
@@ -142,6 +141,9 @@
             }
         },
         watch: {
+            $route() {
+                this.url = location.href;
+            },
             selectedDifficulty() {
                 if (this.challengeMap || this.challengeRules)
                     return;
@@ -205,14 +207,9 @@
 
     @media screen and (max-width: 550px) {
         .rules-card {
-            margin-bottom:60px;
+            margin-bottom: 60px;
             min-height: 100%;
         }
-    }
-
-
-    .chips > * {
-        margin: 5px;
     }
 
     .number-input {

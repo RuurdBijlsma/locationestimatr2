@@ -417,7 +417,7 @@ export default new Vuex.Store({
             return mapId;
         },
         async getChallengeUrl({commit}, data) {
-            console.log("Challenge data", data.radius);
+            console.log("Challenge data", data);
             let appendString = '';
             if (data.radius && data.coordinates) {
                 let radius = data.radius;

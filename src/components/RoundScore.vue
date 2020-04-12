@@ -36,7 +36,8 @@
                     :items="tableGuesses"
                     class="elevation-1 data-table">
                 <template v-slot:footer>
-                    <p class="table-footer">Your total score: {{points}}<span v-if="challenge!==null">, challenger total score: {{challengeTotalScore}}</span>
+                    <p class="table-footer">
+                        Your total score: {{points}}<span v-if="challenge!==null && challengeTotalScore !== -1">, challenger total score: {{challengeTotalScore}}</span>
                     </p>
                 </template>
             </v-data-table>
@@ -209,7 +210,7 @@
                             color: '#02c780',
                             number: i + 1,
                         }, '#FE6256', 400).then(() => {
-                            if (this.challenge !== null) {
+                            if (this.challenge !== null && this.challenge.guesses[0].guess !== undefined) {
                                 this.addOverviewLine({
                                     location: this.toLatLng(this.challenge.guesses[i].target),
                                     name: `Target Location (round ${i + 1})`,
@@ -226,7 +227,7 @@
                     }, i * 250);
                 }
                 let locations = this.guesses.flatMap(g => [g.guess, g.target]).map(l => this.toLatLng(l));
-                if (this.challenge !== null)
+                if (this.challenge !== null && this.challenge.guesses[0].guess !== undefined)
                     locations = locations.concat(this.challenge.guesses.map(c => this.toLatLng(c.guess)));
                 console.log("LOCATIONS", locations, 'guesses', this.guesses);
                 this.updateFit(...locations);
@@ -251,7 +252,7 @@
                 console.log(guess, target, "is last round", isLastRound);
                 this.nextButtonEnabled = false;
                 let challengeGuessLocation = null;
-                if (challengeGuess !== null) {
+                if (challengeGuess !== null && challengeGuess.guess !== undefined) {
                     challengeGuessLocation = this.toLatLng(challengeGuess.guess);
                     this.challengeGuess = challengeGuess;
                 }
@@ -400,6 +401,8 @@
         },
         computed: {
             challengeTotalScore() {
+                if (this.challenge.guesses[0].guess === undefined)
+                    return -1;
                 return this.challenge.guesses.map(c => c.score).reduce((a, b) => a + b);
             },
             distance() {
@@ -436,30 +439,31 @@
         },
         watch: {
             challenge() {
-                this.tableHeaders = [
-                    {
-                        text: "Round",
-                        value: "round",
-                    },
-                    {
-                        text: "Distance (you)",
-                        value: "distance",
-                        sortable: false,
-                    },
-                    {
-                        text: "Distance (challenger)",
-                        value: "challengerDistance",
-                        sortable: false,
-                    },
-                    {
-                        text: "Score (you)",
-                        value: "score",
-                    },
-                    {
-                        text: "Score (challenger)",
-                        value: "challengerScore",
-                    },
-                ];
+                if (this.challenge.guesses[0].guess !== undefined)
+                    this.tableHeaders = [
+                        {
+                            text: "Round",
+                            value: "round",
+                        },
+                        {
+                            text: "Distance (you)",
+                            value: "distance",
+                            sortable: false,
+                        },
+                        {
+                            text: "Distance (challenger)",
+                            value: "challengerDistance",
+                            sortable: false,
+                        },
+                        {
+                            text: "Score (you)",
+                            value: "score",
+                        },
+                        {
+                            text: "Score (challenger)",
+                            value: "challengerScore",
+                        },
+                    ];
             }
         }
     }
