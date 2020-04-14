@@ -74,7 +74,7 @@ async function addCount(mapId, field) {
     }
 }
 
-async function getMapById(id) {
+async function getMapById(id, cacheTime = year) {
     let get = async () => {
         let mapData = (await db.collection('maps').doc(id).get()).data();
         //map has been deleted :O
@@ -112,13 +112,13 @@ async function getMapById(id) {
         delete mapData.kml;
         return mapData;
     };
-    return getCached('shallowMap:' + id, get, year);
+    return getCached('shallowMap:' + id, get, cacheTime);
 }
 
-async function getMapsByIds(ids) {
+async function getMapsByIds(ids, cacheTime = year) {
     // console.log({ids})
     // console.log({result});
-    return await Promise.all(ids.map(getMapById));
+    return await Promise.all(ids.map(id => getMapById(id, cacheTime)));
 }
 
 export default new Vuex.Store({
@@ -466,14 +466,14 @@ export default new Vuex.Store({
         async loadHomeMaps({commit}) {
             if (this.state.homeMaps.length === 0) {
                 console.log("Loading home maps");
-                let get = async () => {
+                let get = async cacheTime => {
                     const mapsCollection = await db.collection('home-maps').orderBy('order').get();
                     const homeMaps = [];
                     mapsCollection.forEach(map => {
                         homeMaps.push(map.data());
                     });
                     await Promise.all(homeMaps.map(async hm => {
-                        let maps = await getMapsByIds(hm.maps.map(m => m.id));
+                        let maps = await getMapsByIds(hm.maps.map(m => m.id), cacheTime);
                         maps = maps.filter(m => m !== false);
                         hm.maps = maps;
                     }));
@@ -482,10 +482,10 @@ export default new Vuex.Store({
                 };
                 if (tempCache) {
                     console.log("Using temp cache");
-                    let homeMaps = await getCached('homeMaps', get, year);
+                    let homeMaps = await getCached('homeMaps', () => get(year), year);
                     commit('setHomeMaps', homeMaps);
                 }
-                let homeMaps = await getCached('homeMaps', get, day * 5);
+                let homeMaps = await getCached('homeMaps', () => get(day * 5), day * 5);
                 commit('setHomeMaps', homeMaps);
             } else {
                 // console.log("Don't have to load home maps silly")
