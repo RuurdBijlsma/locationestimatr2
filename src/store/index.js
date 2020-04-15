@@ -218,22 +218,40 @@ export default new Vuex.Store({
                     .get();
                 let popMaps = [];
                 popularMapIds.forEach(map => popMaps.push(map.id));
+
                 let likedMapIds = await db.collection('map-counts')
                     .orderBy('likes', 'desc')
                     .limit(8)
                     .get();
                 let likeMaps = [];
                 likedMapIds.forEach(map => likeMaps.push(map.id));
+
                 console.log(popMaps, likeMaps);
                 let [pMaps, lMaps] = await Promise.all([
-                    getMapsByIds(popMaps),
-                    getMapsByIds(likeMaps)
+                    getMapsByIds(popMaps, 5 * day),
+                    getMapsByIds(likeMaps, 5 * day),
                 ]);
                 pMaps = pMaps.filter(p => p !== false);
                 lMaps = lMaps.filter(p => p !== false);
+
+
                 return {popular: pMaps, liked: lMaps};
             };
-            return getCached('explore', get, day);
+            let get2 = async () => {
+                let newMapIds = await db.collection('maps')
+                    .orderBy('date', 'desc')
+                    .limit(12)
+                    .get();
+                let newMaps = [];
+                newMapIds.forEach(map => newMaps.push(map.id));
+                let nMaps = await getMapsByIds(newMaps);
+                return nMaps.filter(p => p !== false && p.counts.plays >= 1);
+            };
+            let [{popular, liked}, recent] = await Promise.all([
+                getCached('explore', get, day),
+                getCached('exploreRecent', get2, 15 * minute),
+            ]);
+            return {popular, liked, recent};
         },
         async getUser({commit, dispatch}, userId) {
             let get = async () => {
