@@ -212,14 +212,15 @@
                 else if (this.map.minimumDistanceForPoints < 10000) this.zoom = 16;
                 else this.zoom = 14;
                 console.log("Using zoom level:", this.zoom, this.map.minimumDistanceForPoints);
-                await randomStreetView.setParameters({
-                    polygon: this.map.polygon,
-                    cacheKey: this.map.id,
-                    type: this.svType,
-                    distribution: this.distribution,
-                    endZoom: this.zoom,
-                    google: Google,
-                });
+                if (this.map instanceof PolyMap)
+                    await randomStreetView.setParameters({
+                        polygon: this.map.polygon,
+                        cacheKey: this.map.id,
+                        type: this.svType,
+                        distribution: this.distribution,
+                        endZoom: this.zoom,
+                        google: Google,
+                    });
                 if (this.visualize)
                     this.initializeTilesVisualizer().then(() => {
                         randomStreetView.on('tiles', tiles => {

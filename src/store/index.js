@@ -88,8 +88,13 @@ async function getMapById(id, cacheTime = year) {
             resolve();
         });
         let imageTask = new Promise(async resolve => {
-            if (mapData.image === 'id')
-                mapData.image = await storage.child('images/user/' + id).getDownloadURL();
+            if (mapData.image === 'id') {
+                try {
+                    mapData.image = await storage.child('images/user/' + id).getDownloadURL();
+                } catch (e) {
+                    mapData.image = 'images/flags/ad.svg';
+                }
+            }
             resolve();
         });
         let userTask = new Promise(async resolve => {
@@ -478,8 +483,12 @@ export default new Vuex.Store({
             return await getCached('map:' + mapKey, get, year);
         },
         async getUrl({commit}, imageUrl) {
-            let get = async () => storage.child(imageUrl).getDownloadURL();
-            return getCached('storage:image:' + imageUrl, get, year);
+            try {
+                let get = async () => storage.child(imageUrl).getDownloadURL();
+                return getCached('storage:image:' + imageUrl, get, year);
+            } catch (e) {
+                return 'images/flags/ad.svg';
+            }
         },
         async loadHomeMaps({commit}) {
             if (this.state.homeMaps.length === 0) {
