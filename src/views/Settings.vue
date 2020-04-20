@@ -1,6 +1,13 @@
 <template>
     <div class="settings">
         <h1>Settings</h1>
+        <h2>Custom API Key</h2>
+        <p class="caption">Fill in your own Google Maps JavaScript API key.
+            Since the main API key doesn't work anymore this is required to play. Get an API key
+            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">here</a>.
+        </p>
+        <v-text-field label="API Key" v-model="apiKey"></v-text-field>
+        <v-btn @click="setApiKey">Apply API key</v-btn>
         <h2>Game</h2>
         <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"></v-switch>
         <p class="caption">Slow CPU mode reduces CPU usage of the location finding algorithm while you're playing the
@@ -70,6 +77,7 @@
 
 <script>
     import Color from 'color-converter';
+    import ApiKey from "../js/ApiKey";
 
     export default {
         name: 'Settings',
@@ -88,12 +96,23 @@
                 slowCpu: this.$store.state.slowCpu,
                 showVisual: localStorage.getItem('visualize') && localStorage.visualize === 'true',
                 timeout: null,
+                apiKey: '',
             }
         },
         mounted() {
+            if (ApiKey.customKey)
+                this.apiKey = ApiKey.key;
             this.color = this.$vuetify.theme.themes.dark.primary;
         },
         methods: {
+            setApiKey() {
+                if (this.apiKey !== '') {
+                    localStorage.apiKey = this.apiKey;
+                    location.reload();
+                } else {
+                    alert("Fill in something first");
+                }
+            },
             async logout() {
                 this.loadingLogout = true;
                 await this.$store.dispatch('logout');

@@ -1,13 +1,13 @@
 import loadGoogleMapsApi from 'load-google-maps-api'
 import EventEmitter from "events";
-import {googleMapsKey} from '../assets/credentials.json';
+import ApiKey from "./ApiKey";
 
 class Google extends EventEmitter {
     constructor() {
         super();
         this.maps = false;
         loadGoogleMapsApi({
-            key: googleMapsKey,
+            key: ApiKey.key,
             libraries: ['geometry']
         }).then(googleMaps => {
             this.maps = googleMaps;
