@@ -13,7 +13,7 @@
         </v-app-bar>
         <v-content class="content"
                    :style="mobile && !($route.path.startsWith('/play') && $store.state.immersive) ? `margin-top: 56px` : ''">
-            <router-view v-if="loggedIn"></router-view>
+            <router-view v-if="loggedIn"/>
         </v-content>
     </v-app>
     <!--    <div id="app">-->

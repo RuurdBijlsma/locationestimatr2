@@ -1,25 +1,25 @@
 <template>
     <div class="settings">
         <h1>Settings</h1>
-        <h2>Custom API Key</h2>
-        <p class="caption">Fill in your own Google Maps JavaScript API key.
-            Since the main API key doesn't work anymore this is required to play. Get an API key
-            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">here</a>.
-        </p>
-        <v-text-field label="API Key" v-model="apiKey"></v-text-field>
-        <v-btn @click="setApiKey">Apply API key</v-btn>
+<!--        <h2>Custom API Key</h2>-->
+<!--        <p class="caption">Fill in your own Google Maps JavaScript API key.-->
+<!--            Since the main API key doesn't work anymore this is required to play. Get an API key-->
+<!--            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">here</a>.-->
+<!--        </p>-->
+<!--        <v-text-field label="API Key" v-model="apiKey"/>-->
+<!--        <v-btn @click="setApiKey">Apply API key</v-btn>-->
         <h2>Game</h2>
-        <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"></v-switch>
+        <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"/>
         <p class="caption">Slow CPU mode reduces CPU usage of the location finding algorithm while you're playing the
             game.
             This will make StreetView panoramas smoother, but finding locations will take more time.</p>
-        <v-switch v-model="slowCpu" label="Slow CPU mode"></v-switch>
+        <v-switch v-model="slowCpu" label="Slow CPU mode"/>
         <h2>Theme color</h2>
-        <v-color-picker mode="hexa" v-model="color" hide-mode-switch></v-color-picker>
+        <v-color-picker mode="hexa" v-model="color" hide-mode-switch/>
         <br>
         <v-btn @click="resetColor()">Reset Theme Color</v-btn>
         <img src="../assets/favicon256.png" v-show="false" ref="favicon">
-        <canvas ref="canvas" v-show="false"></canvas>
+        <canvas ref="canvas" v-show="false"/>
         <div v-if="$store.state.realAccount">
             <h2>Account</h2>
             <v-btn :loading="loadingLogout" @click="logout">Logout</v-btn>
@@ -33,14 +33,14 @@
                         <v-card-title primary-title>Change Password</v-card-title>
                         <v-card-text>
                             <v-text-field disabled type="mail" name="user" :value="$store.getters.user.email"
-                                          label="Email"></v-text-field>
+                                          label="Email"/>
                             <v-text-field type="password" name="newPassword" v-model="password"
-                                          label="New Password"></v-text-field>
+                                          label="New Password"/>
                             <p class="caption error--text">{{pwError}}</p>
                         </v-card-text>
-                        <v-divider></v-divider>
+                        <v-divider/>
                         <v-card-actions>
-                            <v-spacer></v-spacer>
+                            <v-spacer/>
                             <v-btn color="primary" text type="submit">Submit</v-btn>
                         </v-card-actions>
                     </v-form>
@@ -59,9 +59,9 @@
                         your account permanently?
                         <p class="caption error--text">{{deleteError}}</p>
                     </v-card-text>
-                    <v-divider></v-divider>
+                    <v-divider/>
                     <v-card-actions>
-                        <v-spacer></v-spacer>
+                        <v-spacer/>
                         <v-btn text @click="deleteDialog=false">Cancel</v-btn>
                         <v-btn color="error" text @click="deleteAccount">Delete Account</v-btn>
                     </v-card-actions>

@@ -178,10 +178,10 @@
             }
         },
         mounted() {
-            if (!ApiKey.customKey) {
-                alert("The API key for this project was disabled, a custom API key is required to play now. There is more info in the settings page.");
-                this.$router.push('/settings');
-            }
+            // if (!ApiKey.customKey) {
+            //     alert("The API key for this project was disabled, a custom API key is required to play now. There is more info in the settings page.");
+            //     this.$router.push('/settings');
+            // }
         },
         methods: {
             async sendFeedback() {
