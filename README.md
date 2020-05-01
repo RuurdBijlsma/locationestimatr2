@@ -1,6 +1,4 @@
 # LocationEstimatr 2
-The API for this project stopped working, so it's not live anymore. Self hosting is possible though. 
-
 
 
 ### Game
