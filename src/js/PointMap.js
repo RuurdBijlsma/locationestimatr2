@@ -2,8 +2,8 @@ import GeoMap from "./GeoMap";
 import Google from "./Google";
 
 export default class PointMap extends GeoMap {
-    constructor(points, minimumDistanceForPoints, name, id = 'NoId') {
-        super('point', name, id, minimumDistanceForPoints);
+    constructor(points, settings, minimumDistanceForPoints, name, id = 'NoId') {
+        super('point', settings, name, id, minimumDistanceForPoints);
         this.points = points;
         this.googlePoints = null;
         this.googlePoints = points.map(p => {
@@ -24,9 +24,10 @@ export default class PointMap extends GeoMap {
     }
 
     getBounds() {
-        const bounds = new google.maps.LatLngBounds();
-        // for (let {position} of this.googlePoints) {
-        for (let position of this.worldBounds) {
+        const bounds = new Google.maps.LatLngBounds();
+        let boundPoints = this.settings.zoom ? this.googlePoints.map(g => g.position) : this.worldBounds;
+        // console.log()
+        for (let position of boundPoints) {
             bounds.extend(position);
         }
         return bounds;

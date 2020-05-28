@@ -2,8 +2,8 @@ import GeoMap from "./GeoMap";
 import Google from "./Google";
 
 export default class PolyMap extends GeoMap {
-    constructor(polygon, minimumDistanceForPoints, name, id = 'NoId') {
-        super('poly', name, id, minimumDistanceForPoints);
+    constructor(polygon, settings, minimumDistanceForPoints, name, id = 'NoId') {
+        super('poly', settings, name, id, minimumDistanceForPoints);
         this.polygon = polygon;
     }
 

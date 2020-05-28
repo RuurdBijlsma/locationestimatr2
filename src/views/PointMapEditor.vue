@@ -9,14 +9,14 @@
         <p class="error--text caption">{{error}}</p>
         <div class="controls">
             <v-file-input small-chips v-model="jsonFile" label="Import Map" outlined dense accept=".json"
-                          title="Import .json file into editor" class="json-input"></v-file-input>
+                          title="Import .json file into editor" class="json-input"/>
             <v-btn @click="exportJson()" outlined
                    title="Export your map as a json file, which can be imported later.">
                 Export Map
             </v-btn>
         </div>
         <div class="controls">
-            <v-switch class="coverage-switch" v-model="showCoverage" label="Show StreetView Coverage"></v-switch>
+            <v-switch class="coverage-switch" v-model="showCoverage" label="Show StreetView Coverage"/>
         </div>
         <div class="controls">
             <v-btn @click="confirmPoint()" outlined v-if="svPoint.position!==null">
@@ -36,34 +36,45 @@
         <!--        <v-file-input v-model="mapImage" class="image-input" prepend-icon="insert_photo" outlined dense small-chips-->
         <!--                      accept="image/*" label="Map Image (optional)"></v-file-input>-->
         <v-form class="name-field" @submit="createMap">
-            <v-text-field required :rules="nameRules" v-model="mapName" class="name-input" outlined label="Map Name"
-                          dense></v-text-field>
-            <v-dialog v-model="dialog" width="500">
-                <template v-slot:activator="{ on }">
-                    <v-btn text color='primary' type="submit" :loading="uploading">
-                        Upload Map
-                    </v-btn>
-                </template>
-                <v-card>
-                    <v-card-title v-if="invalid" primary-title>Invalid map!</v-card-title>
-                    <v-card-title v-else primary-title>Are you sure</v-card-title>
-                    <v-card-text v-if="!invalid">
-                        Once you upload your map, you can't edit it anymore, if you want to work on this
-                        later, click "Export JSON". The current StreetView preview will be used as thumbnail image for
-                        this map.
-                    </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="error" text @click="dialog = false">
-                            Cancel
+            <div class="map-settings">
+                <v-switch label="Zoom in on points on minimap" v-model="settings.zoom"/>
+            </div>
+            <div class="map-settings">
+                <v-text-field class="difficulty-multiplier" type="number"
+                              label="Points difficulty multiplier (higher value gives lower score for same distance)"
+                              v-model="settings.difficultyMultiplier"/>
+            </div>
+            <div class="map-settings">
+                <v-text-field required :rules="nameRules" v-model="mapName" class="name-input" outlined label="Map Name"
+                              dense/>
+                <v-dialog v-model="dialog" width="500">
+                    <template v-slot:activator="{ on }">
+                        <v-btn text color='primary' type="submit" :loading="uploading">
+                            Upload Map
                         </v-btn>
-                        <v-btn v-if="!invalid" color="primary" text @click="uploadMap">
-                            Upload
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+                    </template>
+                    <v-card>
+                        <v-card-title v-if="invalid" primary-title>Invalid map!</v-card-title>
+                        <v-card-title v-else primary-title>Are you sure</v-card-title>
+                        <v-card-text v-if="!invalid">
+                            Once you upload your map, you can't edit it anymore, if you want to work on this
+                            later, click "Export JSON". The current StreetView preview will be used as thumbnail image
+                            for
+                            this map.
+                        </v-card-text>
+                        <v-divider/>
+                        <v-card-actions>
+                            <v-spacer/>
+                            <v-btn color="error" text @click="dialog = false">
+                                Cancel
+                            </v-btn>
+                            <v-btn v-if="!invalid" color="primary" text @click="uploadMap">
+                                Upload
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </div>
         </v-form>
     </div>
 </template>
@@ -95,7 +106,11 @@
                 showCoverage: false,
                 error: '',
                 points: [],
-                svPoint: {position: null, pov: null}
+                svPoint: {position: null, pov: null},
+                settings: {
+                    difficultyMultiplier: 1,
+                    zoom: true,
+                },
             }
         },
         async mounted() {
@@ -306,6 +321,7 @@
                     points: this.exportPoints,
                     image: await this.getImage(),
                     date: new Date(),
+                    settings: this.settings,
                 });
                 this.uploading = false;
                 // console.warn("EMIT HERE");
@@ -404,11 +420,20 @@
         cursor: pointer;
     }
 
+    .difficulty-multiplier {
+        max-width: 320px;
+    }
+
     .name-field {
         max-width: 1000px;
+        /*display: flex;*/
+        /*justify-content: space-around;*/
+        margin: 20px 0;
+    }
+
+    .map-settings {
         display: flex;
         justify-content: space-around;
-        margin: 20px 0;
     }
 
     .name-input {

@@ -7,7 +7,7 @@ class MapManager {
     async areaToGeoMap(coordinates, radius, name = 'My Area', id = 'my_area') {
         let paths = await this.getAreaPaths(...coordinates, radius);
         console.log("AREA PATHS", paths);
-        return await this.getMapByPaths(paths, name, id)
+        return await this.getMapByPaths(paths, undefined, name, id)
     }
 
     async mapToGeoMap(map, id) {
@@ -21,7 +21,7 @@ class MapManager {
                 break;
             case 'points':
                 await Google.wait();
-                return this.getMapByPoints(map.points, map.name, id);
+                return this.getMapByPoints(map.points, map.settings, map.name, id);
             case 'kml':
             default:
                 paths = await this.kmlsToPaths(map.kml);
@@ -29,10 +29,10 @@ class MapManager {
         }
 
         console.log("?MAP ID", map);
-        return await this.getMapByPaths(paths, map.name, id);
+        return await this.getMapByPaths(paths, map.settings, map.name, id);
     }
 
-    getMapByPoints(points, mapName, id) {
+    getMapByPoints(points, settings, mapName, id) {
         // let bounds = new Google.maps.LatLngBounds();
         // for (let {position} of points) {
         //     bounds.extend(new Google.maps.LatLng(...position));
@@ -52,10 +52,10 @@ class MapManager {
         // let area = Google.maps.geometry.spherical.computeArea(path);
         // console.log({area, path});
         // let minimumDistanceForPoints = Math.sqrt(area) * 2;
-        return new PointMap(points, 500000, mapName, id);
+        return new PointMap(points, settings, 500000, mapName, id);
     }
 
-    async getMapByPaths(paths, mapName, id) {
+    async getMapByPaths(paths, settings, mapName, id) {
         await Google.wait();
 
         let poly = new Google.maps.Polygon({
@@ -77,7 +77,7 @@ class MapManager {
 
         let minimumDistanceForPoints = Math.sqrt(area) * 2;
 
-        return new PolyMap(poly, minimumDistanceForPoints, mapName, id);
+        return new PolyMap(poly, settings, minimumDistanceForPoints, mapName, id);
     }
 
     async getAreaPaths(lat, lon, radius, numSides = 20) {

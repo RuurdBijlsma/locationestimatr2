@@ -1,10 +1,18 @@
 export default class GeoMap {
-    constructor(type, name, id = 'NoId', minimumDistanceForPoints = 100000) {
+    constructor(type, settings, name, id = 'NoId', minimumDistanceForPoints = 100000) {
         this.type = type;
         this.name = name;
+        if (settings === undefined) {
+            settings = {
+                difficultyMultiplier: 1,
+                zoom: false,
+            }
+        }
+        this.settings = settings;
         this.id = id;
         this.maxScore = 5000;
-        this.minimumDistanceForPoints = minimumDistanceForPoints;
+        console.log("MULTIPLIER", this.settings.difficultyMultiplier)
+        this.minimumDistanceForPoints = minimumDistanceForPoints / this.settings.difficultyMultiplier;
     }
 
     getBounds() {
