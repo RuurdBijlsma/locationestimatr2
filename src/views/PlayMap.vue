@@ -164,6 +164,15 @@
             },
             startGame(rules) {
                 this.gameState = 1;
+                for (let key in rules) {
+                    if (rules.hasOwnProperty(key)) {
+                        let value = rules[key];
+                        // noinspection EqualityComparisonWithCoercionJS
+                        if (!isNaN(+value) && rules[key] == +rules[key]) {
+                            rules[key] = +rules[key];
+                        }
+                    }
+                }
                 setTimeout(() => {
                     this.$refs.game.start(this.map, rules, this.challenge);
                 });

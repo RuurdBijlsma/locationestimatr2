@@ -64,6 +64,8 @@ export default class StreetViewElement {
 
     getLocation() {
         let position = this.panorama.getPosition();
+        if(!position)
+            return false;
         let lat = position.lat();
         let lon = position.lng();
         return [lat, lon];

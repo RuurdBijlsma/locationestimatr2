@@ -137,7 +137,7 @@
                 });
             },
             async confirmPoint() {
-                console.log("Placing point at", this.svPoint.position)
+                console.log("Placing point at", this.svPoint.position);
                 let point = {
                     ...this.svPoint
                 };
@@ -183,8 +183,12 @@
                     console.log({points});
                     points.forEach(p => this.placeMarker(new Google.maps.LatLng(...p.position), p));
                     this.points = this.points.concat(points);
-                    if (this.activePoint === null)
-                        this.activePoint = this.points[this.points.length - 1];
+                    if (this.activePoint === null) {
+                        let lastPoint = this.points[this.points.length - 1];
+                        console.log({lastPoint});
+                        this.preview(lastPoint.marker.position);
+                        this.activePoint = lastPoint;
+                    }
                 };
 
                 reader.readAsText(file);
