@@ -571,7 +571,7 @@
             makeGuess() {
                 clearInterval(this.timer);
                 this.guessedLocation = [this.mapMarker.position.lat(), this.mapMarker.position.lng()];
-                let targetDestination = this.rules.objectives === 1 ? this.svElement.getLocation() : this.currentDestination;
+                let targetDestination = this.rules.objective === 1 ? this.svElement.getLocation() : this.currentDestination;
                 let distance = this.measureDistance(this.guessedLocation, targetDestination);
                 let points = this.map.scoreCalculation(distance);
                 this.previousGuesses.push({
