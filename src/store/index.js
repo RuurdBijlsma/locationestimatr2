@@ -360,7 +360,7 @@ export default new Vuex.Store({
                     .where('map', '==', map)
                     .where('rules', '==', difficulty)
                     .orderBy('totalScore', 'desc')
-                    .orderBy('totalDistance', 'desc')
+                    .orderBy('totalDistance', 'asc')
                     .limit(limit)
                     .get();
                 let list = [];
