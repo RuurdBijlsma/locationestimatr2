@@ -69,7 +69,7 @@
                 singleExpand: false,
                 selectedDifficulty: 'Normal',
                 scoreTypes: Rules.presetNames.filter(p => p !== 'Custom'),
-                compoundScores: [{id: "Global", scores: [], expanded: [],sort:false,}],
+                compoundScores: [{id: "Global", scores: [], expanded: [], sort: false,}],
                 map: null,
                 image: '',
                 loading: false,
@@ -128,14 +128,14 @@
                             scores: this.parseScores(localScores),
                             id: 'Local',
                             expanded: [],
-                            sort:true,
+                            sort: true,
                         };
                     } catch (e) {
                         this.compoundScores[1] = {
                             scores: [],
                             id: 'Local',
                             expanded: [],
-                            sort:true,
+                            sort: true,
                         };
                     }
                     this.loading = true;
@@ -162,7 +162,7 @@
                         scores: this.parseScores(scores),
                         id: 'Global',
                         expanded: [],
-                        sort:true,
+                        sort: false,
                     };
 
 
