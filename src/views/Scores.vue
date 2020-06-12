@@ -13,8 +13,8 @@
                     label="Difficulty"
                     :disabled="loading"
                     outlined
-            ></v-select>
-            <div v-for="{id, scores, expanded} in compoundScores"
+            />
+            <div v-for="{id, scores, expanded, sort} in compoundScores"
                  :key="id">
                 <h2>{{id}} Scores</h2>
                 <v-data-table
@@ -26,7 +26,7 @@
                         item-key="number"
                         :items-per-page="10"
                         :single-expand="singleExpand"
-                        disable-sort
+                        :disable-sort="!sort"
                         :expanded.sync="expanded"
                         :mobile-breakpoint="400"
                         loading-text="Loading scores... Please wait">
@@ -69,7 +69,7 @@
                 singleExpand: false,
                 selectedDifficulty: 'Normal',
                 scoreTypes: Rules.presetNames.filter(p => p !== 'Custom'),
-                compoundScores: [{id: "Global", scores: [], expanded: [],}],
+                compoundScores: [{id: "Global", scores: [], expanded: [],sort:false,}],
                 map: null,
                 image: '',
                 loading: false,
@@ -128,12 +128,14 @@
                             scores: this.parseScores(localScores),
                             id: 'Local',
                             expanded: [],
+                            sort:true,
                         };
                     } catch (e) {
                         this.compoundScores[1] = {
                             scores: [],
                             id: 'Local',
                             expanded: [],
+                            sort:true,
                         };
                     }
                     this.loading = true;
@@ -160,6 +162,7 @@
                         scores: this.parseScores(scores),
                         id: 'Global',
                         expanded: [],
+                        sort:true,
                     };
 
 
