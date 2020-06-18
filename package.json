@@ -10,13 +10,13 @@
   "dependencies": {
     "color-converter": "^1.4.1",
     "core-js": "^3.6.4",
-    "firebase": "^7.11.0",
+    "firebase": "^7.15.1",
     "html2canvas": "^1.0.0-rc.5",
     "load-google-maps-api": "^2.0.2",
+    "random-streetview": "^1.0.10",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
-    "random-streetview": "^1.0.10",
     "vuetify": "^2.2.18",
     "vuex": "^3.1.2"
   },

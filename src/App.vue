@@ -11,10 +11,10 @@
                 <v-icon>home</v-icon>
             </v-btn>
         </v-app-bar>
-        <v-content class="content"
+        <v-main class="content"
                    :style="mobile && !($route.path.startsWith('/play') && $store.state.immersive) ? `margin-top: 56px` : ''">
             <router-view v-if="loggedIn"/>
-        </v-content>
+        </v-main>
     </v-app>
     <!--    <div id="app">-->
     <!--    </div>-->
