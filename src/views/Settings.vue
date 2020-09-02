@@ -1,16 +1,16 @@
 <template>
     <div class="settings">
         <h1>Settings</h1>
-        <h2>Custom API Key</h2>
-        <p class="caption">Fill in your own Google Maps JavaScript API key.
-            Since the main API key doesn't work anymore this is required to play. Get an API key
-            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">here</a>.
-        </p>
-        <v-text-field label="API Key" v-model="apiKey"/>
-        <div>
-            <v-btn @click="setApiKey">Apply API key</v-btn>
-            <v-btn @click="removeApiKey">Remove Custom API key</v-btn>
-        </div>
+<!--        <h2>Custom API Key</h2>-->
+<!--        <p class="caption">Fill in your own Google Maps JavaScript API key.-->
+<!--            Since the main API key doesn't work anymore this is required to play. Get an API key-->
+<!--            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">here</a>.-->
+<!--        </p>-->
+<!--        <v-text-field label="API Key" v-model="apiKey"/>-->
+<!--        <div>-->
+<!--            <v-btn @click="setApiKey">Apply API key</v-btn>-->
+<!--            <v-btn @click="removeApiKey">Remove Custom API key</v-btn>-->
+<!--        </div>-->
         <h2>Game</h2>
         <v-switch label="Show finding random location visual (might spoil location)" v-model="showVisual"/>
         <p class="caption">Slow CPU mode reduces CPU usage of the location finding algorithm while you're playing the
